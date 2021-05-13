@@ -1,7 +1,7 @@
 [
-    {
-        "command": "project:deploy:org",
-        "plugin": "@salesforce/plugin-project-org",
-        "flags": []
-    }
+  {
+    "command": "project:deploy:org",
+    "plugin": "@salesforce/plugin-project-org",
+    "flags": ["directory", "manifest", "metadata", "target-env"]
+  }
 ]

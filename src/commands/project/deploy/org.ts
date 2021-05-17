@@ -46,6 +46,9 @@ export default class DeployOrg extends Command {
       char: 'e',
       description: messages.getMessage('target-env'),
     }),
+    json: Flags.boolean({
+      description: 'json output',
+    }),
   };
 
   public async run(): Promise<FileResponse[]> {
@@ -68,7 +71,11 @@ export default class DeployOrg extends Command {
 
     const deployResult = await deploy.start();
     const fileResponses = deployResult.getFileResponses();
-    this.displayHumanReadableResults(fileResponses);
+    if (!flags.json) {
+      this.displayHumanReadableResults(fileResponses);
+    } else {
+      this.log(JSON.stringify({ status: 0, result: [] }).trim());
+    }
     return fileResponses;
   }
 

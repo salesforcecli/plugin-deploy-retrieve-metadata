@@ -2,6 +2,6 @@
   {
     "command": "project:deploy:org",
     "plugin": "@salesforce/plugin-project-org",
-    "flags": ["directory", "manifest", "metadata", "target-env"]
+    "flags": ["directory", "json", "manifest", "metadata", "target-env"]
   }
 ]

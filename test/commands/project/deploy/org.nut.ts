@@ -38,9 +38,22 @@ describe('Deploy NUTs', () => {
     });
 
     it('should deploy named ApexClass', async () => {
-      await sourceTestkit.modifyLocalFile('force-app/main/default/classes/GeocodingService.cls', '// another comment');
+      await sourceTestkit.modifyLocalGlobs(
+        ['force-app/main/default/classes/GeocodingService.cls'],
+        '// another comment'
+      );
       await sourceTestkit.deploy({ args: '--metadata ApexClass:GeocodingService' });
       await sourceTestkit.expect.filesToBeDeployed(['force-app/main/default/classes/GeocodingService.cls']);
+    });
+
+    it('should deploy multiple metadata types', async () => {
+      await sourceTestkit.modifyLocalGlobs(['force-app/main/default/classes/*.cls'], '// comment');
+      await sourceTestkit.modifyLocalGlobs(['force-app/main/default/aura/**/*.cmp'], '<!-- comment -->');
+      await sourceTestkit.deploy({ args: '--metadata ApexClass AuraDefinitionBundle' });
+      await sourceTestkit.expect.filesToBeDeployed([
+        'force-app/main/default/classes/*',
+        'force-app/main/default/aura/**/*',
+      ]);
     });
   });
 

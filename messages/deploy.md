@@ -10,7 +10,7 @@ deploy source to a salesforce org
 
 # metadata
 
-comma-separated list of metadata component names
+list of metadata component names
 
 # manifest
 
@@ -18,7 +18,7 @@ file path for manifest (package.xml) of components to deploy
 
 # directory
 
-comma-separated list of paths to the local source files to deploy
+list of paths to the local source files to deploy
 
 # target-env
 

@@ -19,7 +19,7 @@ const messages = Messages.load('@salesforce/plugin-project-org', 'deploy', [
   'metadata',
   'manifest',
   'directory',
-  'target-env',
+  'target-org',
   'NoTargetEnv',
   'NoTargetEnvActions',
 ]);
@@ -42,9 +42,9 @@ export default class DeployOrg extends Command {
       description: messages.getMessage('directory'),
       multiple: true,
     }),
-    'target-env': Flags.string({
+    'target-org': Flags.string({
       char: 'e',
-      description: messages.getMessage('target-env'),
+      description: messages.getMessage('target-org'),
     }),
     json: Flags.boolean({
       description: 'json output',
@@ -66,7 +66,7 @@ export default class DeployOrg extends Command {
     });
 
     const deploy = componentSet.deploy({
-      usernameOrConnection: await this.resolveTargetEnv(flags['target-env']),
+      usernameOrConnection: await this.resolveTargetEnv(flags['target-org']),
     });
 
     const deployResult = await deploy.start();

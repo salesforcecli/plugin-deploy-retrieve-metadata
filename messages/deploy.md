@@ -20,9 +20,9 @@ file path for manifest (package.xml) of components to deploy
 
 list of paths to the local source files to deploy
 
-# target-env
+# target-org
 
-environment you want to deploy to
+org environment you want to deploy to
 
 # NoTargetEnv
 

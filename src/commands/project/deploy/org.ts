@@ -24,6 +24,8 @@ const messages = Messages.load('@salesforce/plugin-project-org', 'deploy', [
   'NoTargetEnvActions',
 ]);
 
+export type DeployOrgResult = FileResponse[];
+
 export default class DeployOrg extends Command {
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -51,7 +53,7 @@ export default class DeployOrg extends Command {
     }),
   };
 
-  public async run(): Promise<FileResponse[]> {
+  public async run(): Promise<DeployOrgResult> {
     const flags = (await this.parse(DeployOrg)).flags;
     const componentSet = await ComponentSetBuilder.build({
       directory: flags.directory,

@@ -71,43 +71,28 @@ sf plugins
 ## Commands
 
 <!-- commands -->
+* [`sf project:deploy:org`](#sf-projectdeployorg)
 
-- [`sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`](#sfdx-helloorg--n-string--f--v-string--u-string---apiversion-string---json---loglevel-tracedebuginfowarnerrorfataltracedebuginfowarnerrorfatal)
+## `sf project:deploy:org`
 
-## `sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]`
-
-print a greeting and your org IDs
+deploy source to a salesforce org
 
 ```
 USAGE
-  $ sfdx hello:org [-n <string>] [-f] [-v <string>] [-u <string>] [--apiversion <string>] [--json] [--loglevel
-  trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL]
+  $ sf project:deploy:org
 
 OPTIONS
-  -f, --force                                                                       example boolean flag
-  -n, --name=name                                                                   name to print
-
-  -u, --targetusername=targetusername                                               username or alias for the target
-                                                                                    org; overrides default target org
-
-  -v, --targetdevhubusername=targetdevhubusername                                   username or alias for the dev hub
-                                                                                    org; overrides default dev hub org
-
-  --apiversion=apiversion                                                           override the api version used for
-                                                                                    api requests made by this command
-
-  --json                                                                            format output as json
-
-  --loglevel=(trace|debug|info|warn|error|fatal|TRACE|DEBUG|INFO|WARN|ERROR|FATAL)  [default: warn] logging level for
-                                                                                    this command invocation
+  -d, --directory=directory    list of paths to the local source files to deploy
+  -e, --target-org=target-org  org environment you want to deploy to
+  -m, --metadata=metadata      list of metadata component names
+  -x, --manifest=manifest      file path for manifest (package.xml) of components to deploy
+  --json                       json output
 
 EXAMPLES
-  $ sfdx hello:org --targetusername myOrg@example.com --targetdevhubusername devhub@org.com
-     Hello world! This is org: MyOrg and I will be around until Tue Mar 20 2018!
-     My hub org id is: 00Dxx000000001234
-
-  $ sfdx hello:org --name myname --targetusername myOrg@example.com
-     Hello myname! This is org: MyOrg and I will be around until Tue Mar 20 2018!
+  sf project deploy org --metadata ApexClass
+  sf project deploy org --manifest package.xml
+  sf project deploy org --directory force-app
 ```
 
+_See code: [src/commands/project/deploy/org.ts](https://github.com/salesforcecli/plugin-project-org/blob/v0.0.1/src/commands/project/deploy/org.ts)_
 <!-- commandsstop -->

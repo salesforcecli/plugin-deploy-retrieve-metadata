@@ -11,7 +11,7 @@ import { assert, expect } from 'chai';
 import { ComponentSet, FromSourceOptions } from '@salesforce/source-deploy-retrieve';
 import { stubMethod } from '@salesforce/ts-sinon';
 import { fs as fsCore, SfdxError } from '@salesforce/core';
-import { ComponentSetBuilder } from '../src/componentSetBuilder';
+import { ComponentSetBuilder } from '../../src/utils/componentSetBuilder';
 
 describe('ComponentSetBuilder', () => {
   const sandbox = sinon.createSandbox();

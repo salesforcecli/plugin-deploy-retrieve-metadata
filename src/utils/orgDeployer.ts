@@ -10,14 +10,12 @@ import { cyan } from 'chalk';
 import { Answers, prompt } from 'inquirer';
 import { Dictionary, Nullable, ensureString } from '@salesforce/ts-types';
 import { NamedPackageDir } from '@salesforce/core';
-import { Deployer, Preferences, Options } from '@salesforce/plugin-project-utils';
+import { Deployable, Deployer, Preferences, Options } from '@salesforce/plugin-project-utils';
 import { ComponentSetBuilder } from '../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../utils/tableBuilder';
 
-export class OrgDeployer extends Deployer {
-  private testLevel = 'none';
-
-  public constructor(private pkg: NamedPackageDir, protected options: Options) {
+export class DeployablePackage extends Deployable {
+  public constructor(public pkg: NamedPackageDir, private parent: Deployer) {
     super();
   }
 
@@ -37,8 +35,18 @@ export class OrgDeployer extends Deployer {
     return null;
   }
 
-  public get package(): NamedPackageDir {
-    return this.pkg;
+  public getParent(): Deployer {
+    return this.parent;
+  }
+}
+
+export class OrgDeployer extends Deployer {
+  public deployables: DeployablePackage[];
+  private testLevel = 'none';
+
+  public constructor(private packages: NamedPackageDir[], protected options: Options) {
+    super();
+    this.deployables = this.packages.map((pkg) => new DeployablePackage(pkg, this));
   }
 
   // eslint-disable-next-line @typescript-eslint/require-await
@@ -52,8 +60,10 @@ export class OrgDeployer extends Deployer {
   }
 
   public async deploy(): Promise<void> {
-    this.log(`${EOL}Deploying ${cyan.bold(this.getAppName())} to ${this.options.username}`);
-    const componentSet = await ComponentSetBuilder.build({ directory: [this.pkg.fullPath] });
+    const directories = this.deployables.map((d) => d.pkg.fullPath);
+    const name = this.deployables.map((p) => cyan.bold(p.getAppName())).join(', ');
+    this.log(`${EOL}Deploying ${name} to ${this.options.username}`);
+    const componentSet = await ComponentSetBuilder.build({ directory: directories });
     const deploy = componentSet.deploy({
       usernameOrConnection: this.options.username,
     });
@@ -66,7 +76,7 @@ export class OrgDeployer extends Deployer {
     const { tests } = await prompt<Answers>([
       {
         name: 'tests',
-        message: 'Select the test level you would like to run for ' + cyan.bold(this.pkg.name) + ':',
+        message: 'Select the test level you would like to run:',
         type: 'list',
         loop: false,
         pageSize: 4,
@@ -79,26 +89,5 @@ export class OrgDeployer extends Deployer {
       },
     ]);
     return ensureString(tests);
-  }
-}
-
-export class MergedOrgDeployer extends OrgDeployer {
-  private packages: NamedPackageDir[];
-
-  public constructor(deployers: OrgDeployer[], options: Options) {
-    super({} as NamedPackageDir, options);
-    this.packages = deployers.map((d) => d.package);
-  }
-
-  public async deploy(): Promise<void> {
-    const appName = this.packages.map((p) => cyan.bold(p.name)).join(', ');
-    this.log(`${EOL}Deploying ${appName} to ${this.options.username}`);
-    const componentSet = await ComponentSetBuilder.build({ directory: this.packages.map((p) => p.fullPath) });
-    const deploy = componentSet.deploy({
-      usernameOrConnection: this.options.username,
-    });
-
-    const deployResult = await deploy.start();
-    displayHumanReadableResults(deployResult?.getFileResponses() || []);
   }
 }

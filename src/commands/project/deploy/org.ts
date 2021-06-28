@@ -80,6 +80,10 @@ export default class DeployOrg extends Command {
     return { status: 0, result };
   }
 
+  protected toErrorJson(err: unknown): { status: number; err: unknown } {
+    return { status: process.exitCode || 1, err };
+  }
+
   private async getPackageDirs(): Promise<string[]> {
     const project = await SfdxProject.resolve();
     return project.getUniquePackageDirectories().map((pDir) => pDir.fullPath);

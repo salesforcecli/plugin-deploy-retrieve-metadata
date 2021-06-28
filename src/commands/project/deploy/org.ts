@@ -76,7 +76,7 @@ export default class DeployOrg extends Command {
     return fileResponses;
   }
 
-  protected toSuccessJson<T = FileResponse[]>(result: T): { status: number; result: T } {
+  protected toSuccessJson(result: FileResponse[]): { status: number; result: FileResponse[] } {
     return { status: 0, result };
   }
 

@@ -7,9 +7,8 @@
 
 import { EOL } from 'os';
 import { cyan } from 'chalk';
-import { Answers, prompt } from 'inquirer';
-import { Dictionary, Nullable, ensureString } from '@salesforce/ts-types';
-import { NamedPackageDir } from '@salesforce/core';
+import { Dictionary, Nullable } from '@salesforce/ts-types';
+import { Aliases, Config, ConfigAggregator, NamedPackageDir } from '@salesforce/core';
 import { Deployable, Deployer, Preferences, Options } from '@salesforce/plugin-project-utils';
 import { ComponentSetBuilder } from '../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../utils/tableBuilder';
@@ -43,39 +42,57 @@ export class DeployablePackage extends Deployable {
 export class OrgDeployer extends Deployer {
   public deployables: DeployablePackage[];
   private testLevel = 'none';
+  private username!: string;
 
   public constructor(private packages: NamedPackageDir[], protected options: Options) {
     super();
     this.deployables = this.packages.map((pkg) => new DeployablePackage(pkg, this));
   }
 
-  // eslint-disable-next-line @typescript-eslint/require-await
   public async setup(preferences: Preferences): Promise<Dictionary<string>> {
     if (preferences.interactive) {
       // Add this once we support test level
       // this.testLevel = await this.promptForTestLevel();
+      this.username = await this.promptForUsername();
     }
 
-    return { testLevel: this.testLevel };
+    return { testLevel: this.testLevel, username: this.username };
   }
 
   public async deploy(): Promise<void> {
     const directories = this.deployables.map((d) => d.pkg.fullPath);
     const name = this.deployables.map((p) => cyan.bold(p.getAppName())).join(', ');
-    this.log(`${EOL}Deploying ${name} to ${this.options.username}`);
+    this.log(`${EOL}Deploying ${name} to ${this.username}`);
     const componentSet = await ComponentSetBuilder.build({ directory: directories });
     const deploy = componentSet.deploy({
-      usernameOrConnection: this.options.username,
+      usernameOrConnection: this.username,
     });
 
     const deployResult = await deploy.start();
     displayHumanReadableResults(deployResult?.getFileResponses() || []);
   }
 
+  public async promptForUsername(): Promise<string> {
+    const aliasOrUsername = ConfigAggregator.getValue(Config.DEFAULT_USERNAME)?.value as string;
+
+    if (!aliasOrUsername) {
+      const { username } = await this.prompt<{ username: string }>([
+        {
+          name: 'username',
+          message: 'Enter the target org for this deploy:',
+          type: 'input',
+        },
+      ]);
+      return (await Aliases.fetch(username)) || username;
+    } else {
+      return (await Aliases.fetch(aliasOrUsername)) || aliasOrUsername;
+    }
+  }
+
   public async promptForTestLevel(): Promise<string> {
-    const { tests } = await prompt<Answers>([
+    const { testLevel } = await this.prompt<{ testLevel: string }>([
       {
-        name: 'tests',
+        name: 'testLevel',
         message: 'Select the test level you would like to run:',
         type: 'list',
         loop: false,
@@ -88,6 +105,6 @@ export class OrgDeployer extends Deployer {
         ],
       },
     ]);
-    return ensureString(tests);
+    return testLevel;
   }
 }

@@ -432,10 +432,10 @@
     is-wsl "^2.1.1"
     tslib "^2.0.0"
 
-"@oclif/core@^0.5.17":
-  version "0.5.17"
-  resolved "https://registry.npmjs.org/@oclif/core/-/core-0.5.17.tgz#60bdbf3252d4e3b106c5fa15c98594655930ca1a"
-  integrity sha512-sTY2SYr1v/wfh4JjxAvNTYQTScB5wn6S62RU4bCj2RODH/apN8waoRa5I8QpLecuT4hjdE4rHVX5fKnV1ksEDA==
+"@oclif/core@^0.5.18":
+  version "0.5.18"
+  resolved "https://registry.npmjs.org/@oclif/core/-/core-0.5.18.tgz#11146d0d10366b23630a4abf2a257b4a9c72467e"
+  integrity sha512-DmMs5Iq4gwfAHfvGbkcCK/ETUs8QbCee7mVn3QFo5A9c59ZtDrnv8hJ4jURw/qAqVB2zDt1WsQiNYFJO0BvEfQ==
   dependencies:
     "@oclif/linewrap" "^1.0.0"
     chalk "^4.1.0"

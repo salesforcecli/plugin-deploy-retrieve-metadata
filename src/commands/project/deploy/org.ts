@@ -13,13 +13,14 @@ import { ComponentSetBuilder, ManifestOption } from '../../../utils/componentSet
 import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.load('@salesforce/plugin-project-org', 'deploy', [
+const messages = Messages.load('@salesforce/plugin-project-org', 'project.deploy.org', [
+  'summary',
   'description',
   'examples',
-  'metadata',
-  'manifest',
-  'directory',
-  'target-org',
+  'flags.metadata',
+  'flags.manifest',
+  'flags.deploy-dir',
+  'flags.target-org',
   'NoTargetEnv',
   'NoTargetEnvActions',
 ]);
@@ -28,32 +29,33 @@ export type DeployOrgResult = FileResponse[];
 
 export default class DeployOrg extends Command {
   public static readonly description = messages.getMessage('description');
+  public static readonly summary = messages.getMessage('summary');
   public static readonly examples = messages.getMessages('examples');
   public static flags = {
     metadata: Flags.string({
       char: 'm',
-      description: messages.getMessage('metadata'),
+      description: messages.getMessage('flags.metadata'),
       multiple: true,
     }),
     manifest: Flags.string({
       char: 'x',
-      description: messages.getMessage('manifest'),
+      description: messages.getMessage('flags.manifest'),
     }),
-    directory: Flags.string({
+    'deploy-dir': Flags.string({
       char: 'd',
-      description: messages.getMessage('directory'),
+      description: messages.getMessage('flags.deploy-dir'),
       multiple: true,
     }),
     'target-org': Flags.string({
-      char: 'e',
-      description: messages.getMessage('target-org'),
+      char: 't',
+      description: messages.getMessage('flags.target-org'),
     }),
   };
 
   public async run(): Promise<DeployOrgResult> {
     const flags = (await this.parse(DeployOrg)).flags;
     const componentSet = await ComponentSetBuilder.build({
-      directory: flags.directory,
+      directory: flags['deploy-dir'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,
         directoryPaths: await this.getPackageDirs(),

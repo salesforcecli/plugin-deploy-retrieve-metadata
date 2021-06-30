@@ -801,10 +801,10 @@
     unzipper "0.10.11"
     xmldom-sfdx-encoding "^0.1.29"
 
-"@salesforce/source-testkit@^0.0.3":
-  version "0.0.3"
-  resolved "https://registry.npmjs.org/@salesforce/source-testkit/-/source-testkit-0.0.3.tgz#2ac6d6a2ada21c4f631c574996f78df9d12b1f62"
-  integrity sha512-wZefuS5sZMKMKzocInaY1msaAqDlrmZtVtOYVXz6PF+BKwYupeY1BlCpKzj3+10WsV6LV6+9qxjnpMG0QFIG7Q==
+"@salesforce/source-testkit@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.yarnpkg.com/@salesforce/source-testkit/-/source-testkit-0.0.5.tgz#9f9a83be85cbfbbf1fdf0bd3a5298d9391e2740f"
+  integrity sha512-Qkkp0OkYiPqpAnRJPYRFTAQMOcqiEqygGhcUod680d7snSkr68fIhqIaNYsaQ6Bnqsz5i9c+LkkORndKx7azKg==
   dependencies:
     "@salesforce/cli-plugins-testkit" "^1.1.1"
     "@salesforce/core" "^2.20.11"

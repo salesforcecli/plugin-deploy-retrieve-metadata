@@ -14,6 +14,7 @@
     "tslib": "^2"
   },
   "devDependencies": {
+    "@oclif/dev-cli": "^1.26.0",
     "@oclif/plugin-command-snapshot": "^2.2.0",
     "@salesforce/cli-plugins-testkit": "^0.0.25",
     "@salesforce/dev-config": "^2.1.2",
@@ -40,7 +41,6 @@
     "lint-staged": "^10.2.2",
     "mocha": "^8.3.0",
     "nyc": "^15.1.0",
-    "oclif": "^1.18.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^2.0.1",
     "shx": "0.2.2",
@@ -113,7 +113,7 @@
     "test:deprecation-policy": "./bin/dev snapshot:compare",
     "test:json-schema": "./bin/dev schema:compare",
     "test:nuts": "nyc mocha \"**/*.nut.ts\" --slow 4500 --timeout 600000 --parallel",
-    "version": "oclif readme"
+    "version": "oclif-dev readme"
   },
   "husky": {
     "hooks": {

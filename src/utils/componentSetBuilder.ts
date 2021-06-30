@@ -61,11 +61,11 @@ export class ComponentSetBuilder {
     // Resolve manifest with source in package directories.
     if (manifest) {
       logger.debug(`Building ComponentSet from manifest: ${manifest.manifestPath}`);
-      const directoryPaths = options.manifest.directoryPaths;
+      const directoryPaths = manifest.directoryPaths;
       logger.debug(`Searching in packageDir: ${directoryPaths.join(', ')} for matching metadata`);
       const compSet = await ComponentSet.fromManifest({
         manifestPath: manifest.manifestPath,
-        resolveSourcePaths: options.manifest.directoryPaths,
+        resolveSourcePaths: manifest.directoryPaths,
       });
       csAggregator.push(...compSet);
     }
@@ -84,7 +84,7 @@ export class ComponentSetBuilder {
         });
       });
 
-      const directoryPaths = options.metadata.directoryPaths;
+      const directoryPaths = metadata.directoryPaths;
       logger.debug(`Searching for matching metadata in directories: ${directoryPaths.join(', ')}`);
       const fromSource = ComponentSet.fromSource({ fsPaths: directoryPaths, include: filter });
       // If no matching metadata is found, default to the original component set

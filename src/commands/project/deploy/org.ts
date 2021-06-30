@@ -9,17 +9,18 @@ import { Command, Flags } from '@oclif/core';
 import { Aliases, Config, ConfigAggregator, Messages, SfdxError, SfdxProject } from '@salesforce/core';
 import { FileResponse } from '@salesforce/source-deploy-retrieve';
 import { Nullable } from '@salesforce/ts-types';
-import cli from 'cli-ux';
-import { ComponentSetBuilder } from '../../../componentSetBuilder';
+import { ComponentSetBuilder, ManifestOption } from '../../../utils/componentSetBuilder';
+import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.load('@salesforce/plugin-project-org', 'deploy', [
+const messages = Messages.load('@salesforce/plugin-project-org', 'project.deploy.org', [
+  'summary',
   'description',
   'examples',
-  'metadata',
-  'manifest',
-  'directory',
-  'target-org',
+  'flags.metadata',
+  'flags.manifest',
+  'flags.deploy-dir',
+  'flags.target-org',
   'NoTargetEnv',
   'NoTargetEnvActions',
 ]);
@@ -28,39 +29,37 @@ export type DeployOrgResult = FileResponse[];
 
 export default class DeployOrg extends Command {
   public static readonly description = messages.getMessage('description');
+  public static readonly summary = messages.getMessage('summary');
   public static readonly examples = messages.getMessages('examples');
   public static flags = {
     metadata: Flags.string({
       char: 'm',
-      description: messages.getMessage('metadata'),
+      description: messages.getMessage('flags.metadata'),
       multiple: true,
     }),
     manifest: Flags.string({
       char: 'x',
-      description: messages.getMessage('manifest'),
+      description: messages.getMessage('flags.manifest'),
     }),
-    directory: Flags.string({
+    'deploy-dir': Flags.string({
       char: 'd',
-      description: messages.getMessage('directory'),
+      description: messages.getMessage('flags.deploy-dir'),
       multiple: true,
     }),
     'target-org': Flags.string({
-      char: 'e',
-      description: messages.getMessage('target-org'),
-    }),
-    json: Flags.boolean({
-      description: 'json output',
+      char: 't',
+      description: messages.getMessage('flags.target-org'),
     }),
   };
 
   public async run(): Promise<DeployOrgResult> {
     const flags = (await this.parse(DeployOrg)).flags;
     const componentSet = await ComponentSetBuilder.build({
-      directory: flags.directory,
-      manifest: flags.manifest && {
+      directory: flags['deploy-dir'],
+      manifest: (flags.manifest && {
         manifestPath: flags.manifest,
         directoryPaths: await this.getPackageDirs(),
-      },
+      }) as ManifestOption,
       metadata: flags.metadata && {
         metadataEntries: flags.metadata,
         directoryPaths: await this.getPackageDirs(),
@@ -68,27 +67,23 @@ export default class DeployOrg extends Command {
     });
 
     const deploy = componentSet.deploy({
-      usernameOrConnection: await this.resolveTargetEnv(flags['target-org']),
+      usernameOrConnection: await this.resolveTargetOrg(flags['target-org']),
     });
 
     const deployResult = await deploy.start();
-    const fileResponses = deployResult.getFileResponses();
+    const fileResponses = deployResult?.getFileResponses() || [];
     if (!flags.json) {
-      this.displayHumanReadableResults(fileResponses);
-    } else {
-      this.log(JSON.stringify({ status: 0, result: [] }).trim());
+      displayHumanReadableResults(fileResponses);
     }
     return fileResponses;
   }
 
-  private displayHumanReadableResults(fileResponses: FileResponse[]): void {
-    const columns = {
-      fullName: { header: 'Name' },
-      type: { header: 'Type' },
-      filePath: { header: 'Path' },
-    };
-    const options = { sort: 'type' };
-    cli.table(fileResponses, columns, options);
+  protected toSuccessJson(result: FileResponse[]): { status: number; result: FileResponse[] } {
+    return { status: 0, result };
+  }
+
+  protected toErrorJson(err: unknown): { status: number; err: unknown } {
+    return { status: process.exitCode || 1, err };
   }
 
   private async getPackageDirs(): Promise<string[]> {
@@ -96,10 +91,10 @@ export default class DeployOrg extends Command {
     return project.getUniquePackageDirectories().map((pDir) => pDir.fullPath);
   }
 
-  private async resolveTargetEnv(targetEnv: Nullable<string>): Promise<string> {
-    const aliasOrEnv = targetEnv || (ConfigAggregator.getValue(Config.DEFAULT_USERNAME)?.value as string);
+  private async resolveTargetOrg(targetOrg: Nullable<string>): Promise<string> {
+    const aliasOrUsername = targetOrg || (ConfigAggregator.getValue(Config.DEFAULT_USERNAME)?.value as string);
 
-    if (!aliasOrEnv) {
+    if (!aliasOrUsername) {
       throw new SfdxError(
         messages.getMessage('NoTargetEnv'),
         'NoTargetEnv',
@@ -107,8 +102,6 @@ export default class DeployOrg extends Command {
       );
     }
 
-    const env = (await Aliases.fetch(aliasOrEnv)) || aliasOrEnv;
-
-    return env;
+    return (await Aliases.fetch(aliasOrUsername)) || aliasOrUsername;
   }
 }

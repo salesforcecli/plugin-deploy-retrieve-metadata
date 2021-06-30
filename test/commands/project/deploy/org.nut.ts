@@ -25,7 +25,7 @@ describe('Deploy NUTs', () => {
 
   describe('--directory flag', () => {
     it('should deploy force-app', async () => {
-      await sourceTestkit.deploy({ args: '--directory force-app' });
+      await sourceTestkit.deploy({ args: '--deploy-dir force-app' });
       await sourceTestkit.expect.filesToBeDeployed(['force-app/**/*'], ['force-app/test/**/*']);
     });
   });

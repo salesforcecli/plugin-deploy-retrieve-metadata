@@ -7,9 +7,9 @@
 
 import { EOL } from 'os';
 import { cyan } from 'chalk';
-import { Dictionary, Nullable } from '@salesforce/ts-types';
-import { Aliases, Config, ConfigAggregator, NamedPackageDir } from '@salesforce/core';
-import { Deployable, Deployer, Preferences, Options } from '@salesforce/plugin-project-utils';
+import { Dictionary, Nullable, ensureString } from '@salesforce/ts-types';
+import { Aliases, AuthInfo, Config, ConfigAggregator, NamedPackageDir } from '@salesforce/core';
+import { Deployable, Deployer, Preferences, Options, generateTableChoices } from '@salesforce/plugin-project-utils';
 import { ComponentSetBuilder } from '../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../utils/tableBuilder';
 
@@ -76,11 +76,22 @@ export class OrgDeployer extends Deployer {
     const aliasOrUsername = ConfigAggregator.getValue(Config.DEFAULT_USERNAME)?.value as string;
 
     if (!aliasOrUsername) {
+      const authroizations = await AuthInfo.listAllAuthorizations();
+      const newestAuths = authroizations
+        .filter((a) => !a.error)
+        .sort((a, b) => new Date(ensureString(b.timestamp)).getTime() - new Date(ensureString(a.timestamp)).getTime());
+      const options = newestAuths.map((auth) => ({
+        name: auth.username,
+        alias: auth.alias || '',
+        value: auth.username,
+      }));
+      const columns = { name: 'Org', alias: 'Alias' };
       const { username } = await this.prompt<{ username: string }>([
         {
           name: 'username',
           message: 'Enter the target org for this deploy:',
-          type: 'input',
+          type: 'list',
+          choices: generateTableChoices(columns, options),
         },
       ]);
       return (await Aliases.fetch(username)) || username;

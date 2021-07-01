@@ -7,12 +7,24 @@
 
 import { EOL } from 'os';
 import { cyan } from 'chalk';
-import { Dictionary, Nullable, ensureString } from '@salesforce/ts-types';
+import { Nullable, ensureString } from '@salesforce/ts-types';
 import { Aliases, AuthInfo, Config, ConfigAggregator, NamedPackageDir } from '@salesforce/core';
-import { Deployable, Deployer, Preferences, Options, generateTableChoices } from '@salesforce/plugin-project-utils';
+import {
+  Deployable,
+  Deployer,
+  Preferences,
+  DeployerOptions,
+  generateTableChoices,
+} from '@salesforce/plugin-project-utils';
 import { ComponentSetBuilder } from '../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../utils/tableBuilder';
 import { TestLevel } from '../utils/testLevel';
+
+export interface OrgDeployOptions extends DeployerOptions {
+  testLevel?: TestLevel;
+  username?: string;
+  apps?: string[];
+}
 
 export class DeployablePackage extends Deployable {
   public constructor(public pkg: NamedPackageDir, private parent: Deployer) {
@@ -41,22 +53,40 @@ export class DeployablePackage extends Deployable {
 }
 
 export class OrgDeployer extends Deployer {
+  public static NAME = 'Salesforce Apps';
+
   public deployables: DeployablePackage[];
   private testLevel = TestLevel.NoTestRun;
   private username!: string;
 
-  public constructor(private packages: NamedPackageDir[], protected options: Options) {
+  public constructor(private packages: NamedPackageDir[]) {
     super();
     this.deployables = this.packages.map((pkg) => new DeployablePackage(pkg, this));
   }
 
-  public async setup(preferences: Preferences): Promise<Dictionary<string>> {
+  public getName(): string {
+    return OrgDeployer.NAME;
+  }
+
+  public async setup(preferences: Preferences, options: OrgDeployOptions): Promise<OrgDeployOptions> {
     if (preferences.interactive) {
       this.testLevel = await this.promptForTestLevel();
       this.username = await this.promptForUsername();
+    } else {
+      if (options.apps?.length) {
+        const apps = options.apps || [];
+        const selected = this.deployables.filter((d) => apps.includes(d.getAppPath()));
+        this.selectDeployables(selected);
+      }
+      this.testLevel = options.testLevel || (await this.promptForTestLevel());
+      this.username = options.username || (await this.promptForUsername());
     }
 
-    return { testLevel: this.testLevel, username: this.username };
+    return {
+      testLevel: this.testLevel,
+      username: this.username,
+      apps: this.deployables.map((d) => d.getAppPath()),
+    };
   }
 
   public async deploy(): Promise<void> {

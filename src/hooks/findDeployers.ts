@@ -6,13 +6,12 @@
  */
 
 import { SfdxProject } from '@salesforce/core';
-import { Options } from '@salesforce/plugin-project-utils';
 import { OrgDeployer } from '../utils/orgDeployer';
 
-const hook = async function (options: Options): Promise<OrgDeployer[]> {
+const hook = async function (): Promise<OrgDeployer[]> {
   const project = await SfdxProject.resolve();
   const packageDirectories = project.getPackageDirectories();
-  return [new OrgDeployer(packageDirectories, options)];
+  return [new OrgDeployer(packageDirectories)];
 };
 
 export default hook;

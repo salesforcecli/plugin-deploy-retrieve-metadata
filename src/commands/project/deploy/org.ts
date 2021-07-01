@@ -11,6 +11,7 @@ import { FileResponse } from '@salesforce/source-deploy-retrieve';
 import { Nullable } from '@salesforce/ts-types';
 import { ComponentSetBuilder, ManifestOption } from '../../../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../../../utils/tableBuilder';
+import { TestLevel } from '../../../utils/testLevel';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.load('@salesforce/plugin-project-org', 'project.deploy.org', [
@@ -21,6 +22,13 @@ const messages = Messages.load('@salesforce/plugin-project-org', 'project.deploy
   'flags.manifest',
   'flags.deploy-dir',
   'flags.target-org',
+  'flags.test-level',
+  'flags.deploy-dir.summary',
+  'flags.metadata.summary',
+  'flags.manifest.summary',
+  'flags.test-level.summary',
+  'flags.wait.summary',
+  'flags.wait.description',
   'NoTargetEnv',
   'NoTargetEnvActions',
 ]);
@@ -35,20 +43,34 @@ export default class DeployOrg extends Command {
     metadata: Flags.string({
       char: 'm',
       description: messages.getMessage('flags.metadata'),
+      summary: messages.getMessage('flags.metadata.summary'),
       multiple: true,
     }),
     manifest: Flags.string({
       char: 'x',
       description: messages.getMessage('flags.manifest'),
+      summary: messages.getMessage('flags.manifest.summary'),
     }),
     'deploy-dir': Flags.string({
       char: 'd',
       description: messages.getMessage('flags.deploy-dir'),
+      summary: messages.getMessage('flags.deploy-dir.summary'),
       multiple: true,
     }),
     'target-org': Flags.string({
-      char: 't',
       description: messages.getMessage('flags.target-org'),
+    }),
+    'test-level': Flags.string({
+      char: 'l',
+      description: messages.getMessage('flags.test-level'),
+      summary: messages.getMessage('flags.test-level.summary'),
+      options: Object.values(TestLevel),
+      default: TestLevel.NoTestRun,
+    }),
+    wait: Flags.integer({
+      summary: messages.getMessage('flags.wait.summary'),
+      description: messages.getMessage('flags.wait.description'),
+      default: 33,
     }),
   };
 
@@ -66,12 +88,16 @@ export default class DeployOrg extends Command {
       },
     });
 
-    const deploy = componentSet.deploy({
+    const deploy = await componentSet.deploy({
       usernameOrConnection: await this.resolveTargetOrg(flags['target-org']),
+      apiOptions: {
+        testLevel: flags['test-level'] as TestLevel,
+      },
     });
 
-    const deployResult = await deploy.start();
-    const fileResponses = deployResult?.getFileResponses() || [];
+    const result = await deploy.pollStatus(500, flags.wait);
+
+    const fileResponses = result?.getFileResponses() || [];
     if (!flags.json) {
       displayHumanReadableResults(fileResponses);
     }

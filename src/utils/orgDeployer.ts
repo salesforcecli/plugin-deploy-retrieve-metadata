@@ -12,6 +12,7 @@ import { Aliases, AuthInfo, Config, ConfigAggregator, NamedPackageDir } from '@s
 import { Deployable, Deployer, Preferences, Options, generateTableChoices } from '@salesforce/plugin-project-utils';
 import { ComponentSetBuilder } from '../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../utils/tableBuilder';
+import { TestLevel } from '../utils/testLevel';
 
 export class DeployablePackage extends Deployable {
   public constructor(public pkg: NamedPackageDir, private parent: Deployer) {
@@ -23,7 +24,7 @@ export class DeployablePackage extends Deployable {
   }
 
   public getAppType(): string {
-    return 'org';
+    return 'Salesforce App';
   }
 
   public getAppPath(): string {
@@ -41,7 +42,7 @@ export class DeployablePackage extends Deployable {
 
 export class OrgDeployer extends Deployer {
   public deployables: DeployablePackage[];
-  private testLevel = 'none';
+  private testLevel = TestLevel.NoTestRun;
   private username!: string;
 
   public constructor(private packages: NamedPackageDir[], protected options: Options) {
@@ -51,8 +52,7 @@ export class OrgDeployer extends Deployer {
 
   public async setup(preferences: Preferences): Promise<Dictionary<string>> {
     if (preferences.interactive) {
-      // Add this once we support test level
-      // this.testLevel = await this.promptForTestLevel();
+      this.testLevel = await this.promptForTestLevel();
       this.username = await this.promptForUsername();
     }
 
@@ -64,11 +64,14 @@ export class OrgDeployer extends Deployer {
     const name = this.deployables.map((p) => cyan.bold(p.getAppName())).join(', ');
     this.log(`${EOL}Deploying ${name} to ${this.username}`);
     const componentSet = await ComponentSetBuilder.build({ directory: directories });
-    const deploy = componentSet.deploy({
+    const deploy = await componentSet.deploy({
       usernameOrConnection: this.username,
+      apiOptions: {
+        testLevel: this.testLevel,
+      },
     });
 
-    const deployResult = await deploy.start();
+    const deployResult = await deploy.pollStatus(500);
     displayHumanReadableResults(deployResult?.getFileResponses() || []);
   }
 
@@ -100,7 +103,7 @@ export class OrgDeployer extends Deployer {
     }
   }
 
-  public async promptForTestLevel(): Promise<string> {
+  public async promptForTestLevel(): Promise<TestLevel> {
     const { testLevel } = await this.prompt<{ testLevel: string }>([
       {
         name: 'testLevel',
@@ -109,13 +112,17 @@ export class OrgDeployer extends Deployer {
         loop: false,
         pageSize: 4,
         choices: [
-          { name: 'Run local tests', value: 'local', short: 'Run local tests' },
-          { name: 'Run specified tests', value: 'specified', short: 'Run specified tests' },
-          { name: 'Run all tests in environment', value: 'all', short: 'Run all tests in environment' },
-          { name: "Don't run tests", value: 'none', short: "Don't run tests" },
+          { name: 'Run local tests', value: TestLevel.RunLocalTests, short: 'Run local tests' },
+          { name: 'Run specified tests', value: TestLevel.RunSpecifiedTests, short: 'Run specified tests' },
+          {
+            name: 'Run all tests in environment',
+            value: TestLevel.RunAllTestsInOrg,
+            short: 'Run all tests in environment',
+          },
+          { name: "Don't run tests", value: TestLevel.NoTestRun, short: "Don't run tests" },
         ],
       },
     ]);
-    return testLevel;
+    return testLevel as TestLevel;
   }
 }

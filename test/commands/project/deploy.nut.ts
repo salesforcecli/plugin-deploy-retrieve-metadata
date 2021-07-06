@@ -11,7 +11,8 @@ import { fs } from '@salesforce/core';
 import { TestLevel } from '../../../src/utils/testLevel';
 import { OrgDeployer } from '../../../src/utils/orgDeployer';
 
-describe('project deploy NUTs', () => {
+// Skip until this is merged https://github.com/forcedotcom/source-deploy-retrieve/pull/369
+describe.skip('project deploy NUTs', () => {
   let sourceTestkit: SourceTestkit;
 
   before(async () => {

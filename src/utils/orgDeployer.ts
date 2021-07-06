@@ -8,6 +8,7 @@
 import { EOL } from 'os';
 import { cyan } from 'chalk';
 import { Nullable, ensureString } from '@salesforce/ts-types';
+import { Duration } from '@salesforce/kit';
 import { Aliases, AuthInfo, Config, ConfigAggregator, NamedPackageDir } from '@salesforce/core';
 import {
   Deployable,
@@ -99,7 +100,7 @@ export class OrgDeployer extends Deployer {
       apiOptions: { testLevel: this.testLevel },
     });
 
-    const deployResult = await deploy.pollStatus(500);
+    const deployResult = await deploy.pollStatus(500, Duration.minutes(33).seconds);
     displayHumanReadableResults(deployResult?.getFileResponses() || []);
   }
 

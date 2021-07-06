@@ -9,6 +9,7 @@ import { Command, Flags } from '@oclif/core';
 import { Aliases, Config, ConfigAggregator, Messages, SfdxError, SfdxProject } from '@salesforce/core';
 import { FileResponse } from '@salesforce/source-deploy-retrieve';
 import { Nullable } from '@salesforce/ts-types';
+import { Duration } from '@salesforce/kit';
 import { ComponentSetBuilder, ManifestOption } from '../../../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 import { TestLevel } from '../../../utils/testLevel';
@@ -95,7 +96,7 @@ export default class DeployOrg extends Command {
       },
     });
 
-    const result = await deploy.pollStatus(500, flags.wait);
+    const result = await deploy.pollStatus(500, Duration.minutes(flags.wait).seconds);
 
     const fileResponses = result?.getFileResponses() || [];
     if (!flags.json) {

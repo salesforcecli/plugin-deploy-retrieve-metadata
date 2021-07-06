@@ -8,7 +8,7 @@
 import * as path from 'path';
 import { SourceTestkit } from '@salesforce/source-testkit';
 
-describe('Deploy NUTs', () => {
+describe('project deploy org NUTs', () => {
   let sourceTestkit: SourceTestkit;
 
   before(async () => {

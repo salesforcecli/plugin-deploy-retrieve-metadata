@@ -829,16 +829,6 @@
     "@salesforce/core" "^2.15.2"
     tslib "^2"
 
-"@salesforce/plugin-project-utils@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@salesforce/plugin-project-utils/-/plugin-project-utils-0.0.5.tgz#e94b8654164f7a63bd8a77bad9798424f56200da"
-  integrity sha512-nrDmFPpxJCiKam8FDR4MU9X4XEy4j67oweSkl6DzPgqfdTG9ss3/G1X1dzNh4xcScTQ+oG5W+xpJsL3h0bpLow==
-  dependencies:
-    "@salesforce/kit" "^1.5.8"
-    "@salesforce/ts-types" "^1.5.13"
-    cli-ux "^5.6.2"
-    inquirer "^8.1.1"
-
 "@salesforce/plugin-project-utils@^0.0.7":
   version "0.0.7"
   resolved "https://registry.npmjs.org/@salesforce/plugin-project-utils/-/plugin-project-utils-0.0.7.tgz#e7b1427b7579255d54bdbf0e8795292e5e6e1e6e"
@@ -849,14 +839,14 @@
     cli-ux "^5.6.2"
     inquirer "^8.1.1"
 
-"@salesforce/plugin-project@^0.0.4":
-  version "0.0.4"
-  resolved "https://registry.npmjs.org/@salesforce/plugin-project/-/plugin-project-0.0.4.tgz#7c2d03bf76908e870b7a484d1b38ff255e5cec65"
-  integrity sha512-D/uVXKYQDhrP4hBfDOSoFlIbq3oH+ba4w7iDR/0ZDqLK1i/fkheIwRz+1xdMQhHcje6nlpbkUA/8XpAsxQOvMQ==
+"@salesforce/plugin-project@^0.0.5":
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/@salesforce/plugin-project/-/plugin-project-0.0.5.tgz#c8eb4e661c892ff0e90dbd4faeadca757b87697e"
+  integrity sha512-KbEcoYH8C5U6d99+qLqU5FvFac/P8O7gWUc15//oojaQHHYeLLqlNGLzKpqlRI55l7+am/mf9gyLjbmbgb/h6g==
   dependencies:
     "@oclif/core" "^0.5.19"
     "@salesforce/core" "^3.1.1-v3.1"
-    "@salesforce/plugin-project-utils" "^0.0.5"
+    "@salesforce/plugin-project-utils" "^0.0.7"
     tslib "^2"
 
 "@salesforce/prettier-config@^0.0.2":

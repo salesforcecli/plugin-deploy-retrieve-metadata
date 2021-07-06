@@ -786,10 +786,10 @@
     "@salesforce/core" "^2.15.2"
     tslib "^2"
 
-"@salesforce/plugin-project-utils@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@salesforce/plugin-project-utils/-/plugin-project-utils-0.0.5.tgz#e94b8654164f7a63bd8a77bad9798424f56200da"
-  integrity sha512-nrDmFPpxJCiKam8FDR4MU9X4XEy4j67oweSkl6DzPgqfdTG9ss3/G1X1dzNh4xcScTQ+oG5W+xpJsL3h0bpLow==
+"@salesforce/plugin-project-utils@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@salesforce/plugin-project-utils/-/plugin-project-utils-0.0.7.tgz#e7b1427b7579255d54bdbf0e8795292e5e6e1e6e"
+  integrity sha512-sMEFpOELbZ2RP+zaYlasGgdVV/lorx8eh3j6lgJVVzXoxJntSEA188Ejnx2o8F0qTwIpwzgltkoeXlWiFbJqkQ==
   dependencies:
     "@salesforce/kit" "^1.5.8"
     "@salesforce/ts-types" "^1.5.13"

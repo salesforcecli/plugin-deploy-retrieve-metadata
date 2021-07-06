@@ -96,9 +96,7 @@ export class OrgDeployer extends Deployer {
     const componentSet = await ComponentSetBuilder.build({ directory: directories });
     const deploy = await componentSet.deploy({
       usernameOrConnection: this.username,
-      apiOptions: {
-        testLevel: this.testLevel,
-      },
+      apiOptions: { testLevel: this.testLevel },
     });
 
     const deployResult = await deploy.pollStatus(500);
@@ -122,7 +120,7 @@ export class OrgDeployer extends Deployer {
       const { username } = await this.prompt<{ username: string }>([
         {
           name: 'username',
-          message: 'Enter the target org for this deploy:',
+          message: 'Select the org you want to deploy to:',
           type: 'list',
           choices: generateTableChoices(columns, options),
         },

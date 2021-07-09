@@ -914,10 +914,10 @@
     unzipper "0.10.11"
     xmldom-sfdx-encoding "^0.1.29"
 
-"@salesforce/source-testkit@^0.0.6":
-  version "0.0.6"
-  resolved "https://registry.npmjs.org/@salesforce/source-testkit/-/source-testkit-0.0.6.tgz#f7b6128610f8ec567b7563df067f693c2008a063"
-  integrity sha512-O9dchqJ5abDHHIVSEz2l6wbfQKe9sqfnvFscRA4IFWmggt9ltUak81HqyKt4Cj4bgaYxdZUmx2xXXdRnw4oVPw==
+"@salesforce/source-testkit@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@salesforce/source-testkit/-/source-testkit-0.0.7.tgz#c6ac257b8901ed214344be6e18148309e2305acb"
+  integrity sha512-LA1HwfXZLZ3/R6HL1+D0avD0gKuohz68rrABGva7rPQrCGZjT5ZraD9+SSbvttufLOFt9OVZC72YJT9lYy+udw==
   dependencies:
     "@salesforce/cli-plugins-testkit" "^1.1.1"
     "@salesforce/core" "^2.20.11"

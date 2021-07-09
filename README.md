@@ -71,49 +71,98 @@ sf plugins
 ## Commands
 
 <!-- commands -->
-* [`sf project:deploy:org`](#sf-projectdeployorg)
+* [`sf project deploy org`](#sf-project-deploy-org)
 
-## `sf project:deploy:org`
+## `sf project deploy org`
 
 You must run this command from wihin a project.
 
 ```
 USAGE
-  $ sf project:deploy:org
+  $ sf project deploy org [--json] [-m <value>] [-x <value>] [-d <value>] [--target-org <value>] [-l
+    NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg] [--wait <value>]
 
-OPTIONS
-  -d, --deploy-dir=deploy-dir  Root of local directory tree of files to deploy.
-  -m, --metadata=metadata      Space-separated list of metadata component names to deploy.
-  -t, --target-org=target-org  Username or alias of the org you want to deploy to
-  -x, --manifest=manifest      Full file path for manifest (package.xml) of components to deploy.
-  --json                       format output as json
+FLAGS
+  -d, --deploy-dir=<value>...  Root of local directory tree of files to deploy.
+
+  -l, --test-level=<option>    [default: NoTestRun] Deployment Apex testing level.
+                               <options: NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg>
+
+  -m, --metadata=<value>...    List of metadata component names to deploy.
+
+  -x, --manifest=<value>       Full file path for manifest (package.xml) of components to deploy.
+
+  --target-org=<value>         Username or alias of the org you want to deploy to
+
+  --wait=<value>               [default: 33] Number of minutes to wait for command to complete.
+
+GLOBAL FLAGS
+  --json  format output as json
 
 DESCRIPTION
-  The source you deploy overwrites the corresponding metadata in your org. This command doesn’t attempt to merge your 
+  Deploy source to an org.
+
+  You must run this command from wihin a project.
+
+  The source you deploy overwrites the corresponding metadata in your org. This command doesn’t attempt to merge your
   source with the versions in your org.
 
-  If the comma-separated list you’re supplying contains spaces, enclose the entire comma-separated list in one set of 
+  If the comma-separated list you’re supplying contains spaces, enclose the entire comma-separated list in one set of
   double quotes. On Windows, if the list contains commas, also enclose the entire list in one set of double quotes.
 
 EXAMPLES
   Deploy the source files in a directory:
-  sf project:deploy:org --deploy-dir path/to/source
-  Deploy a specific Apex class and the objects whose source is in a directory:
-  sf project:deploy:org --deploy-dir "path/to/apex/classes/MyClass.cls,path/to/source/objects"
-  Deploy source files in a comma-separated list that contains spaces:
-  sf project:deploy:org --deploy-dir "path/to/objects/MyCustomObject/fields/MyField.field-meta.xml, 
-  path/to/apex/classes"
-  Deploy all Apex classes:
-  sf project:deploy:org --metadata ApexClass
-  Deploy a specific Apex class:
-  sf project:deploy:org --metadata ApexClass:MyApexClass
-  Deploy all custom objects and Apex classes:
-  sf project:deploy:org --metadata "CustomObject,ApexClass"
-  Deploy all Apex classes and two specific profiles (one of which has a space in its name):
-  sf project:deploy:org --metadata "ApexClass, Profile:My Profile, Profile: AnotherProfile"
-  Deploy all components listed in a manifest:
-  sf project:deploy:org --manifest path/to/package.xml
-```
 
-_See code: [src/commands/project/deploy/org.ts](https://github.com/salesforcecli/plugin-project-org/blob/v0.0.1/src/commands/project/deploy/org.ts)_
+    $ sf project deploy org --deploy-dir path/to/source
+
+  Deploy a specific Apex class and the objects whose source is in a directory:
+
+    $ sf project deploy org --deploy-dir "path/to/apex/classes/MyClass.cls,path/to/source/objects"
+
+  Deploy source files in a comma-separated list that contains spaces:
+
+    $ sf project deploy org --deploy-dir "path/to/objects/MyCustomObject/fields/MyField.field-meta.xml, \
+      path/to/apex/classes"
+
+  Deploy all Apex classes:
+
+    $ sf project deploy org --metadata ApexClass
+
+  Deploy a specific Apex class:
+
+    $ sf project deploy org --metadata ApexClass:MyApexClass
+
+  Deploy all custom objects and Apex classes:
+
+    $ sf project deploy org --metadata "CustomObject,ApexClass"
+
+  Deploy all Apex classes and two specific profiles (one of which has a space in its name):
+
+    $ sf project deploy org --metadata "ApexClass, Profile:My Profile, Profile: AnotherProfile"
+
+  Deploy all components listed in a manifest:
+
+    $ sf project deploy org --manifest path/to/package.xml
+
+FLAG DESCRIPTIONS
+  -d, --deploy-dir=<value>...  Root of local directory tree of files to deploy.
+
+    Root of local directory tree of files to deploy.
+
+  -l, --test-level=NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg  Deployment Apex testing level.
+
+    Deployment Apex testing level.
+
+  -m, --metadata=<value>...  List of metadata component names to deploy.
+
+    List of metadata component names to deploy.
+
+  -x, --manifest=<value>  Full file path for manifest (package.xml) of components to deploy.
+
+    Full file path for manifest (package.xml) of components to deploy.
+
+  --wait=<value>  Number of minutes to wait for command to complete.
+
+    Default is 33 minutes.
+```
 <!-- commandsstop -->

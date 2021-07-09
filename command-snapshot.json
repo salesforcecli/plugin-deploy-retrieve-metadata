@@ -3,5 +3,10 @@
     "command": "project:deploy:org",
     "plugin": "@salesforce/plugin-project-org",
     "flags": ["deploy-dir", "json", "manifest", "metadata", "target-org", "test-level", "wait"]
+  },
+  {
+    "command": "project:retrieve:org",
+    "plugin": "@salesforce/plugin-project-org",
+    "flags": ["api-version", "json", "manifest", "metadata", "package-name", "source-dir", "target-org", "wait"]
   }
 ]

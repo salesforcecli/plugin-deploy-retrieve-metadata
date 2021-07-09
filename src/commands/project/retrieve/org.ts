@@ -24,7 +24,7 @@ export default class ProjectRetrieveOrg extends Command {
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
   public static flags = {
-    'api-verison': Flags.string({
+    'api-version': Flags.string({
       char: 'a',
       summary: messages.getMessage('flags.api-version.summary'),
     }),
@@ -67,7 +67,7 @@ export default class ProjectRetrieveOrg extends Command {
     const flags = (await this.parse(ProjectRetrieveOrg)).flags;
 
     const componentSet = await ComponentSetBuilder.build({
-      apiversion: flags['api-version'] as string,
+      apiversion: flags['api-version'],
       directory: flags['source-dir'],
       packagenames: flags['package-name'],
       manifest: flags.manifest && {

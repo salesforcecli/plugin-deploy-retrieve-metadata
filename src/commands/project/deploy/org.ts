@@ -16,24 +16,7 @@ import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 import { TestLevel } from '../../../utils/testLevel';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.load('@salesforce/plugin-project-org', 'project.deploy.org', [
-  'summary',
-  'description',
-  'examples',
-  'flags.metadata',
-  'flags.manifest',
-  'flags.deploy-dir',
-  'flags.target-org',
-  'flags.test-level',
-  'flags.deploy-dir.summary',
-  'flags.metadata.summary',
-  'flags.manifest.summary',
-  'flags.test-level.summary',
-  'flags.wait.summary',
-  'flags.wait.description',
-  'NoTargetEnv',
-  'NoTargetEnvActions',
-]);
+const messages = Messages.loadMessages('@salesforce/plugin-project-org', 'project.deploy.org');
 
 export type DeployOrgResult = FileResponse[];
 

@@ -15,7 +15,7 @@ import { ComponentSetBuilder } from '../../../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/plugin-project-org', 'retrieve.org');
+const messages = Messages.loadMessages('@salesforce/plugin-project-org', 'project.retrieve.org');
 
 export type RetrieveOrgResult = FileResponse[];
 

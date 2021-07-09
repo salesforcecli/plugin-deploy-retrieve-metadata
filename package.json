@@ -89,7 +89,10 @@
         "description": "Commands to interact with projects",
         "subtopics": {
           "deploy": {
-            "description": "Commands to deploy source to and retrieve source from salesforce orgs"
+            "description": "Commands to deploy source code."
+          },
+          "retrieve": {
+            "description": "Commands to retrieve source code."
           }
         }
       }

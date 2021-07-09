@@ -6,11 +6,11 @@
  */
 
 import { Command, Flags } from '@oclif/core';
-import { Aliases, Config, ConfigAggregator, Messages, SfdxError, SfdxProject } from '@salesforce/core';
+import { Messages, SfdxProject } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@salesforce/source-deploy-retrieve';
-import { Nullable } from '@salesforce/ts-types';
 
+import { getPackageDirs, resolveTargetOrg } from '../../../utils/orgs';
 import { ComponentSetBuilder } from '../../../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 
@@ -72,18 +72,18 @@ export default class ProjectRetrieveOrg extends Command {
       packagenames: flags['package-name'],
       manifest: flags.manifest && {
         manifestPath: flags.manifest,
-        directoryPaths: await this.getPackageDirs(),
+        directoryPaths: await getPackageDirs(),
       },
       metadata: flags.metadata && {
         metadataEntries: flags.metadata,
-        directoryPaths: await this.getPackageDirs(),
+        directoryPaths: await getPackageDirs(),
       },
     });
 
     const project = await SfdxProject.resolve();
 
     const retrieve = await componentSet.retrieve({
-      usernameOrConnection: await this.resolveTargetOrg(flags['target-org']),
+      usernameOrConnection: await resolveTargetOrg(flags['target-org']),
       merge: true,
       output: project.getDefaultPackage().fullPath,
       packageNames: flags['package-name'],
@@ -98,24 +98,5 @@ export default class ProjectRetrieveOrg extends Command {
       displayHumanReadableResults(fileResponses);
     }
     return fileResponses;
-  }
-
-  private async getPackageDirs(): Promise<string[]> {
-    const project = await SfdxProject.resolve();
-    return project.getUniquePackageDirectories().map((pDir) => pDir.fullPath);
-  }
-
-  private async resolveTargetOrg(targetOrg: Nullable<string>): Promise<string> {
-    const aliasOrUsername = targetOrg || (ConfigAggregator.getValue(Config.DEFAULT_USERNAME)?.value as string);
-
-    if (!aliasOrUsername) {
-      throw new SfdxError(
-        messages.getMessage('NoTargetEnv'),
-        'NoTargetEnv',
-        messages.getMessages('NoTargetEnvActions')
-      );
-    }
-
-    return (await Aliases.fetch(aliasOrUsername)) || aliasOrUsername;
   }
 }

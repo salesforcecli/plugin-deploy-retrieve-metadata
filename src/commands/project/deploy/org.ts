@@ -6,10 +6,11 @@
  */
 
 import { Command, Flags } from '@oclif/core';
-import { Aliases, Config, ConfigAggregator, Messages, SfdxError, SfdxProject } from '@salesforce/core';
-import { FileResponse } from '@salesforce/source-deploy-retrieve';
-import { Nullable } from '@salesforce/ts-types';
+import { Messages } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
+import { FileResponse } from '@salesforce/source-deploy-retrieve';
+
+import { getPackageDirs, resolveTargetOrg } from '../../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 import { TestLevel } from '../../../utils/testLevel';
@@ -81,16 +82,16 @@ export default class DeployOrg extends Command {
       directory: flags['deploy-dir'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,
-        directoryPaths: await this.getPackageDirs(),
+        directoryPaths: await getPackageDirs(),
       }) as ManifestOption,
       metadata: flags.metadata && {
         metadataEntries: flags.metadata,
-        directoryPaths: await this.getPackageDirs(),
+        directoryPaths: await getPackageDirs(),
       },
     });
 
     const deploy = await componentSet.deploy({
-      usernameOrConnection: await this.resolveTargetOrg(flags['target-org']),
+      usernameOrConnection: await resolveTargetOrg(flags['target-org']),
       apiOptions: {
         testLevel: flags['test-level'] as TestLevel,
       },
@@ -103,32 +104,5 @@ export default class DeployOrg extends Command {
       displayHumanReadableResults(fileResponses);
     }
     return fileResponses;
-  }
-
-  protected toSuccessJson(result: FileResponse[]): { status: number; result: FileResponse[] } {
-    return { status: 0, result };
-  }
-
-  protected toErrorJson(err: unknown): { status: number; err: unknown } {
-    return { status: process.exitCode || 1, err };
-  }
-
-  private async getPackageDirs(): Promise<string[]> {
-    const project = await SfdxProject.resolve();
-    return project.getUniquePackageDirectories().map((pDir) => pDir.fullPath);
-  }
-
-  private async resolveTargetOrg(targetOrg: Nullable<string>): Promise<string> {
-    const aliasOrUsername = targetOrg || (ConfigAggregator.getValue(Config.DEFAULT_USERNAME)?.value as string);
-
-    if (!aliasOrUsername) {
-      throw new SfdxError(
-        messages.getMessage('NoTargetEnv'),
-        'NoTargetEnv',
-        messages.getMessages('NoTargetEnvActions')
-      );
-    }
-
-    return (await Aliases.fetch(aliasOrUsername)) || aliasOrUsername;
   }
 }

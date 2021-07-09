@@ -8,7 +8,7 @@
     "@oclif/core": "^0.5.18",
     "@salesforce/core": "3.1.0-v3.0",
     "@salesforce/plugin-project-utils": "^0.0.7",
-    "@salesforce/source-deploy-retrieve": "^3.0.0",
+    "@salesforce/source-deploy-retrieve": "^3.1.1",
     "chalk": "^4.1.1",
     "cli-ux": "^5.5.1",
     "tslib": "^2"

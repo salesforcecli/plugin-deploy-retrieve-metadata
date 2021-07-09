@@ -7,8 +7,10 @@
 
 import { Command, Flags } from '@oclif/core';
 import { Aliases, Config, ConfigAggregator, Messages, SfdxError, SfdxProject } from '@salesforce/core';
+import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@salesforce/source-deploy-retrieve';
 import { Nullable } from '@salesforce/ts-types';
+
 import { ComponentSetBuilder } from '../../../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 
@@ -80,15 +82,17 @@ export default class ProjectRetrieveOrg extends Command {
 
     const project = await SfdxProject.resolve();
 
-    const retrieve = componentSet.retrieve({
+    const retrieve = await componentSet.retrieve({
       usernameOrConnection: await this.resolveTargetOrg(flags['target-org']),
       merge: true,
       output: project.getDefaultPackage().fullPath,
       packageNames: flags['package-name'],
     });
 
-    const result = await retrieve.start();
-    const fileResponses = result.getFileResponses() || [];
+    await retrieve.start();
+    const result = await retrieve.pollStatus(500, Duration.minutes(flags.wait).seconds);
+
+    const fileResponses = result?.getFileResponses() || [];
 
     if (!flags.json) {
       displayHumanReadableResults(fileResponses);

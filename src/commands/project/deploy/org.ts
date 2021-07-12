@@ -88,4 +88,12 @@ export default class DeployOrg extends Command {
     }
     return fileResponses;
   }
+
+  protected toSuccessJson(result: FileResponse[]): { status: number; result: FileResponse[] } {
+    return { status: 0, result };
+  }
+
+  protected toErrorJson(err: unknown): { status: number; err: unknown } {
+    return { status: process.exitCode || 1, err };
+  }
 }

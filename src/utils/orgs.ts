@@ -13,8 +13,8 @@ export const resolveTargetOrg = async (targetOrg: Nullable<string>): Promise<str
 
   if (!aliasOrUsername) {
     throw new SfdxError('no target environment specified', 'NoTargetEnv', [
-      'specify target environment with the --target-env flag',
-      'set the default environment with "sf config set defaultusername"',
+      'specify target environment with the --target-org flag',
+      'set the default environment with "sf config set target-org"',
     ]);
   }
 

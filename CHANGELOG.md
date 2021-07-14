@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.5](https://github.com/salesforcecli/plugin-project-org/compare/v0.0.4...v0.0.5) (2021-07-14)
+
+
+### Features
+
+* add project retrieve org ([#5](https://github.com/salesforcecli/plugin-project-org/issues/5)) ([4a29157](https://github.com/salesforcecli/plugin-project-org/commit/4a29157302ce668d8947f84e00c985edd7717765))
+
 ### [0.0.4](https://github.com/salesforcecli/plugin-project-org/compare/v0.0.3...v0.0.4) (2021-07-11)
 
 

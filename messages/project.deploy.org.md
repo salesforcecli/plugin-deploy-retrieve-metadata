@@ -192,12 +192,3 @@ If you specify this flag, don’t specify --metadata or --deploy-dir.
 # flags.force-overwrite.summary
 
 Ignore source conflict warnings and overwrite changes to the org.
-
-# NoTargetEnv
-
-no target environment specified
-
-# NoTargetEnvActions
-
-- specify target environment with the --target-env flag
-- set the default environment with "sf config set defaultusername"

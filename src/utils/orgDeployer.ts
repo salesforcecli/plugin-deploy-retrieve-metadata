@@ -20,6 +20,7 @@ import {
 import { ComponentSetBuilder } from '../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../utils/tableBuilder';
 import { TestLevel } from '../utils/testLevel';
+import { DeployProgress } from './progressBar';
 
 export interface OrgDeployOptions extends DeployerOptions {
   testLevel?: TestLevel;
@@ -100,8 +101,10 @@ export class OrgDeployer extends Deployer {
       apiOptions: { testLevel: this.testLevel },
     });
 
-    const deployResult = await deploy.pollStatus(500, Duration.minutes(33).seconds);
-    displayHumanReadableResults(deployResult?.getFileResponses() || []);
+    new DeployProgress(deploy).start();
+
+    const result = await deploy.pollStatus(500, Duration.minutes(33).seconds);
+    displayHumanReadableResults(result?.getFileResponses() || []);
   }
 
   public async promptForUsername(): Promise<string> {

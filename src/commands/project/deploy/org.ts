@@ -14,6 +14,7 @@ import { getPackageDirs, resolveTargetOrg } from '../../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../../../utils/tableBuilder';
 import { TestLevel } from '../../../utils/testLevel';
+import { DeployProgress } from '../../../utils/progressBar';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-project-org', 'project.deploy.org');
@@ -79,6 +80,10 @@ export default class DeployOrg extends Command {
         testLevel: flags['test-level'] as TestLevel,
       },
     });
+
+    if (!this.jsonEnabled()) {
+      new DeployProgress(deploy).start();
+    }
 
     const result = await deploy.pollStatus(500, Duration.minutes(flags.wait).seconds);
 

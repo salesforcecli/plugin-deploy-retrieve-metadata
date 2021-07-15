@@ -10,18 +10,18 @@ import { Messages } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
 import { FileResponse } from '@salesforce/source-deploy-retrieve';
 
-import { getPackageDirs, resolveTargetOrg } from '../../../utils/orgs';
-import { ComponentSetBuilder, ManifestOption } from '../../../utils/componentSetBuilder';
-import { displayHumanReadableResults } from '../../../utils/tableBuilder';
-import { TestLevel } from '../../../utils/testLevel';
-import { DeployProgress } from '../../../utils/progressBar';
+import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
+import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
+import { displayHumanReadableResults } from '../../utils/tableBuilder';
+import { TestLevel } from '../../utils/testLevel';
+import { DeployProgress } from '../../utils/progressBar';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/plugin-project-org', 'project.deploy.org');
+const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'deploy.metadata');
 
-export type DeployOrgResult = FileResponse[];
+export type DeployMetadataResult = FileResponse[];
 
-export default class DeployOrg extends Command {
+export default class DeployMetadata extends Command {
   public static readonly description = messages.getMessage('description');
   public static readonly summary = messages.getMessage('summary');
   public static readonly examples = messages.getMessages('examples');
@@ -60,8 +60,8 @@ export default class DeployOrg extends Command {
     }),
   };
 
-  public async run(): Promise<DeployOrgResult> {
-    const flags = (await this.parse(DeployOrg)).flags;
+  public async run(): Promise<DeployMetadataResult> {
+    const flags = (await this.parse(DeployMetadata)).flags;
     const componentSet = await ComponentSetBuilder.build({
       directory: flags['deploy-dir'],
       manifest: (flags.manifest && {

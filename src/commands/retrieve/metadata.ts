@@ -10,16 +10,16 @@ import { Messages, SfdxProject } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@salesforce/source-deploy-retrieve';
 
-import { getPackageDirs, resolveTargetOrg } from '../../../utils/orgs';
-import { ComponentSetBuilder } from '../../../utils/componentSetBuilder';
-import { displayHumanReadableResults } from '../../../utils/tableBuilder';
+import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
+import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
+import { displayHumanReadableResults } from '../../utils/tableBuilder';
 
 Messages.importMessagesDirectory(__dirname);
-const messages = Messages.loadMessages('@salesforce/plugin-project-org', 'project.retrieve.org');
+const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'retrieve.metadata');
 
-export type RetrieveOrgResult = FileResponse[];
+export type RetrieveMetadataResult = FileResponse[];
 
-export default class ProjectRetrieveOrg extends Command {
+export default class RetrieveMetadata extends Command {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -31,13 +31,13 @@ export default class ProjectRetrieveOrg extends Command {
     manifest: Flags.string({
       char: 'x',
       summary: messages.getMessage('flags.manifest.summary'),
-      exclusive: ['metadata', 'sourcepath'],
+      exclusive: ['metadata', 'source-dir'],
     }),
     metadata: Flags.string({
       char: 'm',
       summary: messages.getMessage('flags.metadata.summary'),
       multiple: true,
-      exclusive: ['manifest', 'sourcepath'],
+      exclusive: ['manifest', 'source-dir'],
     }),
     'package-name': Flags.string({
       char: 'n',
@@ -61,19 +61,19 @@ export default class ProjectRetrieveOrg extends Command {
     }),
   };
 
-  protected retrieveResult: RetrieveResult;
+  protected retrieveResult!: RetrieveResult;
 
-  public async run(): Promise<RetrieveOrgResult> {
-    const flags = (await this.parse(ProjectRetrieveOrg)).flags;
+  public async run(): Promise<RetrieveMetadataResult> {
+    const flags = (await this.parse(RetrieveMetadata)).flags;
 
     const componentSet = await ComponentSetBuilder.build({
       apiversion: flags['api-version'],
       directory: flags['source-dir'],
       packagenames: flags['package-name'],
-      manifest: flags.manifest && {
+      manifest: (flags.manifest && {
         manifestPath: flags.manifest,
         directoryPaths: await getPackageDirs(),
-      },
+      }) as ManifestOption,
       metadata: flags.metadata && {
         metadataEntries: flags.metadata,
         directoryPaths: await getPackageDirs(),

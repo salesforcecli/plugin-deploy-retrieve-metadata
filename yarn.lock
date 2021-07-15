@@ -832,24 +832,34 @@
     "@salesforce/core" "^2.15.2"
     tslib "^2"
 
-"@salesforce/plugin-project-utils@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.npmjs.org/@salesforce/plugin-project-utils/-/plugin-project-utils-0.0.7.tgz#e7b1427b7579255d54bdbf0e8795292e5e6e1e6e"
-  integrity sha512-sMEFpOELbZ2RP+zaYlasGgdVV/lorx8eh3j6lgJVVzXoxJntSEA188Ejnx2o8F0qTwIpwzgltkoeXlWiFbJqkQ==
+"@salesforce/plugin-deploy-retrieve-utils@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.npmjs.org/@salesforce/plugin-deploy-retrieve-utils/-/plugin-deploy-retrieve-utils-0.0.8.tgz#866ba43f02f011f6501377240d13da48788edf4b"
+  integrity sha512-QyjjcqP4P73azL9VwxLhO/9vS3aoBTVqk77gN+gMkp3mlFksbLZYyQqRxSuoF1m5NqIf9Wu0ARGMfoSuEN9kZw==
   dependencies:
     "@salesforce/kit" "^1.5.8"
     "@salesforce/ts-types" "^1.5.13"
     cli-ux "^5.6.2"
     inquirer "^8.1.1"
 
-"@salesforce/plugin-project@^0.0.5":
-  version "0.0.5"
-  resolved "https://registry.npmjs.org/@salesforce/plugin-project/-/plugin-project-0.0.5.tgz#c8eb4e661c892ff0e90dbd4faeadca757b87697e"
-  integrity sha512-KbEcoYH8C5U6d99+qLqU5FvFac/P8O7gWUc15//oojaQHHYeLLqlNGLzKpqlRI55l7+am/mf9gyLjbmbgb/h6g==
+"@salesforce/plugin-deploy-retrieve-utils@^0.0.9":
+  version "0.0.9"
+  resolved "https://registry.npmjs.org/@salesforce/plugin-deploy-retrieve-utils/-/plugin-deploy-retrieve-utils-0.0.9.tgz#b663d8f2653ce5ee0f37c34ea3dcd226c4daba36"
+  integrity sha512-hZ5zjht94Ttnie8FirGkYf5/qE0QHKhi0fzeCsdwHOuqkpdQcuxAgSuOx9GLg1XaWPAYJYlukYwRqBLA+FsQgg==
   dependencies:
-    "@oclif/core" "^0.5.19"
+    "@salesforce/kit" "^1.5.8"
+    "@salesforce/ts-types" "^1.5.13"
+    cli-ux "^5.6.2"
+    inquirer "^8.1.1"
+
+"@salesforce/plugin-deploy-retrieve@^0.0.7":
+  version "0.0.7"
+  resolved "https://registry.npmjs.org/@salesforce/plugin-deploy-retrieve/-/plugin-deploy-retrieve-0.0.7.tgz#ca163531d65cfb49852e78e6e8e8bc5e60391743"
+  integrity sha512-Lg1Bwq0Uq1PB1U86kKxQSqqtlVz+TBc4mC+b0loymq7DTSUJks/BqA1Ibat4XiOmM0CZM+dk7Mluv3tvCtqp9w==
+  dependencies:
+    "@oclif/core" "^0.5.21"
     "@salesforce/core" "^3.1.1-v3.1"
-    "@salesforce/plugin-project-utils" "^0.0.7"
+    "@salesforce/plugin-deploy-retrieve-utils" "^0.0.8"
     tslib "^2"
 
 "@salesforce/prettier-config@^0.0.2":
@@ -894,10 +904,10 @@
     unzipper "0.10.11"
     xmldom-sfdx-encoding "^0.1.29"
 
-"@salesforce/source-testkit@^0.0.7":
-  version "0.0.7"
-  resolved "https://registry.npmjs.org/@salesforce/source-testkit/-/source-testkit-0.0.7.tgz#c6ac257b8901ed214344be6e18148309e2305acb"
-  integrity sha512-LA1HwfXZLZ3/R6HL1+D0avD0gKuohz68rrABGva7rPQrCGZjT5ZraD9+SSbvttufLOFt9OVZC72YJT9lYy+udw==
+"@salesforce/source-testkit@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.npmjs.org/@salesforce/source-testkit/-/source-testkit-0.0.8.tgz#6224236be952af12a696f386ea4eb071e803a153"
+  integrity sha512-atmPOl8KW5ppIqf7pDcbmgNx9NolfX5Y4kLIoAma8aaQlkLJEyjzKu9wfQUAsnhOUgrX7Ke4DBmrSUbWhgKexg==
   dependencies:
     "@salesforce/cli-plugins-testkit" "^1.1.1"
     "@salesforce/core" "^2.20.11"

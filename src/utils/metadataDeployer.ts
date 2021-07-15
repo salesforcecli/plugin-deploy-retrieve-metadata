@@ -16,16 +16,16 @@ import {
   Preferences,
   DeployerOptions,
   generateTableChoices,
-} from '@salesforce/plugin-project-utils';
-import { ComponentSetBuilder } from '../utils/componentSetBuilder';
-import { displayHumanReadableResults } from '../utils/tableBuilder';
-import { TestLevel } from '../utils/testLevel';
+} from '@salesforce/plugin-deploy-retrieve-utils';
+import { ComponentSetBuilder } from './componentSetBuilder';
+import { displayHumanReadableResults } from './tableBuilder';
+import { TestLevel } from './testLevel';
 import { DeployProgress } from './progressBar';
 
-export interface OrgDeployOptions extends DeployerOptions {
+export interface MetadataDeployOptions extends DeployerOptions {
   testLevel?: TestLevel;
   username?: string;
-  apps?: string[];
+  directories?: string[];
 }
 
 export class DeployablePackage extends Deployable {
@@ -54,7 +54,7 @@ export class DeployablePackage extends Deployable {
   }
 }
 
-export class OrgDeployer extends Deployer {
+export class MetadataDeployer extends Deployer {
   public static NAME = 'Salesforce Apps';
 
   public deployables: DeployablePackage[];
@@ -67,17 +67,17 @@ export class OrgDeployer extends Deployer {
   }
 
   public getName(): string {
-    return OrgDeployer.NAME;
+    return MetadataDeployer.NAME;
   }
 
-  public async setup(preferences: Preferences, options: OrgDeployOptions): Promise<OrgDeployOptions> {
+  public async setup(preferences: Preferences, options: MetadataDeployOptions): Promise<MetadataDeployOptions> {
     if (preferences.interactive) {
       this.testLevel = await this.promptForTestLevel();
       this.username = await this.promptForUsername();
     } else {
-      if (options.apps?.length) {
-        const apps = options.apps || [];
-        const selected = this.deployables.filter((d) => apps.includes(d.getAppPath()));
+      if (options.directories?.length) {
+        const directories = options.directories || [];
+        const selected = this.deployables.filter((d) => directories.includes(d.getAppPath()));
         this.selectDeployables(selected);
       }
       this.testLevel = options.testLevel || (await this.promptForTestLevel());

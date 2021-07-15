@@ -1,13 +1,13 @@
 {
-  "name": "@salesforce/plugin-project-org",
-  "description": "Commands for deploying source to salesforce orgs",
-  "version": "0.0.6",
+  "name": "@salesforce/plugin-deploy-retrieve-metadata",
+  "description": "Commands for deploying metadata to salesforce orgs",
+  "version": "0.0.7",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
     "@oclif/core": "^0.5.21",
     "@salesforce/core": "^3.1.1-v3.2",
-    "@salesforce/plugin-project-utils": "^0.0.7",
+    "@salesforce/plugin-deploy-retrieve-utils": "^0.0.9",
     "@salesforce/source-deploy-retrieve": "^3.1.1",
     "chalk": "^4.1.1",
     "cli-ux": "^5.5.1",
@@ -20,9 +20,9 @@
     "@salesforce/dev-scripts": "^0.9.17",
     "@salesforce/plugin-command-reference": "^1.3.3",
     "@salesforce/plugin-config": "^1.2.6",
-    "@salesforce/plugin-project": "^0.0.5",
+    "@salesforce/plugin-deploy-retrieve": "^0.0.7",
     "@salesforce/prettier-config": "^0.0.2",
-    "@salesforce/source-testkit": "^0.0.7",
+    "@salesforce/source-testkit": "^0.0.8",
     "@salesforce/ts-sinon": "1.3.5",
     "@typescript-eslint/eslint-plugin": "^4.2.0",
     "@typescript-eslint/parser": "^4.2.0",
@@ -63,7 +63,7 @@
     "/oclif.manifest.json",
     "/schemas"
   ],
-  "homepage": "https://github.com/salesforcecli/plugin-project-org",
+  "homepage": "https://github.com/salesforcecli/plugin-deploy-retrieve-metadata",
   "keywords": [
     "force",
     "salesforce",
@@ -82,23 +82,18 @@
       "@oclif/plugin-command-snapshot",
       "@salesforce/plugin-command-reference",
       "@salesforce/plugin-config",
-      "@salesforce/plugin-project"
+      "@salesforce/plugin-deploy-retrieve"
     ],
     "topics": {
-      "project": {
-        "description": "Commands to interact with projects",
-        "subtopics": {
-          "deploy": {
-            "description": "Commands to deploy source code."
-          },
-          "retrieve": {
-            "description": "Commands to retrieve source code."
-          }
-        }
+      "deploy": {
+        "description": "Commands to deploy source code."
+      },
+      "retrieve": {
+        "description": "Commands to retrieve source code."
       }
     }
   },
-  "repository": "salesforcecli/plugin-project-org",
+  "repository": "salesforcecli/plugin-deploy-retrieve-metadata",
   "scripts": {
     "build": "sf-build",
     "clean": "sf-clean",

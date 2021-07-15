@@ -8,8 +8,8 @@
 import * as path from 'path';
 import { SourceTestkit } from '@salesforce/source-testkit';
 import { fs } from '@salesforce/core';
-import { TestLevel } from '../../../src/utils/testLevel';
-import { OrgDeployer } from '../../../src/utils/orgDeployer';
+import { TestLevel } from '../../src/utils/testLevel';
+import { MetadataDeployer } from '../../src/utils/metadataDeployer';
 
 describe('project deploy NUTs', () => {
   let sourceTestkit: SourceTestkit;
@@ -26,17 +26,17 @@ describe('project deploy NUTs', () => {
     await sourceTestkit?.clean();
   });
 
-  describe('project-deploy-options.json', () => {
+  describe('deploy-options.json', () => {
     it('should deploy force-app', async () => {
       const deployOptions = {
-        [OrgDeployer.NAME]: {
+        [MetadataDeployer.NAME]: {
           testLevel: TestLevel.NoTestRun,
           username: sourceTestkit.username,
           apps: ['force-app'],
         },
       };
-      await fs.writeJson(path.join(sourceTestkit.projectDir, 'project-deploy-options.json'), deployOptions);
-      await sourceTestkit.execute('project deploy', { json: false });
+      await fs.writeJson(path.join(sourceTestkit.projectDir, 'deploy-options.json'), deployOptions);
+      await sourceTestkit.execute('deploy', { json: false });
       await sourceTestkit.expect.filesToBeDeployed(['force-app/**/*'], ['force-app/test/**/*']);
     });
   });

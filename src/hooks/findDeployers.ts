@@ -6,12 +6,12 @@
  */
 
 import { SfdxProject } from '@salesforce/core';
-import { OrgDeployer } from '../utils/orgDeployer';
+import { MetadataDeployer } from '../utils/metadataDeployer';
 
-const hook = async function (): Promise<OrgDeployer[]> {
+const hook = async function (): Promise<MetadataDeployer[]> {
   const project = await SfdxProject.resolve();
   const packageDirectories = project.getPackageDirectories();
-  return [new OrgDeployer(packageDirectories)];
+  return [new MetadataDeployer(packageDirectories)];
 };
 
 export default hook;

@@ -8,7 +8,7 @@
 import * as path from 'path';
 import { SourceTestkit } from '@salesforce/source-testkit';
 
-describe('project deploy org NUTs', () => {
+describe('deploy metadata NUTs', () => {
   let sourceTestkit: SourceTestkit;
 
   before(async () => {
@@ -23,7 +23,7 @@ describe('project deploy org NUTs', () => {
     await sourceTestkit?.clean();
   });
 
-  describe('--directory flag', () => {
+  describe('--deploy-dir flag', () => {
     it('should deploy force-app', async () => {
       await sourceTestkit.deploy({ args: '--deploy-dir force-app' });
       await sourceTestkit.expect.filesToBeDeployed(['force-app/**/*'], ['force-app/test/**/*']);

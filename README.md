@@ -1,8 +1,8 @@
-# plugin-project-org;
+# plugin-deploy-retrieve-metadata;
 
-[![NPM](https://img.shields.io/npm/v/@salesforce/plugin-project-org.svg?label=@salesforce/plugin-project-org)](https://www.npmjs.com/package/@salesforce/plugin-project-org) [![CircleCI](https://circleci.com/gh/salesforcecli/plugin-project-org/tree/main.svg?style=shield)](https://circleci.com/gh/salesforcecli/plugin-project-org/tree/main) [![Downloads/week](https://img.shields.io/npm/dw/@salesforce/plugin-project-org.svg)](https://npmjs.org/package/@salesforce/plugin-project-org) [![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)](https://raw.githubusercontent.com/salesforcecli/plugin-project-org/main/LICENSE.txt)
+[![NPM](https://img.shields.io/npm/v/@salesforce/plugin-deploy-retrieve-metadata.svg?label=@salesforce/plugin-deploy-retrieve-metadata)](https://www.npmjs.com/package/@salesforce/plugin-deploy-retrieve-metadata) [![CircleCI](https://circleci.com/gh/salesforcecli/plugin-deploy-retrieve-metadata/tree/main.svg?style=shield)](https://circleci.com/gh/salesforcecli/plugin-deploy-retrieve-metadata/tree/main) [![Downloads/week](https://img.shields.io/npm/dw/@salesforce/plugin-deploy-retrieve-metadata.svg)](https://npmjs.org/package/@salesforce/plugin-deploy-retrieve-metadata) [![License](https://img.shields.io/badge/License-BSD%203--Clause-brightgreen.svg)](https://raw.githubusercontent.com/salesforcecli/plugin-deploy-retrieve-metadata/main/LICENSE.txt)
 
-## Learn about the plugin-project-org
+## Learn about the plugin-deploy-retrieve-metadata
 
 Salesforce CLI plugins are based on the [oclif plugin framework](<(https://oclif.io/docs/introduction.html)>). Read the [plugin developer guide](https://developer.salesforce.com/docs/atlas.en-us.sfdx_cli_plugins.meta/sfdx_cli_plugins/cli_plugins_architecture_sf_cli.htm) to learn about Salesforce CLI plugin development.
 
@@ -13,7 +13,7 @@ Additionally, there are some additional tests that the Salesforce CLI will enfor
 ## Install
 
 ```bash
-sf plugins:install project-org@x.y.z
+sf plugins:install deploy-retrieve-metadata@x.y.z
 ```
 
 ## Issues
@@ -45,14 +45,14 @@ To build the plugin locally, make sure to have yarn installed and run the follow
 
 ```bash
 # Clone the repository
-git clone git@github.com:salesforcecli/plugin-project-org
+git clone git@github.com:salesforcecli/plugin-deploy-retrieve-metadata
 
 # Install the dependencies and compile
 yarn install
 yarn build
 ```
 
-To use your plugin, run using the local `./bin/run` or `./bin/run.cmd` file.
+To use your plugin, run using the local `./bin/dev` or `./bin/dev.cmd` file.
 
 ```bash
 # Run using local run file.
@@ -71,8 +71,9 @@ sf plugins
 ## Commands
 
 <!-- commands -->
-* [`sf project deploy org`](#sf-project-deploy-org)
-* [`sf project retrieve org`](#sf-project-retrieve-org)
+
+- [`sf project deploy org`](#sf-project-deploy-org)
+- [`sf project retrieve org`](#sf-project-retrieve-org)
 
 ## `sf project deploy org`
 
@@ -239,4 +240,5 @@ EXAMPLES
 
     $ sf project retrieve org --package-names "Package1, PackageName With Spaces, Package3"
 ```
+
 <!-- commandsstop -->

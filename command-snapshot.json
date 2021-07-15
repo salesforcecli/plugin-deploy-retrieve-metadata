@@ -1,12 +1,12 @@
 [
   {
-    "command": "project:deploy:org",
-    "plugin": "@salesforce/plugin-project-org",
+    "command": "deploy:metadata",
+    "plugin": "@salesforce/plugin-deploy-retrieve-metadata",
     "flags": ["deploy-dir", "json", "manifest", "metadata", "target-org", "test-level", "wait"]
   },
   {
-    "command": "project:retrieve:org",
-    "plugin": "@salesforce/plugin-project-org",
+    "command": "retrieve:metadata",
+    "plugin": "@salesforce/plugin-deploy-retrieve-metadata",
     "flags": ["api-version", "json", "manifest", "metadata", "package-name", "source-dir", "target-org", "wait"]
   }
 ]

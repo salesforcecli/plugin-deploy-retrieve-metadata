@@ -71,17 +71,16 @@ sf plugins
 ## Commands
 
 <!-- commands -->
+* [`sf deploy metadata`](#sf-deploy-metadata)
+* [`sf retrieve metadata`](#sf-retrieve-metadata)
 
-- [`sf project deploy org`](#sf-project-deploy-org)
-- [`sf project retrieve org`](#sf-project-retrieve-org)
-
-## `sf project deploy org`
+## `sf deploy metadata`
 
 You must run this command from wihin a project.
 
 ```
 USAGE
-  $ sf project deploy org [--json] [-m <value>] [-x <value>] [-d <value>] [--target-org <value>] [-l
+  $ sf deploy metadata [--json] [-m <value>] [-x <value>] [-d <value>] [--target-org <value>] [-l
     NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg] [--wait <value>]
 
 FLAGS
@@ -115,36 +114,36 @@ DESCRIPTION
 EXAMPLES
   Deploy the source files in a directory:
 
-    $ sf project deploy org --deploy-dir path/to/source
+    $ sf deploy metadata --deploy-dir path/to/source
 
   Deploy a specific Apex class and the objects whose source is in a directory:
 
-    $ sf project deploy org --deploy-dir "path/to/apex/classes/MyClass.cls,path/to/source/objects"
+    $ sf deploy metadata --deploy-dir "path/to/apex/classes/MyClass.cls,path/to/source/objects"
 
   Deploy source files in a comma-separated list that contains spaces:
 
-    $ sf project deploy org --deploy-dir "path/to/objects/MyCustomObject/fields/MyField.field-meta.xml, \
+    $ sf deploy metadata --deploy-dir "path/to/objects/MyCustomObject/fields/MyField.field-meta.xml, \
       path/to/apex/classes"
 
   Deploy all Apex classes:
 
-    $ sf project deploy org --metadata ApexClass
+    $ sf deploy metadata --metadata ApexClass
 
   Deploy a specific Apex class:
 
-    $ sf project deploy org --metadata ApexClass:MyApexClass
+    $ sf deploy metadata --metadata ApexClass:MyApexClass
 
   Deploy all custom objects and Apex classes:
 
-    $ sf project deploy org --metadata "CustomObject,ApexClass"
+    $ sf deploy metadata --metadata "CustomObject,ApexClass"
 
   Deploy all Apex classes and two specific profiles (one of which has a space in its name):
 
-    $ sf project deploy org --metadata "ApexClass, Profile:My Profile, Profile: AnotherProfile"
+    $ sf deploy metadata --metadata "ApexClass, Profile:My Profile, Profile: AnotherProfile"
 
   Deploy all components listed in a manifest:
 
-    $ sf project deploy org --manifest path/to/package.xml
+    $ sf deploy metadata --manifest path/to/package.xml
 
 FLAG DESCRIPTIONS
   -d, --deploy-dir=<value>...  Root of local directory tree of files to deploy.
@@ -168,14 +167,14 @@ FLAG DESCRIPTIONS
     Default is 33 minutes.
 ```
 
-## `sf project retrieve org`
+## `sf retrieve metadata`
 
 The source you retrieve overwrites the corresponding source files in your local project . This command doesn’t attempt to merge the source from your org with your local source files. If the command detects a conflict, it displays the conflicts but doesn’t complete the process. After reviewing the conflict, rerun the command with the --force-overwrite flag to overwrite your local files.
 
 ```
 USAGE
-  $ sf project retrieve org [--json] [-a <value>] [-n <value>] [-d <value> | [-x <value> | -m <value> | ] | ] [-t <value>]
-    [-w <value>]
+  $ sf retrieve metadata [--json] [-a <value>] [-x <value> | -m <value> | -d <value>] [-n <value>] [-t <value>] [-w
+    <value>]
 
 FLAGS
   -a, --api-version=<value>      target API version for the retrieve
@@ -240,5 +239,4 @@ EXAMPLES
 
     $ sf project retrieve org --package-names "Package1, PackageName With Spaces, Package3"
 ```
-
 <!-- commandsstop -->

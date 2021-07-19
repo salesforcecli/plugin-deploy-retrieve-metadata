@@ -1,7 +1,7 @@
 {
   "name": "@salesforce/plugin-deploy-retrieve-metadata",
   "description": "Commands for deploying metadata to salesforce orgs",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {

@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.8](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.7...v0.0.8) (2021-07-19)
+
+
+### Bug Fixes
+
+* update help for "project retrieve org" ([c22e28c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/c22e28cd17fb13045c11a09c4df45f1f6f503478))
+* update help for "sf project deploy org" ([79a2fb6](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/79a2fb689adf467e61b8e22e206f0c239f3013ca))
+
 ### [0.0.7](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.6...v0.0.7) (2021-07-15)
 
 ### [0.0.6](https://github.com/salesforcecli/plugin-project-org/compare/v0.0.5...v0.0.6) (2021-07-14)

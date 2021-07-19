@@ -76,7 +76,7 @@ sf plugins
 
 ## `sf deploy metadata`
 
-You must run this command from wihin a project.
+You must run this command from within a project.
 
 ```
 USAGE
@@ -84,46 +84,45 @@ USAGE
     NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg] [--wait <value>]
 
 FLAGS
-  -d, --deploy-dir=<value>...  Root of local directory tree of files to deploy.
+  -d, --deploy-dir=<value>...  Path to the local source files to deploy.
 
   -l, --test-level=<option>    [default: NoTestRun] Deployment Apex testing level.
                                <options: NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg>
 
-  -m, --metadata=<value>...    List of metadata component names to deploy.
+  -m, --metadata=<value>...    Metadata component names to deploy.
 
   -x, --manifest=<value>       Full file path for manifest (package.xml) of components to deploy.
 
-  --target-org=<value>         Username or alias of the org you want to deploy to
+  --target-org=<value>         Login username or alias for the target org.
 
-  --wait=<value>               [default: 33] Number of minutes to wait for command to complete.
+  --wait=<value>               [default: 33] Number of minutes to wait for command to complete and display results.
 
 GLOBAL FLAGS
   --json  format output as json
 
 DESCRIPTION
-  Deploy source to an org.
+  Deploy metadata in source format to an org from your local project.
 
-  You must run this command from wihin a project.
+  You must run this command from within a project.
 
   The source you deploy overwrites the corresponding metadata in your org. This command doesn’t attempt to merge your
   source with the versions in your org.
 
-  If the comma-separated list you’re supplying contains spaces, enclose the entire comma-separated list in one set of
-  double quotes. On Windows, if the list contains commas, also enclose the entire list in one set of double quotes.
+  To run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue
+  to use the CLI. By default the command waits to finish no matter how long the deployment takes.
+
+  To deploy multiple metadata components, either set multiple --metadata <name> flags or a single --metadata flag with
+  multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax
+  applies to --manifest and --deploy-dir.
 
 EXAMPLES
   Deploy the source files in a directory:
 
-    $ sf deploy metadata --deploy-dir path/to/source
+    $ sf deploy metadata  --deploy-dir path/to/source
 
-  Deploy a specific Apex class and the objects whose source is in a directory:
-
-    $ sf deploy metadata --deploy-dir "path/to/apex/classes/MyClass.cls,path/to/source/objects"
-
-  Deploy source files in a comma-separated list that contains spaces:
-
-    $ sf deploy metadata --deploy-dir "path/to/objects/MyCustomObject/fields/MyField.field-meta.xml, \
-      path/to/apex/classes"
+  Deploy a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
+  $ sf deploy metadata --deploy-dir path/to/apex/classes/MyClass.cls path/to/source/objects
+  $ sf deploy metadata --deploy-dir path/to/apex/classes/MyClass.cls --deploy-dir path/to/source/objects
 
   Deploy all Apex classes:
 
@@ -133,43 +132,66 @@ EXAMPLES
 
     $ sf deploy metadata --metadata ApexClass:MyApexClass
 
-  Deploy all custom objects and Apex classes:
+  Deploy all custom objects and Apex classes (both examples are equivalent):
+  $ sf deploy metadata --metadata CustomObject ApexClass
+  $ sf deploy metadata --metadata CustomObject --metadata ApexClass
 
-    $ sf deploy metadata --metadata "CustomObject,ApexClass"
+  Deploy all Apex classes and a profile that has a space in its name:
 
-  Deploy all Apex classes and two specific profiles (one of which has a space in its name):
-
-    $ sf deploy metadata --metadata "ApexClass, Profile:My Profile, Profile: AnotherProfile"
+    $ sf deploy metadata --metadata ApexClass --metadata "Profile:My Profile"
 
   Deploy all components listed in a manifest:
 
     $ sf deploy metadata --manifest path/to/package.xml
 
-FLAG DESCRIPTIONS
-  -d, --deploy-dir=<value>...  Root of local directory tree of files to deploy.
+  Run the tests that aren’t in any managed packages as part of a deployment:
 
-    Root of local directory tree of files to deploy.
+    $ sf deploy metadata --metadata ApexClass --test-level RunLocalTests
+
+FLAG DESCRIPTIONS
+  -d, --deploy-dir=<value>...  Path to the local source files to deploy.
+
+    The supplied path can be to a single file (in which case the operation is applied to only one file) or to a folder
+    (in which case the operation is applied to all metadata types in the directory and its subdirectories).
+
+    If you specify this flag, don’t specify --metadata or --manifest.
 
   -l, --test-level=NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg  Deployment Apex testing level.
 
-    Deployment Apex testing level.
+    Valid values are:
 
-  -m, --metadata=<value>...  List of metadata component names to deploy.
+    - NoTestRun — No tests are run. This test level applies only to deployments to development environments, such as
+    sandbox, Developer Edition, or trial orgs. This test level is the default for development environments.
 
-    List of metadata component names to deploy.
+    - RunSpecifiedTests — Runs only the tests that you specify with the --run-tests flag. Code coverage requirements
+    differ from the default coverage requirements when using this test level. Executed tests must comprise a minimum of
+    75% code coverage for each class and trigger in the deployment package. This coverage is computed for each class and
+    trigger individually and is different than the overall coverage percentage.
+
+    - RunLocalTests — All tests in your org are run, except the ones that originate from installed managed packages.
+    This test level is the default for production deployments that include Apex classes or triggers.
+
+    - RunAllTestsInOrg — All tests in your org are run, including tests of managed packages.
+
+    If you don’t specify a test level, the default behavior depends on the contents of your deployment package. For more
+    information, see “Running Tests in a Deployment” in the Metadata API Developer Guide.
 
   -x, --manifest=<value>  Full file path for manifest (package.xml) of components to deploy.
 
-    Full file path for manifest (package.xml) of components to deploy.
+    All child components are included. If you specify this flag, don’t specify --metadata or --deploy-dir.
 
-  --wait=<value>  Number of minutes to wait for command to complete.
+  --target-org=<value>  Login username or alias for the target org.
 
-    Default is 33 minutes.
+    Overrides your default org.
+
+  --wait=<value>  Number of minutes to wait for command to complete and display results.
+
+    If the command continues to run after the wait period, the CLI returns control of the terminal window to you.
 ```
 
 ## `sf retrieve metadata`
 
-The source you retrieve overwrites the corresponding source files in your local project . This command doesn’t attempt to merge the source from your org with your local source files. If the command detects a conflict, it displays the conflicts but doesn’t complete the process. After reviewing the conflict, rerun the command with the --force-overwrite flag to overwrite your local files.
+You must run this command from within a project.
 
 ```
 USAGE
@@ -177,66 +199,63 @@ USAGE
     <value>]
 
 FLAGS
-  -a, --api-version=<value>      target API version for the retrieve
-  -d, --source-dir=<value>...    source dir to use instead of the default package dir in sfdx-project.json
-  -m, --metadata=<value>...      comma-separated list of metadata component names
-  -n, --package-name=<value>...  a comma-separated list of packages to retrieve
-  -t, --target-org=<value>       Username or alias of the org you want to retrieve from
-  -w, --wait=<value>             [default: 33] wait time for command to finish in minutes
-  -x, --manifest=<value>         file path for manifest (package.xml) of components to deploy
+  -a, --api-version=<value>      Target API version for the retrieve.
+  -d, --source-dir=<value>...    File paths for source to retrieve from the org.
+  -m, --metadata=<value>...      Metadata component names to retrieve.
+  -n, --package-name=<value>...  Package names to retrieve.
+  -t, --target-org=<value>       Login username or alias for the target org.
+
+  -w, --wait=<value>             [default: 33] Number of minutes to wait for the command to complete and display results
+                                 to the terminal window.
+
+  -x, --manifest=<value>         File path for the manifest (package.xml) that specifies the components to retrieve.
 
 GLOBAL FLAGS
   --json  format output as json
 
 DESCRIPTION
-  Retrieve source from an org.
+  Retrieve metadata in source format from an org to your local project.
 
-  The source you retrieve overwrites the corresponding source files in your local project . This command doesn’t attempt
-  to merge the source from your org with your local source files. If the command detects a conflict, it displays the
-  conflicts but doesn’t complete the process. After reviewing the conflict, rerun the command with the --force-overwrite
-  flag to overwrite your local files.
+  You must run this command from within a project.
 
-  If the comma-separated list you’re supplying contains spaces, enclose the entire comma-separated list in one set of
-  double quotes. On Windows, if the list contains commas, also enclose the entire list in one set of double quotes.
+  The source you retrieve overwrites the corresponding source files in your local project. This command doesn’t attempt
+  to merge the source from your org with your local source files.
 
-  You must run this command from wihin a project.
+  To retrieve multiple metadata components, either use multiple --metadata <name> flags or use a single --metadata flag
+  with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same
+  syntax applies to --manifest and --source-dir.
 
 EXAMPLES
   Retrieve the source files in a directory:
 
-    $ sf project retrieve org --source-path path/to/source
+    $ sf retrieve metadata --source-dir path/to/source
 
-  Retrieve a specific Apex class and the objects whose source is in a directory:
-
-    $ sf project retrieve org --source-path "path/to/apex/classes/MyClass.cls,path/to/source/objects"
-
-  Retrieve source files in a comma-separated list that contains spaces:
-
-    $ sf project retrieve org --source-path "path/to/objects/MyCustomObject/fields/MyField.field-meta.xml, \
-      path/to/apex/classes"
+  Retrieve a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
+  $ sf retrieve metadata --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
+  $ sf retrieve metadata --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
 
   Retrieve all Apex classes:
 
-    $ sf project retrieve org --metadata ApexClass
+    $ sf retrieve metadata --metadata ApexClass
 
   Retrieve a specific Apex class:
 
-    $ sf project retrieve org --metadata ApexClass:MyApexClass
+    $ sf retrieve metadata --metadata ApexClass:MyApexClass
 
-  Retrieve all custom objects and Apex classes:
-
-    $ sf project retrieve org --metadata "CustomObject,ApexClass"
+  Retrieve all custom objects and Apex classes (both examples are equivalent):
+  $ sf retrieve metadata --metadata CustomObject ApexClass
+  $ sf retrieve metadata --metadata CustomObject --metadata ApexClass
 
   Retrieve all metadata components listed in a manifest:
 
-    $ sf project retrieve org --manifest path/to/package.xml
+    $ sf retrieve metadata --manifest path/to/package.xml
 
   Retrieve metadata from a package:
 
-    $ sf project retrieve org --package-names MyPackageName
+    $ sf retrieve metadata --package-name MyPackageName
 
-  Retrieve metadata from multiple packages:
-
-    $ sf project retrieve org --package-names "Package1, PackageName With Spaces, Package3"
+  Retrieve metadata from multiple packages, one of which has a space in its name (both examples are equivalent):
+  $ sf retrieve metadata --package-name Package1 "PackageName With Spaces" Package3
+  $ sf retrieve metadata --package-name Package1 --package-name "PackageName With Spaces" --package-name Package3
 ```
 <!-- commandsstop -->

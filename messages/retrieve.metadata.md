@@ -14,41 +14,38 @@ To retrieve multiple metadata components, either use multiple --metadata <name> 
 
 - Retrieve the source files in a directory:
 
- <%= config.bin %> <%= command.id %> --source-dir path/to/source
+  <%= config.bin %> <%= command.id %> --source-dir path/to/source
 
 - Retrieve a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
 
- <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
-
- <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
+  <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
+  <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
 
 - Retrieve all Apex classes:
 
- <%= config.bin %> <%= command.id %> --metadata ApexClass
+  <%= config.bin %> <%= command.id %> --metadata ApexClass
 
 - Retrieve a specific Apex class:
 
- <%= config.bin %> <%= command.id %> --metadata ApexClass:MyApexClass
+  <%= config.bin %> <%= command.id %> --metadata ApexClass:MyApexClass
 
 - Retrieve all custom objects and Apex classes (both examples are equivalent):
 
- <%= config.bin %> <%= command.id %> --metadata CustomObject ApexClass
-
- <%= config.bin %> <%= command.id %> --metadata CustomObject --metadata ApexClass
+  <%= config.bin %> <%= command.id %> --metadata CustomObject ApexClass
+  <%= config.bin %> <%= command.id %> --metadata CustomObject --metadata ApexClass
 
 - Retrieve all metadata components listed in a manifest:
 
- <%= config.bin %> <%= command.id %> --manifest path/to/package.xml
+  <%= config.bin %> <%= command.id %> --manifest path/to/package.xml
 
 - Retrieve metadata from a package:
 
- <%= config.bin %> <%= command.id %> --package-name MyPackageName
+  <%= config.bin %> <%= command.id %> --package-name MyPackageName
 
 - Retrieve metadata from multiple packages, one of which has a space in its name (both examples are equivalent):
 
- <%= config.bin %> <%= command.id %> --package-name Package1 "PackageName With Spaces" Package3
-
- <%= config.bin %> <%= command.id %> --package-name Package1 --package-name "PackageName With Spaces" --package-name Package3
+  <%= config.bin %> <%= command.id %> --package-name Package1 "PackageName With Spaces" Package3
+  <%= config.bin %> <%= command.id %> --package-name Package1 --package-name "PackageName With Spaces" --package-name Package3
 
 # flags.api-version.summary
 

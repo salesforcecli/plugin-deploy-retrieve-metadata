@@ -1,5 +1,5 @@
 # summary
-  
+
 Deploy metadata in source format to an org from your local project.
 
 # description
@@ -16,12 +16,11 @@ To deploy multiple metadata components, either set multiple --metadata <name> fl
 
 - Deploy the source files in a directory:
 
-     <%= config.bin %> <%= command.id %>  --deploy-dir path/to/source
+      <%= config.bin %> <%= command.id %>  --deploy-dir path/to/source
 
 - Deploy a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
 
       <%= config.bin %> <%= command.id %> --deploy-dir path/to/apex/classes/MyClass.cls path/to/source/objects
-
       <%= config.bin %> <%= command.id %> --deploy-dir path/to/apex/classes/MyClass.cls --deploy-dir path/to/source/objects
 
 - Deploy all Apex classes:
@@ -35,7 +34,6 @@ To deploy multiple metadata components, either set multiple --metadata <name> fl
 - Deploy all custom objects and Apex classes (both examples are equivalent):
 
       <%= config.bin %> <%= command.id %> --metadata CustomObject ApexClass
-
       <%= config.bin %> <%= command.id %> --metadata CustomObject --metadata ApexClass
 
 - Deploy all Apex classes and a profile that has a space in its name:
@@ -70,13 +68,13 @@ Deployment Apex testing level.
 
 Valid values are:
 
- * NoTestRun—No tests are run. This test level applies only to deployments to development environments, such as sandbox, Developer Edition, or trial orgs. This test level is the default for development environments.
+- NoTestRun — No tests are run. This test level applies only to deployments to development environments, such as sandbox, Developer Edition, or trial orgs. This test level is the default for development environments.
 
-* RunSpecifiedTests—Runs only the tests that you specify with the --run-tests flag. Code coverage requirements differ from the default coverage requirements when using this test level. Executed tests must comprise a minimum of 75% code coverage for each class and trigger in the deployment package. This coverage is computed for each class and trigger individually and is different than the overall coverage percentage.
+- RunSpecifiedTests — Runs only the tests that you specify with the --run-tests flag. Code coverage requirements differ from the default coverage requirements when using this test level. Executed tests must comprise a minimum of 75% code coverage for each class and trigger in the deployment package. This coverage is computed for each class and trigger individually and is different than the overall coverage percentage.
 
-* RunLocalTests—All tests in your org are run, except the ones that originate from installed managed packages. This test level is the default for production deployments that include Apex classes or triggers.
+- RunLocalTests — All tests in your org are run, except the ones that originate from installed managed packages. This test level is the default for production deployments that include Apex classes or triggers.
 
-* RunAllTestsInOrg—All tests in your org are run, including tests of managed packages.
+- RunAllTestsInOrg — All tests in your org are run, including tests of managed packages.
 
   If you don’t specify a test level, the default behavior depends on the contents of your deployment package. For more information, see “Running Tests in a Deployment” in the Metadata API Developer Guide.
 

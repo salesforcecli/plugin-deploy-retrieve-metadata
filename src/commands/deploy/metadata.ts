@@ -28,27 +28,27 @@ export default class DeployMetadata extends Command {
   public static flags = {
     metadata: Flags.string({
       char: 'm',
-      description: messages.getMessage('flags.metadata'),
       summary: messages.getMessage('flags.metadata.summary'),
       multiple: true,
     }),
     manifest: Flags.string({
       char: 'x',
-      description: messages.getMessage('flags.manifest'),
+      description: messages.getMessage('flags.manifest.description'),
       summary: messages.getMessage('flags.manifest.summary'),
     }),
     'deploy-dir': Flags.string({
       char: 'd',
-      description: messages.getMessage('flags.deploy-dir'),
+      description: messages.getMessage('flags.deploy-dir.description'),
       summary: messages.getMessage('flags.deploy-dir.summary'),
       multiple: true,
     }),
     'target-org': Flags.string({
-      description: messages.getMessage('flags.target-org'),
+      description: messages.getMessage('flags.target-org.description'),
+      summary: messages.getMessage('flags.target-org.summary'),
     }),
     'test-level': Flags.string({
       char: 'l',
-      description: messages.getMessage('flags.test-level'),
+      description: messages.getMessage('flags.test-level.description'),
       summary: messages.getMessage('flags.test-level.summary'),
       options: Object.values(TestLevel),
       default: TestLevel.NoTestRun,

@@ -1,89 +1,96 @@
 # summary
 
-Retrieve source from an org.
+Retrieve metadata in source format from an org to your local project.
 
 # description
 
-The source you retrieve overwrites the corresponding source files in your local project . This command doesn’t attempt to merge the source from your org with your local source files. If the command detects a conflict, it displays the conflicts but doesn’t complete the process. After reviewing the conflict, rerun the command with the --force-overwrite flag to overwrite your local files.
+You must run this command from within a project.
 
-If the comma-separated list you’re supplying contains spaces, enclose the entire comma-separated list in one set of double quotes. On Windows, if the list contains commas, also enclose the entire list in one set of double quotes.
+The source you retrieve overwrites the corresponding source files in your local project. This command doesn’t attempt to merge the source from your org with your local source files.
 
-You must run this command from wihin a project.
+To retrieve multiple metadata components, either use multiple --metadata <name> flags or use a single --metadata flag with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax applies to --manifest and --source-dir.
 
 # examples
 
 - Retrieve the source files in a directory:
 
-      sf project retrieve org --source-path path/to/source
+  <%= config.bin %> <%= command.id %> --source-dir path/to/source
 
-- Retrieve a specific Apex class and the objects whose source is in a directory:
+- Retrieve a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
 
-      sf project retrieve org --source-path "path/to/apex/classes/MyClass.cls,path/to/source/objects"
-
-- Retrieve source files in a comma-separated list that contains spaces:
-
-      sf project retrieve org --source-path "path/to/objects/MyCustomObject/fields/MyField.field-meta.xml, path/to/apex/classes"
+  <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
+  <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
 
 - Retrieve all Apex classes:
 
-      sf project retrieve org --metadata ApexClass
+  <%= config.bin %> <%= command.id %> --metadata ApexClass
 
 - Retrieve a specific Apex class:
 
-      sf project retrieve org --metadata ApexClass:MyApexClass
+  <%= config.bin %> <%= command.id %> --metadata ApexClass:MyApexClass
 
-- Retrieve all custom objects and Apex classes:
+- Retrieve all custom objects and Apex classes (both examples are equivalent):
 
-      sf project retrieve org --metadata "CustomObject,ApexClass"
+  <%= config.bin %> <%= command.id %> --metadata CustomObject ApexClass
+  <%= config.bin %> <%= command.id %> --metadata CustomObject --metadata ApexClass
 
 - Retrieve all metadata components listed in a manifest:
 
-      sf project retrieve org --manifest path/to/package.xml
+  <%= config.bin %> <%= command.id %> --manifest path/to/package.xml
 
 - Retrieve metadata from a package:
 
-      sf project retrieve org --package-names MyPackageName
+  <%= config.bin %> <%= command.id %> --package-name MyPackageName
 
-- Retrieve metadata from multiple packages:
+- Retrieve metadata from multiple packages, one of which has a space in its name (both examples are equivalent):
 
-      sf project retrieve org --package-names "Package1, PackageName With Spaces, Package3"
+  <%= config.bin %> <%= command.id %> --package-name Package1 "PackageName With Spaces" Package3
+  <%= config.bin %> <%= command.id %> --package-name Package1 --package-name "PackageName With Spaces" --package-name Package3
 
 # flags.api-version.summary
 
-target API version for the retrieve
+Target API version for the retrieve.
+
+# flags.api-version.description
+
+Use this flag to override the default API version, which is the latest version supported the CLI, with the API version in your package.xml file.
 
 # flags.manifest.summary
 
-file path for manifest (package.xml) of components to deploy
+File path for the manifest (package.xml) that specifies the components to retrieve.
+
+# flags.manifest.description
+
+If you specify this parameter, don’t specify --metadata or --source-dir.
 
 # flags.metadata.summary
 
-comma-separated list of metadata component names
+Metadata component names to retrieve.
 
 # flags.package-name.summary
 
-a comma-separated list of packages to retrieve
-
-# flags.retrieve-target-dir.summary
-
-directory root for the retrieved files
-
-# flags.single-package.summary
-
-Indicates that the zip file points to a directory structure for a single package
+Package names to retrieve.
 
 # flags.source-dir.summary
 
-source dir to use instead of the default package dir in sfdx-project.json
+File paths for source to retrieve from the org.
+
+# flags.source-dir.description
+
+The supplied paths can be to a single file (in which case the operation is applied to only one file) or to a folder (in which case the operation is applied to all source files in the directory and its subdirectories).
 
 # flags.target-org.summary
 
-Username or alias of the org you want to retrieve from
+Login username or alias for the target org.
 
-# flags.force-overwrite.summary
+# flags.target-org.description
 
-overwrites local data
+Overrides your default org.
 
 # flags.wait.summary
 
-wait time for command to finish in minutes
+Number of minutes to wait for the command to complete and display results to the terminal window.
+
+# flags.wait.description
+
+If the command continues to run after the wait period, the CLI returns control of the terminal window to you.

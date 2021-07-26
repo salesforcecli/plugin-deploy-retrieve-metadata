@@ -5,8 +5,8 @@
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
-    "@oclif/core": "^0.5.21",
-    "@salesforce/core": "^3.1.1-v3.2",
+    "@oclif/core": "^0.5.26",
+    "@salesforce/core": "^3.3.3",
     "@salesforce/plugin-deploy-retrieve-utils": "^0.0.9",
     "@salesforce/source-deploy-retrieve": "^3.1.1",
     "chalk": "^4.1.1",

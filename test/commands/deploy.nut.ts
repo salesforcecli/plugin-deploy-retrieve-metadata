@@ -11,7 +11,7 @@ import { fs } from '@salesforce/core';
 import { TestLevel } from '../../src/utils/testLevel';
 import { MetadataDeployer } from '../../src/utils/metadataDeployer';
 
-describe('project deploy NUTs', () => {
+describe('deploy NUTs', () => {
   let sourceTestkit: SourceTestkit;
 
   before(async () => {

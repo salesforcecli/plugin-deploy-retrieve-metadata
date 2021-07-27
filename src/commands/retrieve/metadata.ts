@@ -27,10 +27,12 @@ export default class RetrieveMetadata extends Command {
     'api-version': Flags.string({
       char: 'a',
       summary: messages.getMessage('flags.api-version.summary'),
+      description: messages.getMessage('flags.api-version.description'),
     }),
     manifest: Flags.string({
       char: 'x',
       summary: messages.getMessage('flags.manifest.summary'),
+      description: messages.getMessage('flags.manifest.description'),
       exclusive: ['metadata', 'source-dir'],
     }),
     metadata: Flags.string({
@@ -47,17 +49,20 @@ export default class RetrieveMetadata extends Command {
     'source-dir': Flags.string({
       char: 'd',
       summary: messages.getMessage('flags.source-dir.summary'),
+      description: messages.getMessage('flags.source-dir.description'),
       multiple: true,
       exclusive: ['manifest', 'metadata'],
     }),
     'target-org': Flags.string({
       char: 't',
       summary: messages.getMessage('flags.target-org.summary'),
+      description: messages.getMessage('flags.target-org.description'),
     }),
     wait: Flags.integer({
       char: 'w',
       default: 33,
       summary: messages.getMessage('flags.wait.summary'),
+      description: messages.getMessage('flags.wait.description'),
     }),
   };
 

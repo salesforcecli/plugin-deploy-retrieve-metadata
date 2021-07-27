@@ -86,10 +86,10 @@
     ],
     "topics": {
       "deploy": {
-        "description": "Commands to deploy source code."
+        "description": "Deploy artifacts, such as metadata, to an environment."
       },
       "retrieve": {
-        "description": "Commands to retrieve source code."
+        "description": "Retrieve artifacts from an environment."
       }
     }
   },

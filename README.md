@@ -257,5 +257,28 @@ EXAMPLES
   Retrieve metadata from multiple packages, one of which has a space in its name (both examples are equivalent):
   $ sf retrieve metadata --package-name Package1 "PackageName With Spaces" Package3
   $ sf retrieve metadata --package-name Package1 --package-name "PackageName With Spaces" --package-name Package3
+
+FLAG DESCRIPTIONS
+  -a, --api-version=<value>  Target API version for the retrieve.
+
+    Use this flag to override the default API version, which is the latest version supported the CLI, with the API
+    version in your package.xml file.
+
+  -d, --source-dir=<value>...  File paths for source to retrieve from the org.
+
+    The supplied paths can be to a single file (in which case the operation is applied to only one file) or to a folder
+    (in which case the operation is applied to all source files in the directory and its subdirectories).
+
+  -t, --target-org=<value>  Login username or alias for the target org.
+
+    Overrides your default org.
+
+  -w, --wait=<value>  Number of minutes to wait for the command to complete and display results to the terminal window.
+
+    If the command continues to run after the wait period, the CLI returns control of the terminal window to you.
+
+  -x, --manifest=<value>  File path for the manifest (package.xml) that specifies the components to retrieve.
+
+    If you specify this parameter, don’t specify --metadata or --source-dir.
 ```
 <!-- commandsstop -->

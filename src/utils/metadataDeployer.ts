@@ -9,7 +9,7 @@ import { EOL } from 'os';
 import { cyan } from 'chalk';
 import { Nullable, ensureString } from '@salesforce/ts-types';
 import { Duration } from '@salesforce/kit';
-import { Aliases, AuthInfo, Config, ConfigAggregator, NamedPackageDir } from '@salesforce/core';
+import { Aliases, AuthInfo, ConfigAggregator, NamedPackageDir, OrgConfigProperties } from '@salesforce/core';
 import {
   Deployable,
   Deployer,
@@ -108,7 +108,7 @@ export class MetadataDeployer extends Deployer {
   }
 
   public async promptForUsername(): Promise<string> {
-    const aliasOrUsername = ConfigAggregator.getValue(Config.DEFAULT_USERNAME)?.value as string;
+    const aliasOrUsername = ConfigAggregator.getValue(OrgConfigProperties.TARGET_ORG)?.value as string;
 
     if (!aliasOrUsername) {
       const authroizations = await AuthInfo.listAllAuthorizations();

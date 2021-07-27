@@ -5,11 +5,12 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Aliases, Config, ConfigAggregator, SfdxError, SfdxProject } from '@salesforce/core';
-import { Nullable } from '@salesforce/ts-types';
+import { Aliases, ConfigAggregator, SfdxError, SfdxProject, OrgConfigProperties } from '@salesforce/core';
+import { AnyJson, Nullable } from '@salesforce/ts-types';
 
 export const resolveTargetOrg = async (targetOrg: Nullable<string>): Promise<string> => {
-  const aliasOrUsername = targetOrg || (ConfigAggregator.getValue(Config.DEFAULT_USERNAME)?.value as string);
+  const configuredTargetOrg = getConfigValue<string>(OrgConfigProperties.TARGET_ORG);
+  const aliasOrUsername = targetOrg || configuredTargetOrg;
 
   if (!aliasOrUsername) {
     throw new SfdxError('no target environment specified', 'NoTargetEnv', [
@@ -24,4 +25,8 @@ export const resolveTargetOrg = async (targetOrg: Nullable<string>): Promise<str
 export const getPackageDirs = async (): Promise<string[]> => {
   const project = await SfdxProject.resolve();
   return project.getUniquePackageDirectories().map((pDir) => pDir.fullPath);
+};
+
+const getConfigValue = <T extends AnyJson>(key: string): T => {
+  return ConfigAggregator.getValue(key)?.value as T;
 };

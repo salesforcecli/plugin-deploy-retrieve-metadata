@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Aliases, ConfigAggregator, SfdxError, SfdxProject, OrgConfigProperties } from '@salesforce/core';
+import { ConfigAggregator, GlobalInfo, SfdxError, SfdxProject, OrgConfigProperties } from '@salesforce/core';
 import { AnyJson, Nullable } from '@salesforce/ts-types';
 
 export const resolveTargetOrg = async (targetOrg: Nullable<string>): Promise<string> => {
@@ -18,8 +18,7 @@ export const resolveTargetOrg = async (targetOrg: Nullable<string>): Promise<str
       'set the default environment with "sf config set target-org"',
     ]);
   }
-
-  return (await Aliases.fetch(aliasOrUsername)) || aliasOrUsername;
+  return (await GlobalInfo.getInstance()).getAliasee(aliasOrUsername) || aliasOrUsername;
 };
 
 export const getPackageDirs = async (): Promise<string[]> => {

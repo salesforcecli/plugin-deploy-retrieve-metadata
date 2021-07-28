@@ -9,7 +9,7 @@ import { EOL } from 'os';
 import { cyan } from 'chalk';
 import { Nullable, ensureString } from '@salesforce/ts-types';
 import { Duration } from '@salesforce/kit';
-import { Aliases, AuthInfo, ConfigAggregator, NamedPackageDir, OrgConfigProperties } from '@salesforce/core';
+import { AuthInfo, ConfigAggregator, GlobalInfo, NamedPackageDir, OrgConfigProperties } from '@salesforce/core';
 import {
   Deployable,
   Deployer,
@@ -129,9 +129,10 @@ export class MetadataDeployer extends Deployer {
           choices: generateTableChoices(columns, options),
         },
       ]);
-      return (await Aliases.fetch(username)) || username;
+      return username;
     } else {
-      return (await Aliases.fetch(aliasOrUsername)) || aliasOrUsername;
+      const globalInfo = await GlobalInfo.getInstance();
+      return globalInfo.getAliasee(aliasOrUsername) || aliasOrUsername;
     }
   }
 

@@ -21,6 +21,7 @@ import { ComponentSetBuilder } from './componentSetBuilder';
 import { displayHumanReadableResults } from './tableBuilder';
 import { TestLevel } from './testLevel';
 import { DeployProgress } from './progressBar';
+import { resolveRestDeploy } from './config';
 
 export interface MetadataDeployOptions extends DeployerOptions {
   testLevel?: TestLevel;
@@ -94,7 +95,7 @@ export class MetadataDeployer extends Deployer {
   public async deploy(): Promise<void> {
     const directories = this.deployables.map((d) => d.pkg.fullPath);
     const name = this.deployables.map((p) => cyan.bold(p.getAppName())).join(', ');
-    this.log(`${EOL}Deploying ${name} to ${this.username}`);
+    this.log(`${EOL}Deploying ${name} to ${this.username} using ${resolveRestDeploy()} API`);
     const componentSet = await ComponentSetBuilder.build({ directory: directories });
     const deploy = await componentSet.deploy({
       usernameOrConnection: this.username,

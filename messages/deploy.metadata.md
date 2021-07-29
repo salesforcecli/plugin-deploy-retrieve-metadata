@@ -103,3 +103,7 @@ Full file path for manifest (package.xml) of components to deploy.
 # flags.manifest.description
 
 All child components are included. If you specify this flag, don’t specify --metadata or --deploy-dir.
+
+# deploy.metadata.api
+
+Deploying to %s using %s API.

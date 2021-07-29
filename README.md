@@ -80,8 +80,8 @@ You must run this command from within a project.
 
 ```
 USAGE
-  $ sf deploy metadata [--json] [-m <value>] [-x <value>] [-d <value>] [--target-org <value>] [-l
-    NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg] [--wait <value>]
+  $ sf deploy metadata [--json] [-m <value>] [-x <value>] [-d <value>] [-t <value>] [-l
+    NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg] [-w <value>]
 
 FLAGS
   -d, --deploy-dir=<value>...  Path to the local source files to deploy.
@@ -91,11 +91,11 @@ FLAGS
 
   -m, --metadata=<value>...    Metadata component names to deploy.
 
+  -t, --target-org=<value>     Login username or alias for the target org.
+
+  -w, --wait=<value>           [default: 33] Number of minutes to wait for command to complete and display results.
+
   -x, --manifest=<value>       Full file path for manifest (package.xml) of components to deploy.
-
-  --target-org=<value>         Login username or alias for the target org.
-
-  --wait=<value>               [default: 33] Number of minutes to wait for command to complete and display results.
 
 GLOBAL FLAGS
   --json  format output as json
@@ -176,17 +176,17 @@ FLAG DESCRIPTIONS
     If you don’t specify a test level, the default behavior depends on the contents of your deployment package. For more
     information, see “Running Tests in a Deployment” in the Metadata API Developer Guide.
 
-  -x, --manifest=<value>  Full file path for manifest (package.xml) of components to deploy.
-
-    All child components are included. If you specify this flag, don’t specify --metadata or --deploy-dir.
-
-  --target-org=<value>  Login username or alias for the target org.
+  -t, --target-org=<value>  Login username or alias for the target org.
 
     Overrides your default org.
 
-  --wait=<value>  Number of minutes to wait for command to complete and display results.
+  -w, --wait=<value>  Number of minutes to wait for command to complete and display results.
 
     If the command continues to run after the wait period, the CLI returns control of the terminal window to you.
+
+  -x, --manifest=<value>  Full file path for manifest (package.xml) of components to deploy.
+
+    All child components are included. If you specify this flag, don’t specify --metadata or --deploy-dir.
 ```
 
 ## `sf retrieve metadata`

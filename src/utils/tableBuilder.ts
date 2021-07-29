@@ -10,6 +10,7 @@ import cli from 'cli-ux';
 
 export function displayHumanReadableResults(fileResponses: FileResponse[]): void {
   const columns = {
+    state: { header: 'State' },
     fullName: { header: 'Name' },
     type: { header: 'Type' },
     filePath: { header: 'Path' },

@@ -5,6 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import { EOL } from 'os';
 import { Command, Flags } from '@oclif/core';
 import { Messages } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
@@ -15,6 +16,7 @@ import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBui
 import { displayHumanReadableResults } from '../../utils/tableBuilder';
 import { TestLevel } from '../../utils/testLevel';
 import { DeployProgress } from '../../utils/progressBar';
+import { resolveRestDeploy } from '../../utils/config';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'deploy.metadata');
@@ -43,6 +45,7 @@ export default class DeployMetadata extends Command {
       multiple: true,
     }),
     'target-org': Flags.string({
+      char: 't',
       description: messages.getMessage('flags.target-org.description'),
       summary: messages.getMessage('flags.target-org.summary'),
     }),
@@ -54,6 +57,7 @@ export default class DeployMetadata extends Command {
       default: TestLevel.NoTestRun,
     }),
     wait: Flags.integer({
+      char: 'w',
       summary: messages.getMessage('flags.wait.summary'),
       description: messages.getMessage('flags.wait.description'),
       default: 33,
@@ -74,8 +78,12 @@ export default class DeployMetadata extends Command {
       },
     });
 
+    const targetOrg = await resolveTargetOrg(flags['target-org']);
+
+    this.log(`${EOL}${messages.getMessage('deploy.metadata.api', [targetOrg, resolveRestDeploy()])}${EOL}`);
+
     const deploy = await componentSet.deploy({
-      usernameOrConnection: await resolveTargetOrg(flags['target-org']),
+      usernameOrConnection: targetOrg,
       apiOptions: {
         testLevel: flags['test-level'] as TestLevel,
       },
@@ -88,7 +96,7 @@ export default class DeployMetadata extends Command {
     const result = await deploy.pollStatus(500, Duration.minutes(flags.wait).seconds);
 
     const fileResponses = result?.getFileResponses() || [];
-    if (!flags.json) {
+    if (!this.jsonEnabled()) {
       displayHumanReadableResults(fileResponses);
     }
     return fileResponses;

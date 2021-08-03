@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.14](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.13...v0.0.14) (2021-08-03)
+
+
+### Bug Fixes
+
+* remove RunSpecifiedTests from deploy options ([#12](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/12)) ([54fa47c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/54fa47c0fbead762de7dd7fb52a3436cfcc053bd))
+
 ### [0.0.13](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.12...v0.0.13) (2021-07-29)
 
 

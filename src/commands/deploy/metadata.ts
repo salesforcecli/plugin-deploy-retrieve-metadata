@@ -13,7 +13,7 @@ import { FileResponse } from '@salesforce/source-deploy-retrieve';
 
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
-import { displayHumanReadableResults } from '../../utils/tableBuilder';
+import { asRelativePaths, displayHumanReadableResults } from '../../utils/tableBuilder';
 import { TestLevel } from '../../utils/testLevel';
 import { DeployProgress } from '../../utils/progressBar';
 import { resolveRestDeploy } from '../../utils/config';
@@ -95,7 +95,7 @@ export default class DeployMetadata extends Command {
 
     const result = await deploy.pollStatus(500, Duration.minutes(flags.wait).seconds);
 
-    const fileResponses = result?.getFileResponses() || [];
+    const fileResponses = asRelativePaths(result?.getFileResponses() || []);
     if (!this.jsonEnabled()) {
       displayHumanReadableResults(fileResponses);
     }

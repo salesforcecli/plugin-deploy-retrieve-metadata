@@ -133,7 +133,7 @@ export class MetadataDeployer extends Deployer {
       return username;
     } else {
       const globalInfo = await GlobalInfo.getInstance();
-      return globalInfo.getAliasee(aliasOrUsername) || aliasOrUsername;
+      return globalInfo.aliases.resolveUsername(aliasOrUsername);
     }
   }
 
@@ -146,14 +146,13 @@ export class MetadataDeployer extends Deployer {
         loop: false,
         pageSize: 4,
         choices: [
+          { name: "Don't run tests", value: TestLevel.NoTestRun, short: "Don't run tests" },
           { name: 'Run local tests', value: TestLevel.RunLocalTests, short: 'Run local tests' },
-          { name: 'Run specified tests', value: TestLevel.RunSpecifiedTests, short: 'Run specified tests' },
           {
             name: 'Run all tests in environment',
             value: TestLevel.RunAllTestsInOrg,
             short: 'Run all tests in environment',
           },
-          { name: "Don't run tests", value: TestLevel.NoTestRun, short: "Don't run tests" },
         ],
       },
     ]);

@@ -9,11 +9,12 @@ import { EOL } from 'os';
 import { Command, Flags } from '@oclif/core';
 import { Messages } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
-import { FileResponse } from '@salesforce/source-deploy-retrieve';
-
+import { getNumber, getString } from '@salesforce/ts-types';
+import { DeployResult, FileResponse } from '@salesforce/source-deploy-retrieve';
+import { RequestStatus } from '@salesforce/source-deploy-retrieve/lib/src/client/types';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
-import { asRelativePaths, displayHumanReadableResults } from '../../utils/tableBuilder';
+import { asRelativePaths, displayFailures, displaySuccesses, displayTestResults } from '../../utils/output';
 import { TestLevel } from '../../utils/testLevel';
 import { DeployProgress } from '../../utils/progressBar';
 import { resolveRestDeploy } from '../../utils/config';
@@ -25,7 +26,17 @@ const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metad
 // One of these flags must be specified for a valid deploy.
 const requiredFlags = ['manifest', 'metadata', 'source-dir'];
 
-export type DeployMetadataResult = FileResponse[];
+export type TestResults = {
+  passing: number;
+  failing: number;
+  total: number;
+  time?: number;
+};
+
+export type DeployMetadataResult = {
+  files: FileResponse[];
+  tests?: TestResults;
+};
 
 export default class DeployMetadata extends Command {
   public static readonly description = messages.getMessage('description');
@@ -52,7 +63,7 @@ export default class DeployMetadata extends Command {
       exclusive: ['manifest', 'metadata'],
     }),
     'target-org': Flags.string({
-      char: 't',
+      char: 'o',
       description: messages.getMessage('flags.target-org.description'),
       summary: messages.getMessage('flags.target-org.summary'),
     }),
@@ -104,19 +115,33 @@ export default class DeployMetadata extends Command {
     }
 
     const result = await deploy.pollStatus(500, Duration.minutes(flags.wait).seconds);
+    this.setExitCode(result);
 
-    const fileResponses = asRelativePaths(result?.getFileResponses() || []);
+    // eslint-disable-next-line no-console
+    // console.log(result);
     if (!this.jsonEnabled()) {
-      displayHumanReadableResults(fileResponses);
+      displaySuccesses(result);
+      displayFailures(result);
+      displayTestResults(result);
     }
-    return fileResponses;
+    return {
+      files: asRelativePaths(result?.getFileResponses() || []),
+      tests: this.getTestResults(result),
+    };
   }
 
-  protected toSuccessJson(result: FileResponse[]): { status: number; result: FileResponse[] } {
-    return { status: 0, result };
+  private setExitCode(result: DeployResult): void {
+    const status = getString(result, 'response.status');
+    if (status !== RequestStatus.Succeeded) {
+      process.exitCode = 1;
+    }
   }
 
-  protected toErrorJson(err: unknown): { status: number; err: unknown } {
-    return { status: process.exitCode || 1, err };
+  private getTestResults(result: DeployResult): TestResults {
+    const passing = getNumber(result, 'response.numberTestsCompleted');
+    const failing = getNumber(result, 'response.numberTestErrors');
+    const total = getNumber(result, 'response.numberTestsTotal');
+    const time = getNumber(result, 'response.details.runTestResult.totalTime');
+    return { passing, failing, total, time };
   }
 }

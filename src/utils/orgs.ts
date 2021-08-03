@@ -18,7 +18,7 @@ export const resolveTargetOrg = async (targetOrg: Nullable<string>): Promise<str
       'set the default environment with "sf config set target-org"',
     ]);
   }
-  return (await GlobalInfo.getInstance()).getAliasee(aliasOrUsername) || aliasOrUsername;
+  return (await GlobalInfo.getInstance()).aliases.resolveUsername(aliasOrUsername);
 };
 
 export const getPackageDirs = async (): Promise<string[]> => {

@@ -8,18 +8,18 @@ You must run this command from within a project.
 
 The source you retrieve overwrites the corresponding source files in your local project. This command doesn’t attempt to merge the source from your org with your local source files.
 
-To retrieve multiple metadata components, either use multiple --metadata <name> flags or use a single --metadata flag with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax applies to --manifest and --source-dir.
+To retrieve multiple metadata components, either use multiple --metadata <name> flags or use a single --metadata flag with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax applies to --manifest and --source-path.
 
 # examples
 
 - Retrieve the source files in a directory:
 
-  <%= config.bin %> <%= command.id %> --source-dir path/to/source
+  <%= config.bin %> <%= command.id %> --source-path path/to/source
 
 - Retrieve a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
 
-  <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
-  <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
+  <%= config.bin %> <%= command.id %> --source-path path/to/apex/classes/MyClass.cls path/to/source/objects
+  <%= config.bin %> <%= command.id %> --source-path path/to/apex/classes/MyClass.cls --source-path path/to/source/objects
 
 - Retrieve all Apex classes:
 
@@ -61,7 +61,7 @@ File path for the manifest (package.xml) that specifies the components to retrie
 
 # flags.manifest.description
 
-If you specify this parameter, don’t specify --metadata or --source-dir.
+If you specify this parameter, don’t specify --metadata or --source-path.
 
 # flags.metadata.summary
 
@@ -71,11 +71,11 @@ Metadata component names to retrieve.
 
 Package names to retrieve.
 
-# flags.source-dir.summary
+# flags.source-path.summary
 
 File paths for source to retrieve from the org.
 
-# flags.source-dir.description
+# flags.source-path.description
 
 The supplied paths can be to a single file (in which case the operation is applied to only one file) or to a folder (in which case the operation is applied to all source files in the directory and its subdirectories).
 

@@ -46,10 +46,10 @@ export default class RetrieveMetadata extends Command {
       summary: messages.getMessage('flags.package-name.summary'),
       multiple: true,
     }),
-    'source-dir': Flags.string({
-      char: 'd',
-      summary: messages.getMessage('flags.source-dir.summary'),
-      description: messages.getMessage('flags.source-dir.description'),
+    'source-path': Flags.string({
+      char: 's',
+      summary: messages.getMessage('flags.source-path.summary'),
+      description: messages.getMessage('flags.source-path.description'),
       multiple: true,
       exclusive: ['manifest', 'metadata'],
     }),
@@ -73,7 +73,7 @@ export default class RetrieveMetadata extends Command {
 
     const componentSet = await ComponentSetBuilder.build({
       apiversion: flags['api-version'],
-      directory: flags['source-dir'],
+      directory: flags['source-path'],
       packagenames: flags['package-name'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,

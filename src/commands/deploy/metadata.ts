@@ -38,10 +38,10 @@ export default class DeployMetadata extends Command {
       description: messages.getMessage('flags.manifest.description'),
       summary: messages.getMessage('flags.manifest.summary'),
     }),
-    'deploy-dir': Flags.string({
-      char: 'd',
-      description: messages.getMessage('flags.deploy-dir.description'),
-      summary: messages.getMessage('flags.deploy-dir.summary'),
+    'source-path': Flags.string({
+      char: 's',
+      description: messages.getMessage('flags.source-path.description'),
+      summary: messages.getMessage('flags.source-path.summary'),
       multiple: true,
     }),
     'target-org': Flags.string({
@@ -67,7 +67,7 @@ export default class DeployMetadata extends Command {
   public async run(): Promise<DeployMetadataResult> {
     const flags = (await this.parse(DeployMetadata)).flags;
     const componentSet = await ComponentSetBuilder.build({
-      directory: flags['deploy-dir'],
+      directory: flags['source-path'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,
         directoryPaths: await getPackageDirs(),

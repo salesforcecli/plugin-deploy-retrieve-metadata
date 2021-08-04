@@ -17,9 +17,13 @@ import { asRelativePaths, displayHumanReadableResults } from '../../utils/tableB
 import { TestLevel } from '../../utils/testLevel';
 import { DeployProgress } from '../../utils/progressBar';
 import { resolveRestDeploy } from '../../utils/config';
+import { validateOneOfCommandFlags } from '../../utils/requiredFlagValidator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'deploy.metadata');
+
+// One of these flags must be specified for a valid deploy.
+const requiredFlags = ['manifest', 'metadata', 'source-dir'];
 
 export type DeployMetadataResult = FileResponse[];
 
@@ -32,17 +36,20 @@ export default class DeployMetadata extends Command {
       char: 'm',
       summary: messages.getMessage('flags.metadata.summary'),
       multiple: true,
+      exclusive: ['manifest', 'source-dir'],
     }),
     manifest: Flags.string({
       char: 'x',
       description: messages.getMessage('flags.manifest.description'),
       summary: messages.getMessage('flags.manifest.summary'),
+      exclusive: ['metadata', 'source-dir'],
     }),
-    'source-path': Flags.string({
-      char: 's',
-      description: messages.getMessage('flags.source-path.description'),
-      summary: messages.getMessage('flags.source-path.summary'),
+    'source-dir': Flags.string({
+      char: 'd',
+      description: messages.getMessage('flags.source-dir.description'),
+      summary: messages.getMessage('flags.source-dir.summary'),
       multiple: true,
+      exclusive: ['manifest', 'metadata'],
     }),
     'target-org': Flags.string({
       char: 't',
@@ -66,8 +73,11 @@ export default class DeployMetadata extends Command {
 
   public async run(): Promise<DeployMetadataResult> {
     const flags = (await this.parse(DeployMetadata)).flags;
+
+    validateOneOfCommandFlags(requiredFlags, flags);
+
     const componentSet = await ComponentSetBuilder.build({
-      directory: flags['source-path'],
+      directory: flags['source-dir'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,
         directoryPaths: await getPackageDirs(),

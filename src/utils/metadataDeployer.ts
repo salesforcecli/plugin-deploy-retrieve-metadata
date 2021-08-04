@@ -9,7 +9,7 @@ import { EOL } from 'os';
 import { cyan } from 'chalk';
 import { Nullable, ensureString } from '@salesforce/ts-types';
 import { Duration } from '@salesforce/kit';
-import { AuthInfo, ConfigAggregator, GlobalInfo, NamedPackageDir, OrgConfigProperties } from '@salesforce/core';
+import { AuthInfo, ConfigAggregator, GlobalInfo, NamedPackageDir, OrgConfigProperties, SfOrgs } from '@salesforce/core';
 import {
   Deployable,
   Deployer,
@@ -110,18 +110,24 @@ export class MetadataDeployer extends Deployer {
 
   public async promptForUsername(): Promise<string> {
     const aliasOrUsername = ConfigAggregator.getValue(OrgConfigProperties.TARGET_ORG)?.value as string;
-
+    const globalInfo = await GlobalInfo.getInstance();
     if (!aliasOrUsername) {
-      const authroizations = await AuthInfo.listAllAuthorizations();
-      const newestAuths = authroizations
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
+      const orgs: SfOrgs = globalInfo.orgs.getAll();
+      const authorizations = await AuthInfo.listAllAuthorizations();
+      const newestAuths = authorizations
         .filter((a) => !a.error)
-        .sort((a, b) => new Date(ensureString(b.timestamp)).getTime() - new Date(ensureString(a.timestamp)).getTime());
+        .sort((a, b) => {
+          const aTimestamp = orgs[a.username].timestamp;
+          const bTimestamp = orgs[b.username].timestamp;
+          return new Date(ensureString(bTimestamp)).getTime() - new Date(ensureString(aTimestamp)).getTime();
+        });
       const options = newestAuths.map((auth) => ({
         name: auth.username,
-        alias: auth.alias || '',
+        aliases: auth.aliases || '',
         value: auth.username,
       }));
-      const columns = { name: 'Org', alias: 'Alias' };
+      const columns = { name: 'Org', aliases: 'Aliases' };
       const { username } = await this.prompt<{ username: string }>([
         {
           name: 'username',
@@ -132,7 +138,7 @@ export class MetadataDeployer extends Deployer {
       ]);
       return username;
     } else {
-      const globalInfo = await GlobalInfo.getInstance();
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
       return globalInfo.aliases.resolveUsername(aliasOrUsername);
     }
   }

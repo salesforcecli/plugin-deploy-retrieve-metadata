@@ -13,9 +13,13 @@ import { FileResponse, RetrieveResult } from '@salesforce/source-deploy-retrieve
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
 import { displayHumanReadableResults } from '../../utils/tableBuilder';
+import { validateOneOfCommandFlags } from '../../utils/requiredFlagValidator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'retrieve.metadata');
+
+// One of these flags must be specified for a valid deploy.
+const requiredFlags = ['manifest', 'metadata', 'source-dir'];
 
 export type RetrieveMetadataResult = FileResponse[];
 
@@ -46,10 +50,10 @@ export default class RetrieveMetadata extends Command {
       summary: messages.getMessage('flags.package-name.summary'),
       multiple: true,
     }),
-    'source-path': Flags.string({
-      char: 's',
-      summary: messages.getMessage('flags.source-path.summary'),
-      description: messages.getMessage('flags.source-path.description'),
+    'source-dir': Flags.string({
+      char: 'd',
+      summary: messages.getMessage('flags.source-dir.summary'),
+      description: messages.getMessage('flags.source-dir.description'),
       multiple: true,
       exclusive: ['manifest', 'metadata'],
     }),
@@ -71,9 +75,11 @@ export default class RetrieveMetadata extends Command {
   public async run(): Promise<RetrieveMetadataResult> {
     const flags = (await this.parse(RetrieveMetadata)).flags;
 
+    validateOneOfCommandFlags(requiredFlags, flags);
+
     const componentSet = await ComponentSetBuilder.build({
       apiversion: flags['api-version'],
-      directory: flags['source-path'],
+      directory: flags['source-dir'],
       packagenames: flags['package-name'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,

@@ -11,6 +11,6 @@ const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metad
 
 export function validateOneOfCommandFlags(oneOf: string[], flags: { [name: string]: unknown }): void {
   if (!Object.keys(flags).some((flag) => oneOf.includes(flag))) {
-    throw messages.createError('error.RequiredOneOfFlagsMissing', [oneOf.join(', ')]);
+    throw messages.createError('errors.RequiredOneOfFlagsMissing', [oneOf.join(', ')]);
   }
 }

@@ -748,10 +748,10 @@
     sfdx-faye "^1.0.9"
     ts-retry-promise "^0.6.0"
 
-"@salesforce/core@3.3.9":
-  version "3.3.9"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.3.9.tgz#45aa1fb34f2c111e0001aeba370d9caa463b07a3"
-  integrity sha512-5oRP/ft8SgRI2PZ6WUqNs3vI0suzf4uf2DKkrhZdNJ8lZYt/olI9YYsYgaql3T+nPa7OIz441wCpzrw93BZPHg==
+"@salesforce/core@3.3.11":
+  version "3.3.11"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.3.11.tgz#d61e37c787753cae25165361683f55dc79fa62ce"
+  integrity sha512-QKmrrtcdxt5FswT6uFAcs/keRMFZxR/oEhkrflsSPGy6OZsZfSNyVwaKl1npKgv1JuZGeXsUrErTNqw1UyRsVw==
   dependencies:
     "@salesforce/bunyan" "^2.0.0"
     "@salesforce/kit" "^1.5.8"

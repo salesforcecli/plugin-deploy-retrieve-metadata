@@ -2,11 +2,11 @@
   {
     "command": "deploy:metadata",
     "plugin": "@salesforce/plugin-deploy-retrieve-metadata",
-    "flags": ["json", "manifest", "metadata", "source-path", "target-org", "test-level", "wait"]
+    "flags": ["json", "manifest", "metadata", "source-dir", "target-org", "test-level", "wait"]
   },
   {
     "command": "retrieve:metadata",
     "plugin": "@salesforce/plugin-deploy-retrieve-metadata",
-    "flags": ["api-version", "json", "manifest", "metadata", "package-name", "source-path", "target-org", "wait"]
+    "flags": ["api-version", "json", "manifest", "metadata", "package-name", "source-dir", "target-org", "wait"]
   }
 ]

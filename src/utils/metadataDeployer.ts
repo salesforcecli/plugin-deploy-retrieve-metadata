@@ -111,8 +111,9 @@ export class MetadataDeployer extends Deployer {
   public async promptForUsername(): Promise<string> {
     const aliasOrUsername = ConfigAggregator.getValue(OrgConfigProperties.TARGET_ORG)?.value as string;
     const globalInfo = await GlobalInfo.getInstance();
+    const allAliases = globalInfo.aliases.getAll();
+    globalInfo.aliases.resolveUsername(aliasOrUsername);
     if (!aliasOrUsername) {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-assignment
       const orgs: SfOrgs = globalInfo.orgs.getAll();
       const authorizations = await AuthInfo.listAllAuthorizations();
       const newestAuths = authorizations
@@ -124,7 +125,10 @@ export class MetadataDeployer extends Deployer {
         });
       const options = newestAuths.map((auth) => ({
         name: auth.username,
-        aliases: auth.aliases || '',
+        aliases: Object.entries(allAliases)
+          .filter(([, usernameOrAlias]) => usernameOrAlias === auth.username)
+          .map(([alias]) => alias)
+          .join(', '),
         value: auth.username,
       }));
       const columns = { name: 'Org', aliases: 'Aliases' };
@@ -138,7 +142,6 @@ export class MetadataDeployer extends Deployer {
       ]);
       return username;
     } else {
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-member-access,@typescript-eslint/no-unsafe-return
       return globalInfo.aliases.resolveUsername(aliasOrUsername);
     }
   }

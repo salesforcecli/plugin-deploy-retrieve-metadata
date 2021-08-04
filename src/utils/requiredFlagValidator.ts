@@ -10,8 +10,7 @@ Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'required.flag');
 
 export function validateOneOfCommandFlags(oneOf: string[], flags: { [name: string]: unknown }): void {
-  // verify that the user defined one of: manifest, metadata, sourcepath, validateddeployrequestid
   if (!Object.keys(flags).some((flag) => oneOf.includes(flag))) {
-    throw Error(messages.getMessage(' required.oneof.flag.missing', [oneOf.join(', ')]));
+    throw Error(messages.getMessage('required.oneof.flag.missing', [oneOf.join(', ')]));
   }
 }

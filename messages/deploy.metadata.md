@@ -107,7 +107,3 @@ All child components are included. If you specify this flag, don’t specify --m
 # deploy.metadata.api
 
 Deploying to %s using %s API.
-
-# deploy.missing.required.flag
-
-This command expects one of the following flags %s to be provided.

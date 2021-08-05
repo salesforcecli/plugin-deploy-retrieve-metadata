@@ -117,8 +117,6 @@ export default class DeployMetadata extends Command {
     const result = await deploy.pollStatus(500, Duration.minutes(flags.wait).seconds);
     this.setExitCode(result);
 
-    // eslint-disable-next-line no-console
-    // console.log(result);
     if (!this.jsonEnabled()) {
       displaySuccesses(result);
       displayFailures(result);

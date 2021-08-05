@@ -21,25 +21,27 @@ export function asRelativePaths(fileResponses: FileResponse[]): FileResponse[] {
   return fileResponses;
 }
 
-// Sort by type > filePath > fullName
+/**
+ * Sorts file responds by type, then by filePath, then by fullName
+ */
 export function sortFileResponses(fileResponses: FileResponse[]): FileResponse[] {
   return fileResponses.sort((i, j) => {
     if (i.type === j.type) {
       if (i.filePath === j.filePath) {
-        return i.fullName > j.fullName ? 1 : -1;
+        return i.fullName.localeCompare(j.fullName);
       }
-      return i.filePath > j.filePath ? 1 : -1;
+      return i.filePath.localeCompare(j.filePath);
     }
-    return i.type > j.type ? 1 : -1;
+    return i.type.localeCompare(j.type);
   });
 }
 
 export function sortTestResults(results: Failures[] | Successes[] = []): Failures[] | Successes[] {
   return results.sort((a: Successes, b: Successes) => {
     if (a.methodName === b.methodName) {
-      return a.name > b.name ? 1 : -1;
+      return a.name.localeCompare(b.name);
     }
-    return a.methodName > b.methodName ? 1 : -1;
+    return a.methodName.localeCompare(b.methodName);
   });
 }
 

@@ -10,18 +10,18 @@ The source you deploy overwrites the corresponding metadata in your org. This co
 
 To run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue to use the CLI. By default the command waits to finish no matter how long the deployment takes.
 
-To deploy multiple metadata components, either set multiple --metadata <name> flags or a single --metadata flag with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax applies to --manifest and --deploy-dir.
+To deploy multiple metadata components, either set multiple --metadata <name> flags or a single --metadata flag with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax applies to --manifest and --source-dir.
 
 # examples
 
 - Deploy the source files in a directory:
 
-      <%= config.bin %> <%= command.id %>  --deploy-dir path/to/source
+      <%= config.bin %> <%= command.id %>  --source-dir path/to/source
 
 - Deploy a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
 
-      <%= config.bin %> <%= command.id %> --deploy-dir path/to/apex/classes/MyClass.cls path/to/source/objects
-      <%= config.bin %> <%= command.id %> --deploy-dir path/to/apex/classes/MyClass.cls --deploy-dir path/to/source/objects
+      <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
+      <%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
 
 - Deploy all Apex classes:
 
@@ -78,11 +78,11 @@ Valid values are:
 
   If you don’t specify a test level, the default behavior depends on the contents of your deployment package. For more information, see “Running Tests in a Deployment” in the Metadata API Developer Guide.
 
-# flags.deploy-dir.summary
+# flags.source-dir.summary
 
 Path to the local source files to deploy.
 
-# flags.deploy-dir.description
+# flags.source-dir.description
 
 The supplied path can be to a single file (in which case the operation is applied to only one file) or to a folder (in which case the operation is applied to all metadata types in the directory and its subdirectories).
 
@@ -102,7 +102,7 @@ Full file path for manifest (package.xml) of components to deploy.
 
 # flags.manifest.description
 
-All child components are included. If you specify this flag, don’t specify --metadata or --deploy-dir.
+All child components are included. If you specify this flag, don’t specify --metadata or --source-dir.
 
 # deploy.metadata.api
 

@@ -64,7 +64,7 @@ describe('ComponentSetBuilder', () => {
       expect(compSet.has(apexClassComponent)).to.equal(true);
     });
 
-    it('should create ComponentSet from multiple directorys', async () => {
+    it('should create ComponentSet from multiple directories', async () => {
       fileExistsSyncStub.returns(true);
       componentSet.add(apexClassComponent);
       componentSet.add(customObjectComponent);

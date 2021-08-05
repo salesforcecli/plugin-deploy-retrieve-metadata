@@ -23,9 +23,9 @@ describe('deploy metadata NUTs', () => {
     await sourceTestkit?.clean();
   });
 
-  describe('--deploy-dir flag', () => {
+  describe('--source-dir flag', () => {
     it('should deploy force-app', async () => {
-      await sourceTestkit.deploy({ args: '--deploy-dir force-app' });
+      await sourceTestkit.deploy({ args: '--source-dir force-app' });
       await sourceTestkit.expect.filesToBeDeployed(['force-app/**/*'], ['force-app/test/**/*']);
     });
   });

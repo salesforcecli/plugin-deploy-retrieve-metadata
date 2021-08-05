@@ -2,7 +2,7 @@
   {
     "command": "deploy:metadata",
     "plugin": "@salesforce/plugin-deploy-retrieve-metadata",
-    "flags": ["deploy-dir", "json", "manifest", "metadata", "target-org", "test-level", "wait"]
+    "flags": ["json", "manifest", "metadata", "source-dir", "target-org", "test-level", "wait"]
   },
   {
     "command": "retrieve:metadata",

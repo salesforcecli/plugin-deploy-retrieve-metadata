@@ -80,11 +80,11 @@ You must run this command from within a project.
 
 ```
 USAGE
-  $ sf deploy metadata [--json] [-m <value>] [-x <value>] [-d <value>] [-t <value>] [-l
+  $ sf deploy metadata [--json] [-m <value> | -x <value> | -d <value>] [-t <value>] [-l
     NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg] [-w <value>]
 
 FLAGS
-  -d, --deploy-dir=<value>...  Path to the local source files to deploy.
+  -d, --source-dir=<value>...  Path to the local source files to deploy.
 
   -l, --test-level=<option>    [default: NoTestRun] Deployment Apex testing level.
                                <options: NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg>
@@ -113,16 +113,16 @@ DESCRIPTION
 
   To deploy multiple metadata components, either set multiple --metadata <name> flags or a single --metadata flag with
   multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax
-  applies to --manifest and --deploy-dir.
+  applies to --manifest and --source-dir.
 
 EXAMPLES
   Deploy the source files in a directory:
 
-    $ sf deploy metadata  --deploy-dir path/to/source
+    $ sf deploy metadata  --source-dir path/to/source
 
   Deploy a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
-  $ sf deploy metadata --deploy-dir path/to/apex/classes/MyClass.cls path/to/source/objects
-  $ sf deploy metadata --deploy-dir path/to/apex/classes/MyClass.cls --deploy-dir path/to/source/objects
+  $ sf deploy metadata --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
+  $ sf deploy metadata --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
 
   Deploy all Apex classes:
 
@@ -149,7 +149,7 @@ EXAMPLES
     $ sf deploy metadata --metadata ApexClass --test-level RunLocalTests
 
 FLAG DESCRIPTIONS
-  -d, --deploy-dir=<value>...  Path to the local source files to deploy.
+  -d, --source-dir=<value>...  Path to the local source files to deploy.
 
     The supplied path can be to a single file (in which case the operation is applied to only one file) or to a folder
     (in which case the operation is applied to all metadata types in the directory and its subdirectories).
@@ -186,7 +186,7 @@ FLAG DESCRIPTIONS
 
   -x, --manifest=<value>  Full file path for manifest (package.xml) of components to deploy.
 
-    All child components are included. If you specify this flag, don’t specify --metadata or --deploy-dir.
+    All child components are included. If you specify this flag, don’t specify --metadata or --source-dir.
 ```
 
 ## `sf retrieve metadata`

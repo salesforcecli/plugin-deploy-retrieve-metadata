@@ -71,8 +71,9 @@ sf plugins
 ## Commands
 
 <!-- commands -->
-* [`sf deploy metadata`](#sf-deploy-metadata)
-* [`sf retrieve metadata`](#sf-retrieve-metadata)
+
+- [`sf deploy metadata`](#sf-deploy-metadata)
+- [`sf retrieve metadata`](#sf-retrieve-metadata)
 
 ## `sf deploy metadata`
 
@@ -80,7 +81,7 @@ You must run this command from within a project.
 
 ```
 USAGE
-  $ sf deploy metadata [--json] [-m <value> | -x <value> | -d <value>] [-t <value>] [-l
+  $ sf deploy metadata [--json] [-m <value> | -x <value> | -d <value>] [-o <value>] [-l
     NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg] [-w <value>]
 
 FLAGS
@@ -91,14 +92,14 @@ FLAGS
 
   -m, --metadata=<value>...    Metadata component names to deploy.
 
-  -t, --target-org=<value>     Login username or alias for the target org.
+  -o, --target-org=<value>     Login username or alias for the target org.
 
   -w, --wait=<value>           [default: 33] Number of minutes to wait for command to complete and display results.
 
   -x, --manifest=<value>       Full file path for manifest (package.xml) of components to deploy.
 
 GLOBAL FLAGS
-  --json  format output as json
+  --json  Format output as json.
 
 DESCRIPTION
   Deploy metadata in source format to an org from your local project.
@@ -176,7 +177,7 @@ FLAG DESCRIPTIONS
     If you don’t specify a test level, the default behavior depends on the contents of your deployment package. For more
     information, see “Running Tests in a Deployment” in the Metadata API Developer Guide.
 
-  -t, --target-org=<value>  Login username or alias for the target org.
+  -o, --target-org=<value>  Login username or alias for the target org.
 
     Overrides your default org.
 
@@ -195,7 +196,7 @@ You must run this command from within a project.
 
 ```
 USAGE
-  $ sf retrieve metadata [--json] [-a <value>] [-x <value> | -m <value> | -d <value>] [-n <value>] [-t <value>] [-w
+  $ sf retrieve metadata [--json] [-a <value>] [-x <value> | -m <value> | -d <value>] [-n <value>] [-o <value>] [-w
     <value>]
 
 FLAGS
@@ -203,7 +204,7 @@ FLAGS
   -d, --source-dir=<value>...    File paths for source to retrieve from the org.
   -m, --metadata=<value>...      Metadata component names to retrieve.
   -n, --package-name=<value>...  Package names to retrieve.
-  -t, --target-org=<value>       Login username or alias for the target org.
+  -o, --target-org=<value>       Login username or alias for the target org.
 
   -w, --wait=<value>             [default: 33] Number of minutes to wait for the command to complete and display results
                                  to the terminal window.
@@ -211,7 +212,7 @@ FLAGS
   -x, --manifest=<value>         File path for the manifest (package.xml) that specifies the components to retrieve.
 
 GLOBAL FLAGS
-  --json  format output as json
+  --json  Format output as json.
 
 DESCRIPTION
   Retrieve metadata in source format from an org to your local project.
@@ -269,11 +270,13 @@ FLAG DESCRIPTIONS
     The supplied paths can be to a single file (in which case the operation is applied to only one file) or to a folder
     (in which case the operation is applied to all source files in the directory and its subdirectories).
 
-  -t, --target-org=<value>  Login username or alias for the target org.
+  -o, --target-org=<value>  Login username or alias for the target org.
 
     Overrides your default org.
 
-  -w, --wait=<value>  Number of minutes to wait for the command to complete and display results to the terminal window.
+  -w, --wait=<value>
+
+    Number of minutes to wait for the command to complete and display results to the terminal window.
 
     If the command continues to run after the wait period, the CLI returns control of the terminal window to you.
 
@@ -281,4 +284,5 @@ FLAG DESCRIPTIONS
 
     If you specify this parameter, don’t specify --metadata or --source-dir.
 ```
+
 <!-- commandsstop -->

@@ -12,7 +12,7 @@ import { FileResponse, RetrieveResult } from '@salesforce/source-deploy-retrieve
 
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
-import { displayHumanReadableResults } from '../../utils/tableBuilder';
+import { displaySuccesses } from '../../utils/output';
 import { validateOneOfCommandFlags } from '../../utils/requiredFlagValidator';
 
 Messages.importMessagesDirectory(__dirname);
@@ -58,7 +58,7 @@ export default class RetrieveMetadata extends Command {
       exclusive: ['manifest', 'metadata'],
     }),
     'target-org': Flags.string({
-      char: 't',
+      char: 'o',
       summary: messages.getMessage('flags.target-org.summary'),
       description: messages.getMessage('flags.target-org.description'),
     }),
@@ -97,7 +97,7 @@ export default class RetrieveMetadata extends Command {
       usernameOrConnection: await resolveTargetOrg(flags['target-org']),
       merge: true,
       output: project.getDefaultPackage().fullPath,
-      packageNames: flags['package-name'],
+      packageOptions: flags['package-name'],
     });
 
     await retrieve.start();
@@ -106,7 +106,7 @@ export default class RetrieveMetadata extends Command {
     const fileResponses = result?.getFileResponses() || [];
 
     if (!flags.json) {
-      displayHumanReadableResults(fileResponses);
+      displaySuccesses(result);
     }
     return fileResponses;
   }

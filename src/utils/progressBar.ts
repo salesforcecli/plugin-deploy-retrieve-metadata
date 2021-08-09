@@ -16,7 +16,7 @@ const startProgressBar = once((bar: ProgressBar.Bar, total: number) => {
 
 export class ProgressBar {
   private static DEFAULT_OPTIONS = {
-    title: 'SOURCE PROGRESS',
+    title: 'PROGRESS',
     format: '%s | {bar} | {value}/{total} Components',
     barCompleteChar: '\u2588',
     barIncompleteChar: '\u2591',

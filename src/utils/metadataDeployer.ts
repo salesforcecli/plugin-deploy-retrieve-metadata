@@ -18,7 +18,7 @@ import {
   generateTableChoices,
 } from '@salesforce/plugin-deploy-retrieve-utils';
 import { ComponentSetBuilder } from './componentSetBuilder';
-import { displayHumanReadableResults } from './tableBuilder';
+import { displayFailures, displaySuccesses, displayTestResults } from './output';
 import { TestLevel } from './testLevel';
 import { DeployProgress } from './progressBar';
 import { resolveRestDeploy } from './config';
@@ -105,7 +105,9 @@ export class MetadataDeployer extends Deployer {
     new DeployProgress(deploy).start();
 
     const result = await deploy.pollStatus(500, Duration.minutes(33).seconds);
-    displayHumanReadableResults(result?.getFileResponses() || []);
+    displaySuccesses(result);
+    displayFailures(result);
+    displayTestResults(result, this.testLevel);
   }
 
   public async promptForUsername(): Promise<string> {

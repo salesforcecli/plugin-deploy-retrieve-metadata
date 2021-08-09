@@ -3,10 +3,20 @@
   "$ref": "#/definitions/DeployMetadataResult",
   "definitions": {
     "DeployMetadataResult": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/FileResponse"
-      }
+      "type": "object",
+      "properties": {
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/FileResponse"
+          }
+        },
+        "tests": {
+          "$ref": "#/definitions/TestResults"
+        }
+      },
+      "required": ["files"],
+      "additionalProperties": false
     },
     "FileResponse": {
       "anyOf": [
@@ -64,6 +74,25 @@
           "additionalProperties": false
         }
       ]
+    },
+    "TestResults": {
+      "type": "object",
+      "properties": {
+        "passing": {
+          "type": "number"
+        },
+        "failing": {
+          "type": "number"
+        },
+        "total": {
+          "type": "number"
+        },
+        "time": {
+          "type": "number"
+        }
+      },
+      "required": ["passing", "failing", "total"],
+      "additionalProperties": false
     }
   }
 }

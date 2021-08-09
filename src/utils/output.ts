@@ -5,12 +5,22 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import * as os from 'os';
 import * as path from 'path';
+import cli from 'cli-ux';
+import { blue, bold, dim, red, underline } from 'chalk';
 import { DeployResult, FileResponse, RetrieveResult } from '@salesforce/source-deploy-retrieve';
 import { RequestStatus, Failures, Successes } from '@salesforce/source-deploy-retrieve/lib/src/client/types';
-import cli from 'cli-ux';
-import * as chalk from 'chalk';
-import { getNumber } from '@salesforce/ts-types';
+import { get } from '@salesforce/ts-types';
+import { TestLevel } from './testLevel';
+
+function info(message: string): string {
+  return blue(bold(message));
+}
+
+function error(message: string): string {
+  return red(bold(message));
+}
 
 export function asRelativePaths(fileResponses: FileResponse[]): FileResponse[] {
   fileResponses.forEach((file) => {
@@ -26,18 +36,18 @@ export function asRelativePaths(fileResponses: FileResponse[]): FileResponse[] {
  */
 export function sortFileResponses(fileResponses: FileResponse[]): FileResponse[] {
   return fileResponses.sort((i, j) => {
-    if (i.type === j.type) {
+    if (i.type === j.type && i.filePath && j.filePath) {
       if (i.filePath === j.filePath) {
-        return i.fullName.localeCompare(j.fullName);
+        return i.fullName > j.fullName ? 1 : -1;
       }
-      return i.filePath.localeCompare(j.filePath);
+      return i?.filePath > j?.filePath ? 1 : -1;
     }
-    return i.type.localeCompare(j.type);
+    return i.type > j.type ? 1 : -1;
   });
 }
 
 export function sortTestResults(results: Failures[] | Successes[] = []): Failures[] | Successes[] {
-  return results.sort((a: Successes, b: Successes) => {
+  return results.sort((a, b) => {
     if (a.methodName === b.methodName) {
       return a.name.localeCompare(b.name);
     }
@@ -64,39 +74,43 @@ export function displaySuccesses(result: DeployResult | RetrieveResult): void {
     type: { header: 'Type' },
     filePath: { header: 'Path' },
   };
-  const options = { title: chalk.blue.bold('Deployed Source') };
+  const options = { title: info('Deployed Source') };
   cli.log();
   cli.table(successes, columns, options);
 }
 
-export function displayTestResults(result: DeployResult): void {
-  cli.log();
-  cli.log(chalk.blue.bold('Test Results Summary'));
-  const passing = getNumber(result, 'response.numberTestsCompleted');
-  const failing = getNumber(result, 'response.numberTestErrors');
-  const total = getNumber(result, 'response.numberTestsTotal');
-  const time = getNumber(result, 'response.details.runTestResult.totalTime');
-  cli.log(`Passing: ${passing}`);
-  cli.log(`Failing: ${failing}`);
-  cli.log(`Total: ${total}`);
-  if (time) cli.log(`Time: ${time}`);
+export function displayTestResults(result: DeployResult, testLevel: TestLevel): void {
+  if (testLevel === TestLevel.NoTestRun) {
+    cli.log();
+    return;
+  }
 
   if (result?.response?.numberTestErrors) {
     const failures = toArray(result.response.details?.runTestResult?.failures);
     const failureCount = result.response.details.runTestResult?.numFailures;
-    const tests = sortTestResults(failures);
-    const columns = {
-      name: { header: 'Name' },
-      methodName: { header: 'Method' },
-      message: { header: 'Message' },
-      stackTrace: { header: 'Stacktrace' },
-    };
-    const options = {
-      title: chalk.red.bold(`Test Failures [${failureCount}]`),
-    };
+    const tests = sortTestResults(failures) as Failures[];
     cli.log();
-    cli.table(tests, columns, options);
+    cli.log(error(`Test Failures [${failureCount}]`));
+    for (const test of tests) {
+      const testName = underline(`${test.name}.${test.methodName}`);
+      const stackTrace = test.stackTrace.replace(/\n/g, `${os.EOL}    `);
+      cli.log(`• ${testName}`);
+      cli.log(`  ${dim('message')}: ${test.message}`);
+      cli.log(`  ${dim('stacktrace')}: ${os.EOL}    ${stackTrace}`);
+      cli.log();
+    }
   }
+
+  cli.log();
+  cli.log(info('Test Results Summary'));
+  const passing = get(result, 'response.numberTestsCompleted', 0) as number;
+  const failing = get(result, 'response.numberTestErrors', 0) as number;
+  const total = get(result, 'response.numberTestsTotal', 0) as number;
+  const time = get(result, 'response.details.runTestResult.totalTime', 0) as number;
+  cli.log(`Passing: ${passing}`);
+  cli.log(`Failing: ${failing}`);
+  cli.log(`Total: ${total}`);
+  if (time) cli.log(`Time: ${time}`);
 }
 
 export function displayFailures(result: DeployResult | RetrieveResult): void {
@@ -111,7 +125,7 @@ export function displayFailures(result: DeployResult | RetrieveResult): void {
     fullName: { header: 'Name' },
     error: { header: 'Problem' },
   };
-  const options = { title: chalk.red.bold(`Component Failures [${failures.length}]`) };
+  const options = { title: error(`Component Failures [${failures.length}]`) };
   cli.log();
   cli.table(failures, columns, options);
 }

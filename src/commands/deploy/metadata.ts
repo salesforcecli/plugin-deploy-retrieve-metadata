@@ -9,7 +9,7 @@ import { EOL } from 'os';
 import { Command, Flags } from '@oclif/core';
 import { Messages } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
-import { getNumber, getString } from '@salesforce/ts-types';
+import { get, getString } from '@salesforce/ts-types';
 import { DeployResult, FileResponse } from '@salesforce/source-deploy-retrieve';
 import { RequestStatus } from '@salesforce/source-deploy-retrieve/lib/src/client/types';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
@@ -84,7 +84,7 @@ export default class DeployMetadata extends Command {
 
   public async run(): Promise<DeployMetadataResult> {
     const flags = (await this.parse(DeployMetadata)).flags;
-
+    const testLevel = flags['test-level'] as TestLevel;
     validateOneOfCommandFlags(requiredFlags, flags);
 
     const componentSet = await ComponentSetBuilder.build({
@@ -105,9 +105,7 @@ export default class DeployMetadata extends Command {
 
     const deploy = await componentSet.deploy({
       usernameOrConnection: targetOrg,
-      apiOptions: {
-        testLevel: flags['test-level'] as TestLevel,
-      },
+      apiOptions: { testLevel },
     });
 
     if (!this.jsonEnabled()) {
@@ -120,7 +118,7 @@ export default class DeployMetadata extends Command {
     if (!this.jsonEnabled()) {
       displaySuccesses(result);
       displayFailures(result);
-      displayTestResults(result);
+      displayTestResults(result, testLevel);
     }
     return {
       files: asRelativePaths(result?.getFileResponses() || []),
@@ -136,10 +134,11 @@ export default class DeployMetadata extends Command {
   }
 
   private getTestResults(result: DeployResult): TestResults {
-    const passing = getNumber(result, 'response.numberTestsCompleted');
-    const failing = getNumber(result, 'response.numberTestErrors');
-    const total = getNumber(result, 'response.numberTestsTotal');
-    const time = getNumber(result, 'response.details.runTestResult.totalTime');
-    return { passing, failing, total, time };
+    const passing = get(result, 'response.numberTestsCompleted', 0) as number;
+    const failing = get(result, 'response.numberTestErrors', 0) as number;
+    const total = get(result, 'response.numberTestsTotal', 0) as number;
+    const testResults = { passing, failing, total };
+    const time = get(result, 'response.details.runTestResult.totalTime', 0) as number;
+    return time ? { ...testResults, time } : testResults;
   }
 }

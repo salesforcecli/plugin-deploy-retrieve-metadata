@@ -107,7 +107,7 @@ export class MetadataDeployer extends Deployer {
     const result = await deploy.pollStatus(500, Duration.minutes(33).seconds);
     displaySuccesses(result);
     displayFailures(result);
-    displayTestResults(result);
+    displayTestResults(result, this.testLevel);
   }
 
   public async promptForUsername(): Promise<string> {

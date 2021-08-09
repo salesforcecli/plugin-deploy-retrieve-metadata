@@ -2,112 +2,103 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [0.0.16](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.15...v0.0.16) (2021-08-05)
+### [0.0.17](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.16...v0.0.17) (2021-08-09)
 
+### Features
+
+- display test results ([e8c1293](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/e8c12930cc4744de008483d26b4965fc69f12357))
+
+### [0.0.16](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.15...v0.0.16) (2021-08-05)
 
 ### Bug Fixes
 
-* modify deploy md and retrieve to use source-path ([#13](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/13)) ([36f5d8b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/36f5d8b7c82853c2ddaf5c7aa18565b7090e58fe))
+- modify deploy md and retrieve to use source-path ([#13](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/13)) ([36f5d8b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/36f5d8b7c82853c2ddaf5c7aa18565b7090e58fe))
 
 ### [0.0.15](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.14...v0.0.15) (2021-08-03)
 
-
 ### Bug Fixes
 
-* update topic descriptions in package.json ([1c0626d](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/1c0626d112d18987c12e5db027a22643c85eabf2))
+- update topic descriptions in package.json ([1c0626d](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/1c0626d112d18987c12e5db027a22643c85eabf2))
 
 ### [0.0.14](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.13...v0.0.14) (2021-08-03)
 
-
 ### Bug Fixes
 
-* remove RunSpecifiedTests from deploy options ([#12](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/12)) ([54fa47c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/54fa47c0fbead762de7dd7fb52a3436cfcc053bd))
+- remove RunSpecifiedTests from deploy options ([#12](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/12)) ([54fa47c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/54fa47c0fbead762de7dd7fb52a3436cfcc053bd))
 
 ### [0.0.13](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.12...v0.0.13) (2021-07-29)
 
-
 ### Bug Fixes
 
-* add short flags and display deploy api type ([d1b9ea2](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/d1b9ea21fb5ec64709065cc0444e31a0c7c3ccf5))
+- add short flags and display deploy api type ([d1b9ea2](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/d1b9ea21fb5ec64709065cc0444e31a0c7c3ccf5))
 
 ### [0.0.12](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.11...v0.0.12) (2021-07-28)
 
-
 ### Bug Fixes
 
-* update to @salesforce/core@3.3.5 ([22df767](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/22df7676a858b2ddf1c964df8097a76667dfbad2))
+- update to @salesforce/core@3.3.5 ([22df767](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/22df7676a858b2ddf1c964df8097a76667dfbad2))
 
 ### [0.0.11](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.10...v0.0.11) (2021-07-27)
 
-
 ### Bug Fixes
 
-* udpate topic descriptions ([0e48639](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/0e48639e2e28df61fbefee04a23ae715d2107a3e))
+- udpate topic descriptions ([0e48639](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/0e48639e2e28df61fbefee04a23ae715d2107a3e))
 
 ### [0.0.10](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.9...v0.0.10) (2021-07-27)
 
-
 ### Bug Fixes
 
-* add missing flag descriptions ([eb17591](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/eb17591cedff3cbb54dec39ea1429fcd950e4233))
+- add missing flag descriptions ([eb17591](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/eb17591cedff3cbb54dec39ea1429fcd950e4233))
 
 ### [0.0.9](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.8...v0.0.9) (2021-07-27)
 
-
 ### Bug Fixes
 
-* updates for @salesforce/core@3.3.3 ([#8](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/8)) ([d8b84a4](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/d8b84a4aa2269c3309b30213b3b844971e565a6c))
+- updates for @salesforce/core@3.3.3 ([#8](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/8)) ([d8b84a4](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/d8b84a4aa2269c3309b30213b3b844971e565a6c))
 
 ### [0.0.8](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.7...v0.0.8) (2021-07-19)
 
-
 ### Bug Fixes
 
-* update help for "project retrieve org" ([c22e28c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/c22e28cd17fb13045c11a09c4df45f1f6f503478))
-* update help for "sf project deploy org" ([79a2fb6](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/79a2fb689adf467e61b8e22e206f0c239f3013ca))
+- update help for "project retrieve org" ([c22e28c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/c22e28cd17fb13045c11a09c4df45f1f6f503478))
+- update help for "sf project deploy org" ([79a2fb6](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/79a2fb689adf467e61b8e22e206f0c239f3013ca))
 
 ### [0.0.7](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.6...v0.0.7) (2021-07-15)
 
 ### [0.0.6](https://github.com/salesforcecli/plugin-project-org/compare/v0.0.5...v0.0.6) (2021-07-14)
 
-
 ### Features
 
-* show progress bar during deploys ([82ffe1f](https://github.com/salesforcecli/plugin-project-org/commit/82ffe1f65b7d1c3984887b15c74e72ea757acb46))
+- show progress bar during deploys ([82ffe1f](https://github.com/salesforcecli/plugin-project-org/commit/82ffe1f65b7d1c3984887b15c74e72ea757acb46))
 
 ### [0.0.5](https://github.com/salesforcecli/plugin-project-org/compare/v0.0.4...v0.0.5) (2021-07-14)
 
-
 ### Features
 
-* add project retrieve org ([#5](https://github.com/salesforcecli/plugin-project-org/issues/5)) ([4a29157](https://github.com/salesforcecli/plugin-project-org/commit/4a29157302ce668d8947f84e00c985edd7717765))
+- add project retrieve org ([#5](https://github.com/salesforcecli/plugin-project-org/issues/5)) ([4a29157](https://github.com/salesforcecli/plugin-project-org/commit/4a29157302ce668d8947f84e00c985edd7717765))
 
 ### [0.0.4](https://github.com/salesforcecli/plugin-project-org/compare/v0.0.3...v0.0.4) (2021-07-11)
 
-
 ### Bug Fixes
 
-* bump oclif/core ([6aa6439](https://github.com/salesforcecli/plugin-project-org/commit/6aa6439bca0ae0aedfb779c3ef7af22e0fc33328))
+- bump oclif/core ([6aa6439](https://github.com/salesforcecli/plugin-project-org/commit/6aa6439bca0ae0aedfb779c3ef7af22e0fc33328))
 
 ### [0.0.3](https://github.com/salesforcecli/plugin-project-org/compare/v0.0.2...v0.0.3) (2021-07-09)
 
 ### [0.0.2](https://github.com/salesforcecli/plugin-project-org/compare/v0.0.1...v0.0.2) (2021-06-30)
 
-
 ### Features
 
-* add hook for project deploy ([#3](https://github.com/salesforcecli/plugin-project-org/issues/3)) ([3f3be75](https://github.com/salesforcecli/plugin-project-org/commit/3f3be75965c5ffb3f78c49fa02ecf6ae825d09a3))
+- add hook for project deploy ([#3](https://github.com/salesforcecli/plugin-project-org/issues/3)) ([3f3be75](https://github.com/salesforcecli/plugin-project-org/commit/3f3be75965c5ffb3f78c49fa02ecf6ae825d09a3))
 
 ### 0.0.1 (2021-06-23)
 
-
 ### Features
 
-* add deploy org command ([13f0aad](https://github.com/salesforcecli/plugin-project-org/commit/13f0aadccf81c8751b21bbe002167fc32d7934ed)), closes [#2](https://github.com/salesforcecli/plugin-project-org/issues/2)
-* add deploy org command ([dbb2dfd](https://github.com/salesforcecli/plugin-project-org/commit/dbb2dfd8d77cfd91f71c881e9d39eca5e70a21e9))
-
+- add deploy org command ([13f0aad](https://github.com/salesforcecli/plugin-project-org/commit/13f0aadccf81c8751b21bbe002167fc32d7934ed)), closes [#2](https://github.com/salesforcecli/plugin-project-org/issues/2)
+- add deploy org command ([dbb2dfd](https://github.com/salesforcecli/plugin-project-org/commit/dbb2dfd8d77cfd91f71c881e9d39eca5e70a21e9))
 
 ### Bug Fixes
 
-* circle config ([7ad8502](https://github.com/salesforcecli/plugin-project-org/commit/7ad8502681c05426e49591a900b9e60dd83bb04a))
-* publish schema ([d2551aa](https://github.com/salesforcecli/plugin-project-org/commit/d2551aa17765a6a43ba42b33bedd91ede90a4f69))
+- circle config ([7ad8502](https://github.com/salesforcecli/plugin-project-org/commit/7ad8502681c05426e49591a900b9e60dd83bb04a))
+- publish schema ([d2551aa](https://github.com/salesforcecli/plugin-project-org/commit/d2551aa17765a6a43ba42b33bedd91ede90a4f69))

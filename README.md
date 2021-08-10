@@ -71,9 +71,8 @@ sf plugins
 ## Commands
 
 <!-- commands -->
-
-- [`sf deploy metadata`](#sf-deploy-metadata)
-- [`sf retrieve metadata`](#sf-retrieve-metadata)
+* [`sf deploy metadata`](#sf-deploy-metadata)
+* [`sf retrieve metadata`](#sf-retrieve-metadata)
 
 ## `sf deploy metadata`
 
@@ -274,9 +273,7 @@ FLAG DESCRIPTIONS
 
     Overrides your default org.
 
-  -w, --wait=<value>
-
-    Number of minutes to wait for the command to complete and display results to the terminal window.
+  -w, --wait=<value>  Number of minutes to wait for the command to complete and display results to the terminal window.
 
     If the command continues to run after the wait period, the CLI returns control of the terminal window to you.
 
@@ -284,5 +281,4 @@ FLAG DESCRIPTIONS
 
     If you specify this parameter, don’t specify --metadata or --source-dir.
 ```
-
 <!-- commandsstop -->

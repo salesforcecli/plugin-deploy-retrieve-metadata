@@ -37,11 +37,9 @@ const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metad
 
 const compareOrgs = (a: OrgAuthorization, b: OrgAuthorization): number => {
   // scratch orgs before other orgs
-  if (a.isScratchOrg) {
-    if (!b.isScratchOrg) {
-      // all scratch orgs come before non-scratch orgs
-      return -1;
-    }
+  if (a.isScratchOrg && !b.isScratchOrg) {
+    // all scratch orgs come before non-scratch orgs
+    return -1;
   } else {
     // dev hubs after scratch but before remaining orgs
     if (b.isScratchOrg) {
@@ -152,7 +150,7 @@ export class MetadataDeployer extends Deployer {
     displayTestResults(result, this.testLevel);
   }
 
-  public async promptForUsername(): Promise<string | undefined> {
+  public async promptForUsername(): Promise<string> {
     const aliasOrUsername = ConfigAggregator.getValue(OrgConfigProperties.TARGET_ORG)?.value as string;
     const globalInfo = await GlobalInfo.getInstance();
     const allAliases = globalInfo.aliases.getAll();

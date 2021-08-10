@@ -7,9 +7,17 @@
 
 import { EOL } from 'os';
 import { cyan } from 'chalk';
-import { Nullable, ensureString } from '@salesforce/ts-types';
+import { Nullable } from '@salesforce/ts-types';
 import { Duration } from '@salesforce/kit';
-import { AuthInfo, ConfigAggregator, GlobalInfo, NamedPackageDir, OrgConfigProperties, SfOrgs } from '@salesforce/core';
+import {
+  AuthInfo,
+  ConfigAggregator,
+  GlobalInfo,
+  Messages,
+  NamedPackageDir,
+  OrgAuthorization,
+  OrgConfigProperties,
+} from '@salesforce/core';
 import {
   Deployable,
   Deployer,
@@ -17,11 +25,45 @@ import {
   DeployerOptions,
   generateTableChoices,
 } from '@salesforce/plugin-deploy-retrieve-utils';
+
 import { ComponentSetBuilder } from './componentSetBuilder';
 import { displayFailures, displaySuccesses, displayTestResults } from './output';
 import { TestLevel } from './testLevel';
 import { DeployProgress } from './progressBar';
 import { resolveRestDeploy } from './config';
+
+Messages.importMessagesDirectory(__dirname);
+const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'deploy.metadata');
+
+const compareOrgs = (a: OrgAuthorization, b: OrgAuthorization): number => {
+  // scratch orgs before other orgs
+  if (a.isScratchOrg) {
+    if (!b.isScratchOrg) {
+      // all scratch orgs come before non-scratch orgs
+      return -1;
+    }
+  } else {
+    // dev hubs after scratch but before remaining orgs
+    if (b.isScratchOrg) {
+      return 1;
+    }
+    if (a.isDevHub && !b.isScratchOrg && !b.isDevHub) {
+      return -1;
+    }
+    // not a scratch org and not a devhub means "other" sorts last
+    if (!a.isDevHub) {
+      return 1;
+    }
+  }
+  // orgs are equal by type - sort by name ascending
+  if (a.username < b.username) {
+    return -1;
+  }
+  if (a.username > b.username) {
+    return 1;
+  }
+  return 0;
+};
 
 export interface MetadataDeployOptions extends DeployerOptions {
   testLevel?: TestLevel;
@@ -110,39 +152,44 @@ export class MetadataDeployer extends Deployer {
     displayTestResults(result, this.testLevel);
   }
 
-  public async promptForUsername(): Promise<string> {
+  public async promptForUsername(): Promise<string | undefined> {
     const aliasOrUsername = ConfigAggregator.getValue(OrgConfigProperties.TARGET_ORG)?.value as string;
     const globalInfo = await GlobalInfo.getInstance();
     const allAliases = globalInfo.aliases.getAll();
-    globalInfo.aliases.resolveUsername(aliasOrUsername);
+
     if (!aliasOrUsername) {
-      const orgs: SfOrgs = globalInfo.orgs.getAll();
-      const authorizations = await AuthInfo.listAllAuthorizations();
-      const newestAuths = authorizations
-        .filter((a) => !a.error)
-        .sort((a, b) => {
-          const aTimestamp = orgs[a.username].timestamp;
-          const bTimestamp = orgs[b.username].timestamp;
-          return new Date(ensureString(bTimestamp)).getTime() - new Date(ensureString(aTimestamp)).getTime();
+      const authorizations = await AuthInfo.listAllAuthorizations(
+        (orgAuth) => !orgAuth.error && (orgAuth.isDevHub || !orgAuth.isExpired)
+      );
+      if (authorizations.length > 0) {
+        const newestAuths = authorizations.sort((a, b) => {
+          const orgComparison = compareOrgs(a, b);
+          if (orgComparison !== 1) {
+            return orgComparison;
+          }
         });
-      const options = newestAuths.map((auth) => ({
-        name: auth.username,
-        aliases: Object.entries(allAliases)
-          .filter(([, usernameOrAlias]) => usernameOrAlias === auth.username)
-          .map(([alias]) => alias)
-          .join(', '),
-        value: auth.username,
-      }));
-      const columns = { name: 'Org', aliases: 'Aliases' };
-      const { username } = await this.prompt<{ username: string }>([
-        {
-          name: 'username',
-          message: 'Select the org you want to deploy to:',
-          type: 'list',
-          choices: generateTableChoices(columns, options),
-        },
-      ]);
-      return username;
+        const options = newestAuths.map((auth) => ({
+          name: auth.username,
+          aliases: Object.entries(allAliases)
+            .filter(([, usernameOrAlias]) => usernameOrAlias === auth.username)
+            .map(([alias]) => alias)
+            .join(', '),
+          isScratchOrg: auth.isScratchOrg ? 'Yes' : 'No',
+          value: auth.username,
+        }));
+        const columns = { name: 'Org', aliases: 'Aliases', isScratchOrg: 'Scratch Org' };
+        const { username } = await this.prompt<{ username: string }>([
+          {
+            name: 'username',
+            message: 'Select the org you want to deploy to:',
+            type: 'list',
+            choices: generateTableChoices(columns, options, false),
+          },
+        ]);
+        return username;
+      } else {
+        throw messages.createError('errors.NoOrgsToSelect');
+      }
     } else {
       return globalInfo.aliases.resolveUsername(aliasOrUsername);
     }

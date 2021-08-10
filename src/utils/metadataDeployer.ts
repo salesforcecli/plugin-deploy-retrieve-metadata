@@ -159,15 +159,10 @@ export class MetadataDeployer extends Deployer {
 
     if (!aliasOrUsername) {
       const authorizations = await AuthInfo.listAllAuthorizations(
-        (orgAuth) => !orgAuth.error && (orgAuth.isDevHub || !orgAuth.isExpired)
+        (orgAuth) => !orgAuth.error && (orgAuth.isDevHub || !orgAuth.isExpired || orgAuth.isExpired === 'unknown')
       );
       if (authorizations.length > 0) {
-        const newestAuths = authorizations.sort((a, b) => {
-          const orgComparison = compareOrgs(a, b);
-          if (orgComparison !== 1) {
-            return orgComparison;
-          }
-        });
+        const newestAuths = authorizations.sort(compareOrgs);
         const options = newestAuths.map((auth) => ({
           name: auth.username,
           aliases: Object.entries(allAliases)

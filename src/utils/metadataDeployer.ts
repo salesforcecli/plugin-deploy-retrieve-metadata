@@ -35,16 +35,21 @@ import { resolveRestDeploy } from './config';
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'deploy.metadata');
 
-const compareOrgs = (a: OrgAuthorization, b: OrgAuthorization): number => {
+type OrgAuthWithTimestamp = OrgAuthorization & { timestamp: Date };
+
+const compareOrgs = (a: OrgAuthWithTimestamp, b: OrgAuthWithTimestamp): number => {
   // scratch orgs before other orgs
   if (a.isScratchOrg && !b.isScratchOrg) {
     // all scratch orgs come before non-scratch orgs
     return -1;
   } else {
-    // dev hubs after scratch but before remaining orgs
-    if (b.isScratchOrg) {
-      return 1;
+    // sort scratch orgs by timestamp - descending
+    if (a.isScratchOrg && b.isScratchOrg) {
+      const aTimestamp = new Date(a.timestamp);
+      const bTimestamp = new Date(b.timestamp);
+      return bTimestamp.getTime() - aTimestamp.getTime();
     }
+    // dev hubs after scratch but before remaining orgs
     if (a.isDevHub && !b.isScratchOrg && !b.isDevHub) {
       return -1;
     }
@@ -154,11 +159,14 @@ export class MetadataDeployer extends Deployer {
     const aliasOrUsername = ConfigAggregator.getValue(OrgConfigProperties.TARGET_ORG)?.value as string;
     const globalInfo = await GlobalInfo.getInstance();
     const allAliases = globalInfo.aliases.getAll();
-
     if (!aliasOrUsername) {
-      const authorizations = await AuthInfo.listAllAuthorizations(
-        (orgAuth) => !orgAuth.error && (orgAuth.isDevHub || orgAuth.isExpired !== true)
-      );
+      const authorizations = (
+        await AuthInfo.listAllAuthorizations((orgAuth) => !orgAuth.error && orgAuth.isExpired !== true)
+      ).map((orgAuth) => {
+        const org = globalInfo.orgs.get(orgAuth.username);
+        const timestamp = org.timestamp ? new Date(org.timestamp as string) : new Date();
+        return { ...orgAuth, timestamp } as OrgAuthWithTimestamp;
+      });
       if (authorizations.length > 0) {
         const newestAuths = authorizations.sort(compareOrgs);
         const options = newestAuths.map((auth) => ({

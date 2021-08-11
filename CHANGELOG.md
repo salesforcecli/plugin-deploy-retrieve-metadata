@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.19](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.18...v0.0.19) (2021-08-11)
+
+
+### Bug Fixes
+
+* limit orgs to select during interactive deploy ([#17](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/17)) ([1ce5e54](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/1ce5e54ce3f4ff4a8a6072c8c28d4a46040e9823))
+
 ### [0.0.18](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.16...v0.0.18) (2021-08-10)
 
 

@@ -110,5 +110,5 @@ Deploying to %s using %s API.
 
 # errors.NoOrgsToSelect
 
-There are no active scratch orgs, dev hubs or other orgs to select from.
+Can't find any active scratch orgs, Dev Hubs, or other orgs.
 Please verify that you have one of these orgs to select and have properly authenticated to said org before retrying the deploy.

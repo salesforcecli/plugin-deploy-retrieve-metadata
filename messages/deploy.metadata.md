@@ -107,3 +107,8 @@ All child components are included. If you specify this flag, don’t specify --m
 # deploy.metadata.api
 
 Deploying to %s using %s API.
+
+# errors.NoOrgsToSelect
+
+Can't find any active scratch orgs, Dev Hubs, or other orgs.
+Either log into an org or create a scratch org, and then try again. 

@@ -771,10 +771,10 @@
     sfdx-faye "^1.0.9"
     ts-retry-promise "^0.6.0"
 
-"@salesforce/core@3.3.11":
-  version "3.3.11"
-  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.3.11.tgz#d61e37c787753cae25165361683f55dc79fa62ce"
-  integrity sha512-QKmrrtcdxt5FswT6uFAcs/keRMFZxR/oEhkrflsSPGy6OZsZfSNyVwaKl1npKgv1JuZGeXsUrErTNqw1UyRsVw==
+"@salesforce/core@3.3.12":
+  version "3.3.12"
+  resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.3.12.tgz#3eda0adbf3702441ac5ec80c513a6a50e5084f25"
+  integrity sha512-INIo91KD0pmSOIf7SSAJrurljOZ44b4XJadCB73okwkCxsQ+HZrWfI+1jd3oa36jSkxc3mRVr3e8+4WZppiNEQ==
   dependencies:
     "@salesforce/bunyan" "^2.0.0"
     "@salesforce/kit" "^1.5.8"
@@ -949,20 +949,20 @@
     cli-ux "^5.6.3"
     tslib "^2"
 
-"@salesforce/plugin-deploy-retrieve-utils@^0.0.8":
-  version "0.0.8"
-  resolved "https://registry.npmjs.org/@salesforce/plugin-deploy-retrieve-utils/-/plugin-deploy-retrieve-utils-0.0.8.tgz#866ba43f02f011f6501377240d13da48788edf4b"
-  integrity sha512-QyjjcqP4P73azL9VwxLhO/9vS3aoBTVqk77gN+gMkp3mlFksbLZYyQqRxSuoF1m5NqIf9Wu0ARGMfoSuEN9kZw==
+"@salesforce/plugin-deploy-retrieve-utils@^0.0.10":
+  version "0.0.10"
+  resolved "https://registry.yarnpkg.com/@salesforce/plugin-deploy-retrieve-utils/-/plugin-deploy-retrieve-utils-0.0.10.tgz#bac871c38a8338f9e1ba39ec29abd15c608c6d71"
+  integrity sha512-nh4x5BUBaRn005xk56Ozh2A1SwyPpNLqyozWjAEVHKBLEuv0bDV56GOpYxfNHuDNMCJ+b5QwfWF4dduDZm4kww==
   dependencies:
     "@salesforce/kit" "^1.5.8"
     "@salesforce/ts-types" "^1.5.13"
     cli-ux "^5.6.2"
     inquirer "^8.1.1"
 
-"@salesforce/plugin-deploy-retrieve-utils@^0.0.9":
-  version "0.0.9"
-  resolved "https://registry.npmjs.org/@salesforce/plugin-deploy-retrieve-utils/-/plugin-deploy-retrieve-utils-0.0.9.tgz#b663d8f2653ce5ee0f37c34ea3dcd226c4daba36"
-  integrity sha512-hZ5zjht94Ttnie8FirGkYf5/qE0QHKhi0fzeCsdwHOuqkpdQcuxAgSuOx9GLg1XaWPAYJYlukYwRqBLA+FsQgg==
+"@salesforce/plugin-deploy-retrieve-utils@^0.0.8":
+  version "0.0.8"
+  resolved "https://registry.npmjs.org/@salesforce/plugin-deploy-retrieve-utils/-/plugin-deploy-retrieve-utils-0.0.8.tgz#866ba43f02f011f6501377240d13da48788edf4b"
+  integrity sha512-QyjjcqP4P73azL9VwxLhO/9vS3aoBTVqk77gN+gMkp3mlFksbLZYyQqRxSuoF1m5NqIf9Wu0ARGMfoSuEN9kZw==
   dependencies:
     "@salesforce/kit" "^1.5.8"
     "@salesforce/ts-types" "^1.5.13"

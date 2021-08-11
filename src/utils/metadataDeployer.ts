@@ -59,13 +59,7 @@ const compareOrgs = (a: OrgAuthWithTimestamp, b: OrgAuthWithTimestamp): number =
     }
   }
   // orgs are equal by type - sort by name ascending
-  if (a.username < b.username) {
-    return -1;
-  }
-  if (a.username > b.username) {
-    return 1;
-  }
-  return 0;
+  return a.username.localeCompare(b.username);
 };
 
 export interface MetadataDeployOptions extends DeployerOptions {

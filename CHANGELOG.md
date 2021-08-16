@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.21](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.20...v0.0.21) (2021-08-16)
+
+
+### Bug Fixes
+
+* disply correct result header ([#19](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/19)) ([53b333b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/53b333b627ad75213f3b4ad6b30b3ad0411016cb))
+
 ### [0.0.20](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.19...v0.0.20) (2021-08-12)
 
 

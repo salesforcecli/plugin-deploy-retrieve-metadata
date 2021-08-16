@@ -74,7 +74,8 @@ export function displaySuccesses(result: DeployResult | RetrieveResult): void {
     type: { header: 'Type' },
     filePath: { header: 'Path' },
   };
-  const options = { title: info('Deployed Source') };
+  const title = result instanceof DeployResult ? 'Deployed Source' : 'Retrieved Source';
+  const options = { title: info(title) };
   cli.log();
   cli.table(successes, columns, options);
 }

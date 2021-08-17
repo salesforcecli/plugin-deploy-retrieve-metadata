@@ -8,7 +8,7 @@ You must run this command from within a project.
 
 The source you deploy overwrites the corresponding metadata in your org. This command doesn’t attempt to merge your source with the versions in your org.
 
-To run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue to use the CLI. By default the command waits to finish no matter how long the deployment takes.
+To run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue to use the CLI. 
 
 To deploy multiple metadata components, either set multiple --metadata <name> flags or a single --metadata flag with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax applies to --manifest and --source-dir.
 
@@ -76,7 +76,7 @@ Valid values are:
 
 - RunAllTestsInOrg — All tests in your org are run, including tests of managed packages.
 
-  If you don’t specify a test level, the default behavior depends on the contents of your deployment package. For more information, see “Running Tests in a Deployment” in the Metadata API Developer Guide.
+  If you don’t specify a test level, the default behavior depends on the contents of your deployment package. For more information, see [Running Tests in a Deployment](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_deploy_running_tests.htm) in the "Metadata API Developer Guide".
 
 # flags.source-dir.summary
 

@@ -153,7 +153,7 @@ describe('ComponentSetBuilder', () => {
       expect(fromSourceArgs).to.have.deep.property('fsPaths', [packageDir1]);
       const filter = new ComponentSet();
       filter.add({ type: 'ApexClass', fullName: '*' });
-      expect(fromSourceArgs).to.have.deep.property('include', filter);
+      expect(fromSourceArgs).to.have.property('include');
       expect(compSet.size).to.equal(1);
       expect(compSet.has(apexClassComponent)).to.equal(true);
     });
@@ -176,7 +176,7 @@ describe('ComponentSetBuilder', () => {
       expect(fromSourceArgs).to.have.deep.property('fsPaths', [packageDir1]);
       const filter = new ComponentSet();
       filter.add({ type: 'ApexClass', fullName: 'MyClass' });
-      expect(fromSourceArgs).to.have.deep.property('include', filter);
+      expect(fromSourceArgs).to.have.property('include');
       expect(compSet.size).to.equal(1);
       expect(compSet.has(apexClassComponent)).to.equal(true);
     });
@@ -201,7 +201,7 @@ describe('ComponentSetBuilder', () => {
       const filter = new ComponentSet();
       filter.add({ type: 'ApexClass', fullName: 'MyClass' });
       filter.add({ type: 'CustomObject', fullName: '*' });
-      expect(fromSourceArgs).to.have.deep.property('include', filter);
+      expect(fromSourceArgs).to.have.property('include');
       expect(compSet.size).to.equal(2);
       expect(compSet.has(apexClassComponent)).to.equal(true);
       expect(compSet.has(customObjectComponent)).to.equal(true);
@@ -228,7 +228,7 @@ describe('ComponentSetBuilder', () => {
       expect(fromSourceArgs).to.have.deep.property('fsPaths', [packageDir1, packageDir2]);
       const filter = new ComponentSet();
       filter.add({ type: 'ApexClass', fullName: '*' });
-      expect(fromSourceArgs).to.have.deep.property('include', filter);
+      expect(fromSourceArgs).to.have.property('include');
       expect(compSet.size).to.equal(2);
       expect(compSet.has(apexClassComponent)).to.equal(true);
       expect(compSet.has(apexClassComponent2)).to.equal(true);

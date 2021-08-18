@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.23](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.22...v0.0.23) (2021-08-18)
+
+
+### Bug Fixes
+
+* bump oclif/core and @salesforce/core ([#22](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/22)) ([5d3203f](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/5d3203f57e2e28a7ca7b1516d7c5b2b8df0b789f))
+
 ### [0.0.22](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.21...v0.0.22) (2021-08-18)
 
 

@@ -79,7 +79,7 @@ export default class RetrieveMetadata extends Command {
 
     const componentSet = await ComponentSetBuilder.build({
       apiversion: flags['api-version'],
-      directory: flags['source-dir'],
+      sourcepath: flags['source-dir'],
       packagenames: flags['package-name'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,

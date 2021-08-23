@@ -46,41 +46,40 @@ describe('ComponentSetBuilder', () => {
       componentSet = new ComponentSet();
     });
 
-    it('should create ComponentSet from single directory', async () => {
+    it('should create ComponentSet from single sourcepath', async () => {
       fileExistsSyncStub.returns(true);
       componentSet.add(apexClassComponent);
       fromSourceStub.returns(componentSet);
-      const directory = ['force-app'];
+      const sourcepath = ['force-app'];
 
       const compSet = await ComponentSetBuilder.build({
-        directory,
+        sourcepath,
         manifest: undefined,
         metadata: undefined,
       });
 
-      const expectedPath = path.resolve(directory[0]);
-      expect(fromSourceStub.calledOnceWith(expectedPath)).to.equal(true);
+      const expectedArg = { fsPaths: [path.resolve(sourcepath[0])] };
+      expect(fromSourceStub.calledOnceWith(expectedArg)).to.equal(true);
       expect(compSet.size).to.equal(1);
       expect(compSet.has(apexClassComponent)).to.equal(true);
     });
 
-    it('should create ComponentSet from multiple directories', async () => {
+    it('should create ComponentSet from multiple sourcepaths', async () => {
       fileExistsSyncStub.returns(true);
       componentSet.add(apexClassComponent);
       componentSet.add(customObjectComponent);
       fromSourceStub.returns(componentSet);
-      const directory = ['force-app', 'my-app'];
+      const sourcepath = ['force-app', 'my-app'];
 
       const compSet = await ComponentSetBuilder.build({
-        directory,
+        sourcepath,
         manifest: undefined,
         metadata: undefined,
       });
-      const expectedPath1 = path.resolve(directory[0]);
-      const expectedPath2 = path.resolve(directory[1]);
-      expect(fromSourceStub.calledTwice).to.equal(true);
-      expect(fromSourceStub.firstCall.args[0]).to.equal(expectedPath1);
-      expect(fromSourceStub.secondCall.args[0]).to.equal(expectedPath2);
+      const expectedPath1 = path.resolve(sourcepath[0]);
+      const expectedPath2 = path.resolve(sourcepath[1]);
+      const expectedArg = { fsPaths: [expectedPath1, expectedPath2] };
+      expect(fromSourceStub.calledOnceWith(expectedArg)).to.equal(true);
       expect(compSet.size).to.equal(2);
       expect(compSet.has(apexClassComponent)).to.equal(true);
       expect(compSet.has(customObjectComponent)).to.equal(true);
@@ -89,27 +88,45 @@ describe('ComponentSetBuilder', () => {
     it('should create ComponentSet with overridden apiVersion', async () => {
       fileExistsSyncStub.returns(true);
       fromSourceStub.returns(componentSet);
-      const directory = ['force-app'];
+      const sourcepath = ['force-app'];
       const options = {
-        directory,
+        sourcepath,
         manifest: undefined,
         metadata: undefined,
         apiversion: '50.0',
       };
 
       const compSet = await ComponentSetBuilder.build(options);
-      const expectedPath = path.resolve(directory[0]);
-      expect(fromSourceStub.calledOnceWith(expectedPath)).to.equal(true);
+      const expectedArg = { fsPaths: [path.resolve(sourcepath[0])] };
+      expect(fromSourceStub.calledOnceWith(expectedArg)).to.equal(true);
       expect(compSet.size).to.equal(0);
       expect(compSet.apiVersion).to.equal(options.apiversion);
     });
 
-    it('should throw with an invalid directory', async () => {
+    it('should create ComponentSet with sourceApiVersion', async () => {
+      fileExistsSyncStub.returns(true);
+      fromSourceStub.returns(componentSet);
+      const sourcepath = ['force-app'];
+      const options = {
+        sourcepath,
+        manifest: undefined,
+        metadata: undefined,
+        sourceapiversion: '50.0',
+      };
+
+      const compSet = await ComponentSetBuilder.build(options);
+      const expectedArg = { fsPaths: [path.resolve(sourcepath[0])] };
+      expect(fromSourceStub.calledOnceWith(expectedArg)).to.equal(true);
+      expect(compSet.size).to.equal(0);
+      expect(compSet.sourceApiVersion).to.equal(options.sourceapiversion);
+    });
+
+    it('should throw with an invalid sourcepath', async () => {
       fileExistsSyncStub.returns(false);
-      const directory = ['nonexistent'];
+      const sourcepath = ['nonexistent'];
       try {
         await ComponentSetBuilder.build({
-          directory,
+          sourcepath,
           manifest: undefined,
           metadata: undefined,
         });
@@ -117,7 +134,7 @@ describe('ComponentSetBuilder', () => {
       } catch (e: unknown) {
         const err = e as SfdxError;
         expect(fromSourceStub.notCalled).to.equal(true);
-        expect(err.message).to.include(directory[0]);
+        expect(err.message).to.include(sourcepath[0]);
       }
     });
 
@@ -125,7 +142,7 @@ describe('ComponentSetBuilder', () => {
       fileExistsSyncStub.returns(true);
 
       const compSet = await ComponentSetBuilder.build({
-        directory: undefined,
+        sourcepath: undefined,
         manifest: undefined,
         metadata: undefined,
         packagenames: ['mypackage'],
@@ -141,7 +158,7 @@ describe('ComponentSetBuilder', () => {
       const packageDir1 = path.resolve('force-app');
 
       const compSet = await ComponentSetBuilder.build({
-        directory: undefined,
+        sourcepath: undefined,
         manifest: undefined,
         metadata: {
           metadataEntries: ['ApexClass'],
@@ -154,8 +171,29 @@ describe('ComponentSetBuilder', () => {
       const filter = new ComponentSet();
       filter.add({ type: 'ApexClass', fullName: '*' });
       expect(fromSourceArgs).to.have.property('include');
-      expect(compSet.size).to.equal(1);
+      expect(fromSourceArgs.include.getSourceComponents()).to.deep.equal(filter.getSourceComponents());
+      expect(compSet.size).to.equal(2);
       expect(compSet.has(apexClassComponent)).to.equal(true);
+      expect(compSet.has({ type: 'ApexClass', fullName: '*' })).to.equal(true);
+    });
+
+    it('should throw an error when it cant resolve a metadata type (Metadata)', async () => {
+      const packageDir1 = path.resolve('force-app');
+
+      try {
+        await ComponentSetBuilder.build({
+          sourcepath: undefined,
+          manifest: undefined,
+          metadata: {
+            metadataEntries: ['NotAType', 'ApexClass:MyClass'],
+            directoryPaths: [packageDir1],
+          },
+        });
+        assert.fail('the above should throw an error');
+      } catch (e) {
+        expect(e).to.not.be.null;
+        expect((e as Error).message).to.include('The specified metadata type is unsupported: [notatype]');
+      }
     });
 
     it('should create ComponentSet from specific metadata (ApexClass:MyClass)', async () => {
@@ -164,7 +202,7 @@ describe('ComponentSetBuilder', () => {
       const packageDir1 = path.resolve('force-app');
 
       const compSet = await ComponentSetBuilder.build({
-        directory: undefined,
+        sourcepath: undefined,
         manifest: undefined,
         metadata: {
           metadataEntries: ['ApexClass:MyClass'],
@@ -177,6 +215,7 @@ describe('ComponentSetBuilder', () => {
       const filter = new ComponentSet();
       filter.add({ type: 'ApexClass', fullName: 'MyClass' });
       expect(fromSourceArgs).to.have.property('include');
+      expect(fromSourceArgs.include.getSourceComponents()).to.deep.equal(filter.getSourceComponents());
       expect(compSet.size).to.equal(1);
       expect(compSet.has(apexClassComponent)).to.equal(true);
     });
@@ -188,7 +227,7 @@ describe('ComponentSetBuilder', () => {
       const packageDir1 = path.resolve('force-app');
 
       const compSet = await ComponentSetBuilder.build({
-        directory: undefined,
+        sourcepath: undefined,
         manifest: undefined,
         metadata: {
           metadataEntries: ['ApexClass:MyClass', 'CustomObject'],
@@ -202,9 +241,11 @@ describe('ComponentSetBuilder', () => {
       filter.add({ type: 'ApexClass', fullName: 'MyClass' });
       filter.add({ type: 'CustomObject', fullName: '*' });
       expect(fromSourceArgs).to.have.property('include');
-      expect(compSet.size).to.equal(2);
+      expect(fromSourceArgs.include.getSourceComponents()).to.deep.equal(filter.getSourceComponents());
+      expect(compSet.size).to.equal(3);
       expect(compSet.has(apexClassComponent)).to.equal(true);
       expect(compSet.has(customObjectComponent)).to.equal(true);
+      expect(compSet.has({ type: 'CustomObject', fullName: '*' })).to.equal(true);
     });
 
     it('should create ComponentSet from metadata and multiple package directories', async () => {
@@ -216,7 +257,7 @@ describe('ComponentSetBuilder', () => {
       const packageDir2 = path.resolve('my-app');
 
       const compSet = await ComponentSetBuilder.build({
-        directory: undefined,
+        sourcepath: undefined,
         manifest: undefined,
         metadata: {
           metadataEntries: ['ApexClass'],
@@ -229,9 +270,11 @@ describe('ComponentSetBuilder', () => {
       const filter = new ComponentSet();
       filter.add({ type: 'ApexClass', fullName: '*' });
       expect(fromSourceArgs).to.have.property('include');
-      expect(compSet.size).to.equal(2);
+      expect(fromSourceArgs.include.getSourceComponents()).to.deep.equal(filter.getSourceComponents());
+      expect(compSet.size).to.equal(3);
       expect(compSet.has(apexClassComponent)).to.equal(true);
       expect(compSet.has(apexClassComponent2)).to.equal(true);
+      expect(compSet.has({ type: 'ApexClass', fullName: '*' })).to.equal(true);
     });
 
     it('should create ComponentSet from manifest', async () => {
@@ -239,7 +282,7 @@ describe('ComponentSetBuilder', () => {
       fromManifestStub.resolves(componentSet);
       const packageDir1 = path.resolve('force-app');
       const options = {
-        directory: undefined,
+        sourcepath: undefined,
         metadata: undefined,
         manifest: {
           manifestPath: 'apex-package.xml',
@@ -250,6 +293,7 @@ describe('ComponentSetBuilder', () => {
       const compSet = await ComponentSetBuilder.build(options);
       expect(fromManifestStub.calledOnce).to.equal(true);
       expect(fromManifestStub.firstCall.args[0]).to.deep.equal({
+        forceAddWildcards: true,
         manifestPath: options.manifest.manifestPath,
         resolveSourcePaths: [packageDir1],
       });
@@ -265,7 +309,7 @@ describe('ComponentSetBuilder', () => {
       const packageDir1 = path.resolve('force-app');
       const packageDir2 = path.resolve('my-app');
       const options = {
-        directory: undefined,
+        sourcepath: undefined,
         metadata: undefined,
         manifest: {
           manifestPath: 'apex-package.xml',
@@ -276,6 +320,7 @@ describe('ComponentSetBuilder', () => {
       const compSet = await ComponentSetBuilder.build(options);
       expect(fromManifestStub.callCount).to.equal(1);
       expect(fromManifestStub.firstCall.args[0]).to.deep.equal({
+        forceAddWildcards: true,
         manifestPath: options.manifest.manifestPath,
         resolveSourcePaths: [packageDir1, packageDir2],
       });

@@ -88,7 +88,7 @@ export default class DeployMetadata extends Command {
     validateOneOfCommandFlags(requiredFlags, flags);
 
     const componentSet = await ComponentSetBuilder.build({
-      directory: flags['source-dir'],
+      sourcepath: flags['source-dir'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,
         directoryPaths: await getPackageDirs(),

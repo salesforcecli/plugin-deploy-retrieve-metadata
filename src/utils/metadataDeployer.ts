@@ -135,7 +135,7 @@ export class MetadataDeployer extends Deployer {
     const directories = this.deployables.map((d) => d.pkg.fullPath);
     const name = this.deployables.map((p) => cyan.bold(p.getAppName())).join(', ');
     this.log(`${EOL}Deploying ${name} to ${this.username} using ${resolveRestDeploy()} API`);
-    const componentSet = await ComponentSetBuilder.build({ directory: directories });
+    const componentSet = await ComponentSetBuilder.build({ sourcepath: directories });
     const deploy = await componentSet.deploy({
       usernameOrConnection: this.username,
       apiOptions: { testLevel: this.testLevel },

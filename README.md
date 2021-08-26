@@ -18,7 +18,7 @@ sf plugins:install deploy-retrieve-metadata@x.y.z
 
 ## Issues
 
-Please report any issues at https://github.com/forcedotcom/cli/issues
+Please report any issues at https://github.com/salesforcecli/cli/issues
 
 ## Contributing
 

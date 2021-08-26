@@ -6,7 +6,7 @@ Deploy metadata in source format to an org from your local project.
 
 You must run this command from within a project.
 
-The source you deploy overwrites the corresponding metadata in your org. This command doesn’t attempt to merge your source with the versions in your org.
+This command doesn't support source-tracking. The source you deploy overwrites the corresponding metadata in your org. This command doesn’t attempt to merge your source with the versions in your org.
 
 To run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue to use the CLI. 
 

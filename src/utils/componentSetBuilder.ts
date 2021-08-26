@@ -6,7 +6,7 @@
  */
 
 import * as path from 'path';
-import { ComponentSet, RegistryAccess } from '@salesforce/source-deploy-retrieve';
+import { ComponentSet, RegistryAccess } from '@sf/sdr';
 import { fs, SfdxError, Logger } from '@salesforce/core';
 
 export type ManifestOption = {

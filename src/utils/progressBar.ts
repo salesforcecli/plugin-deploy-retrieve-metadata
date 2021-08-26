@@ -8,7 +8,7 @@
 import * as util from 'util';
 import cli from 'cli-ux';
 import { env, once } from '@salesforce/kit';
-import { MetadataApiDeploy } from '@salesforce/source-deploy-retrieve';
+import { MetadataApiDeploy } from '@sf/sdr';
 
 const startProgressBar = once((bar: ProgressBar.Bar, total: number) => {
   bar.start(total);

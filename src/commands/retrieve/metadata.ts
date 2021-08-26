@@ -8,7 +8,7 @@
 import { Command, Flags } from '@oclif/core';
 import { Messages, SfdxProject } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
-import { FileResponse, RetrieveResult } from '@salesforce/source-deploy-retrieve';
+import { FileResponse, RetrieveResult } from '@sf/sdr';
 
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';

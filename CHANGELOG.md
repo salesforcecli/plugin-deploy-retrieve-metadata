@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.27](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.26...v0.0.27) (2021-08-30)
+
+
+### Bug Fixes
+
+* add note about no source-tracking support ([1bbc28e](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/1bbc28e9dd04dee43ed2ed27357a728dd7e83b45))
+* add note that command doesn't support source-tracking ([cd56c49](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/cd56c49b26e7d3955b4ced54bb566f70a6c761bd))
+
 ### [0.0.26](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.25...v0.0.26) (2021-08-26)
 
 ### [0.0.25](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.24...v0.0.25) (2021-08-26)

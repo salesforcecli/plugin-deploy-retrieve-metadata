@@ -105,8 +105,8 @@ DESCRIPTION
 
   You must run this command from within a project.
 
-  The source you deploy overwrites the corresponding metadata in your org. This command doesn’t attempt to merge your
-  source with the versions in your org.
+  This command doesn't support source-tracking. The source you deploy overwrites the corresponding metadata in your org.
+  This command doesn’t attempt to merge your source with the versions in your org.
 
   To run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue
   to use the CLI.
@@ -220,8 +220,8 @@ DESCRIPTION
 
   You must run this command from within a project.
 
-  The source you retrieve overwrites the corresponding source files in your local project. This command doesn’t attempt
-  to merge the source from your org with your local source files.
+  This command doesn't support source-tracking. The source you retrieve overwrites the corresponding source files in
+  your local project. This command doesn’t attempt to merge the source from your org with your local source files.
 
   To retrieve multiple metadata components, either use multiple --metadata <name> flags or use a single --metadata flag
   with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same

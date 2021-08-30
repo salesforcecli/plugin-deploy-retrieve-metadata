@@ -514,10 +514,10 @@
     widest-line "^3.1.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/core@^0.5.31":
-  version "0.5.31"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-0.5.31.tgz#2f2b4d0b0dad4056d65fae4803a429633deb0452"
-  integrity sha512-VPWOR8RORgVlmuulcx/aft1nBhTjT7YiwCeZB/bAiNgqCQ4YncoeIIPJPJs/A0a0dIeOYACfxlp1Xw7vznpISg==
+"@oclif/core@^0.5.33", "@oclif/core@^0.5.34":
+  version "0.5.34"
+  resolved "https://registry.npmjs.org/@oclif/core/-/core-0.5.34.tgz#d8cadcd609929560e6cc836c45d94bc99379e1f6"
+  integrity sha512-laLrm2tvIOr6uboDMVdAbBJMeAAgV0otkoF8imdyhYCsNcmXFyV3x0kwNGbEUYG945CQ0V00u7MS7tmlwdZlGw==
   dependencies:
     "@oclif/linewrap" "^1.0.0"
     chalk "^4.1.0"
@@ -949,16 +949,6 @@
     cli-ux "^5.6.3"
     tslib "^2"
 
-"@salesforce/plugin-deploy-retrieve-utils@^0.0.10":
-  version "0.0.10"
-  resolved "https://registry.yarnpkg.com/@salesforce/plugin-deploy-retrieve-utils/-/plugin-deploy-retrieve-utils-0.0.10.tgz#bac871c38a8338f9e1ba39ec29abd15c608c6d71"
-  integrity sha512-nh4x5BUBaRn005xk56Ozh2A1SwyPpNLqyozWjAEVHKBLEuv0bDV56GOpYxfNHuDNMCJ+b5QwfWF4dduDZm4kww==
-  dependencies:
-    "@salesforce/kit" "^1.5.8"
-    "@salesforce/ts-types" "^1.5.13"
-    cli-ux "^5.6.2"
-    inquirer "^8.1.1"
-
 "@salesforce/plugin-deploy-retrieve-utils@^0.0.8":
   version "0.0.8"
   resolved "https://registry.npmjs.org/@salesforce/plugin-deploy-retrieve-utils/-/plugin-deploy-retrieve-utils-0.0.8.tgz#866ba43f02f011f6501377240d13da48788edf4b"
@@ -988,6 +978,17 @@
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@salesforce/schemas/-/schemas-1.1.0.tgz#bbf94a11ee036f2b0ec6ba82306cd9565a6ba26b"
   integrity sha512-6D7DvE6nFxpLyyTnrOIbbAeCJw2r/EpinFAcMh6gU0gA/CGfSbwV/8uR3uHLYL2zCyCZLH8jJ4dZ3BzCMqc+Eg==
+
+"@salesforce/sf-plugins-core@^0.0.13":
+  version "0.0.13"
+  resolved "https://registry.npmjs.org/@salesforce/sf-plugins-core/-/sf-plugins-core-0.0.13.tgz#c7f762d94f1cb9bb36b3f486eaa24f66eccaf488"
+  integrity sha512-hw7dlMNwGlAuJAPaXWotj0JjOEZxr8yyC9Y/NwW1vtM/NFragv77z6QxUDBsebA6t9C+vub8rH0JTP950dvBpg==
+  dependencies:
+    "@oclif/core" "^0.5.33"
+    "@salesforce/kit" "^1.5.8"
+    "@salesforce/ts-types" "^1.5.13"
+    cli-ux "^5.6.2"
+    inquirer "^8.1.1"
 
 "@salesforce/source-deploy-retrieve@^2.1.3":
   version "2.2.0"

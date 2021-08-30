@@ -6,9 +6,12 @@
  */
 
 import { SfdxProject } from '@salesforce/core';
+import { SfHook } from '@salesforce/sf-plugins-core';
 import { MetadataDeployer } from '../utils/metadataDeployer';
 
-const hook = async function (): Promise<MetadataDeployer[]> {
+const hook: SfHook.Deploy<MetadataDeployer> = async function () {
+  // eslint-disable-next-line no-console
+  console.log('hello world');
   const project = await SfdxProject.resolve();
   const packageDirectories = project.getPackageDirectories();
   return [new MetadataDeployer(packageDirectories)];

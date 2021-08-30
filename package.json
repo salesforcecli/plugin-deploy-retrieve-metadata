@@ -5,9 +5,9 @@
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
-    "@oclif/core": "^0.5.31",
+    "@oclif/core": "^0.5.34",
     "@salesforce/core": "3.4.3",
-    "@salesforce/plugin-deploy-retrieve-utils": "^0.0.10",
+    "@salesforce/sf-plugins-core": "^0.0.13",
     "@sf/sdr": "npm:@salesforce/source-deploy-retrieve@4.3.2",
     "chalk": "^4.1.2",
     "cli-ux": "^5.5.1",
@@ -73,7 +73,7 @@
   "oclif": {
     "commands": "./lib/commands",
     "hooks": {
-      "project:findDeployers": "./lib/hooks/findDeployers"
+      "sf:deploy": "./lib/hooks/deploy"
     },
     "bin": "sf",
     "topicSeparator": " ",

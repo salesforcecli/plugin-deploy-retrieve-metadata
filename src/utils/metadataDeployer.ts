@@ -7,7 +7,6 @@
 
 import { EOL } from 'os';
 import { cyan } from 'chalk';
-import { Nullable } from '@salesforce/ts-types';
 import { Duration } from '@salesforce/kit';
 import {
   AuthInfo,
@@ -18,13 +17,7 @@ import {
   OrgAuthorization,
   OrgConfigProperties,
 } from '@salesforce/core';
-import {
-  Deployable,
-  Deployer,
-  Preferences,
-  DeployerOptions,
-  generateTableChoices,
-} from '@salesforce/plugin-deploy-retrieve-utils';
+import { Deployable, Deployer, generateTableChoices } from '@salesforce/sf-plugins-core';
 
 import { ComponentSetBuilder } from './componentSetBuilder';
 import { displayFailures, displaySuccesses, displayTestResults } from './output';
@@ -62,7 +55,7 @@ const compareOrgs = (a: OrgAuthWithTimestamp, b: OrgAuthWithTimestamp): number =
   return a.username.localeCompare(b.username);
 };
 
-export interface MetadataDeployOptions extends DeployerOptions {
+export interface MetadataDeployOptions extends Deployer.Options {
   testLevel?: TestLevel;
   username?: string;
   directories?: string[];
@@ -73,20 +66,16 @@ export class DeployablePackage extends Deployable {
     super();
   }
 
-  public getAppName(): string {
+  public getName(): string {
     return this.pkg.name;
   }
 
-  public getAppType(): string {
+  public getType(): string {
     return 'Salesforce App';
   }
 
-  public getAppPath(): string {
+  public getPath(): string {
     return this.pkg.path;
-  }
-
-  public getEnvType(): Nullable<string> {
-    return null;
   }
 
   public getParent(): Deployer {
@@ -110,14 +99,14 @@ export class MetadataDeployer extends Deployer {
     return MetadataDeployer.NAME;
   }
 
-  public async setup(preferences: Preferences, options: MetadataDeployOptions): Promise<MetadataDeployOptions> {
-    if (preferences.interactive) {
+  public async setup(flags: Deployer.Flags, options: MetadataDeployOptions): Promise<MetadataDeployOptions> {
+    if (flags.interactive) {
       this.testLevel = await this.promptForTestLevel();
       this.username = await this.promptForUsername();
     } else {
       if (options.directories?.length) {
         const directories = options.directories || [];
-        const selected = this.deployables.filter((d) => directories.includes(d.getAppPath()));
+        const selected = this.deployables.filter((d) => directories.includes(d.getPath()));
         this.selectDeployables(selected);
       }
       this.testLevel = options.testLevel || (await this.promptForTestLevel());
@@ -127,13 +116,13 @@ export class MetadataDeployer extends Deployer {
     return {
       testLevel: this.testLevel,
       username: this.username,
-      apps: this.deployables.map((d) => d.getAppPath()),
+      apps: this.deployables.map((d) => d.getPath()),
     };
   }
 
   public async deploy(): Promise<void> {
     const directories = this.deployables.map((d) => d.pkg.fullPath);
-    const name = this.deployables.map((p) => cyan.bold(p.getAppName())).join(', ');
+    const name = this.deployables.map((p) => cyan.bold(p.getPath())).join(', ');
     this.log(`${EOL}Deploying ${name} to ${this.username} using ${resolveRestDeploy()} API`);
     const componentSet = await ComponentSetBuilder.build({ sourcepath: directories });
     const deploy = await componentSet.deploy({

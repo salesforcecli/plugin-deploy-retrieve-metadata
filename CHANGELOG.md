@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.28](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.27...v0.0.28) (2021-09-02)
+
+
+### Features
+
+* use sf-plugins-core ([#26](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/26)) ([50da793](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/50da793d4d1eff5e365bdc7a77d66d3ff8f850a6))
+
 ### [0.0.27](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.26...v0.0.27) (2021-08-30)
 
 

@@ -3,7 +3,7 @@
   "description": "Commands for deploying metadata to salesforce orgs",
   "version": "0.0.28",
   "author": "Salesforce",
-  "bugs": "https://github.com/forcedotcom/cli/issues",
+  "bugs": "https://github.com/salesforcecli/cli/issues",
   "dependencies": {
     "@oclif/core": "^0.5.34",
     "@salesforce/core": "3.4.3",

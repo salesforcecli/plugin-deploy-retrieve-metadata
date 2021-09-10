@@ -5,11 +5,13 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Command, Flags } from '@oclif/core';
-import { Messages, SfdxProject } from '@salesforce/core';
+import { Flags, HelpSection } from '@oclif/core';
+import { EnvironmentVariable, Messages, OrgConfigProperties, SfdxPropertyKeys, SfdxProject } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@sf/sdr';
 
+import { SfCommand } from '@salesforce/command';
+import { toHelpSection } from '@salesforce/sf-plugins-core';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
 import { displaySuccesses } from '../../utils/output';
@@ -23,7 +25,7 @@ const requiredFlags = ['manifest', 'metadata', 'source-dir'];
 
 export type RetrieveMetadataResult = FileResponse[];
 
-export default class RetrieveMetadata extends Command {
+export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -69,6 +71,16 @@ export default class RetrieveMetadata extends Command {
       description: messages.getMessage('flags.wait.description'),
     }),
   };
+
+  public static configurationVariablesSection?: HelpSection = toHelpSection(
+    'CONFIGURATION VARIABLES',
+    OrgConfigProperties.TARGET_ORG,
+    SfdxPropertyKeys.API_VERSION
+  );
+  public static envVariablesSection?: HelpSection = toHelpSection(
+    'ENVIRONMENT VARIABLES',
+    EnvironmentVariable.SF_TARGET_ORG
+  );
 
   protected retrieveResult!: RetrieveResult;
 

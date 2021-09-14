@@ -6,12 +6,14 @@
  */
 
 import { EOL } from 'os';
-import { Command, Flags } from '@oclif/core';
-import { Messages } from '@salesforce/core';
+import { Flags } from '@oclif/core';
+import { EnvironmentVariable, Messages, OrgConfigProperties, SfdxPropertyKeys } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
 import { get, getString } from '@salesforce/ts-types';
 import { DeployResult, FileResponse } from '@sf/sdr';
 import { RequestStatus } from '@sf/sdr/lib/src/client/types';
+import { SfCommand } from '@salesforce/command';
+import { toHelpSection } from '@salesforce/sf-plugins-core';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
 import { asRelativePaths, displayFailures, displaySuccesses, displayTestResults } from '../../utils/output';
@@ -38,7 +40,7 @@ export type DeployMetadataResult = {
   tests?: TestResults;
 };
 
-export default class DeployMetadata extends Command {
+export default class DeployMetadata extends SfCommand<DeployMetadataResult> {
   public static readonly description = messages.getMessage('description');
   public static readonly summary = messages.getMessage('summary');
   public static readonly examples = messages.getMessages('examples');
@@ -81,6 +83,13 @@ export default class DeployMetadata extends Command {
       default: 33,
     }),
   };
+
+  public static configurationVariablesSection = toHelpSection(
+    'CONFIGURATION VARIABLES',
+    OrgConfigProperties.TARGET_ORG,
+    SfdxPropertyKeys.API_VERSION
+  );
+  public static envVariablesSection = toHelpSection('ENVIRONMENT VARIABLES', EnvironmentVariable.SF_TARGET_ORG);
 
   public async run(): Promise<DeployMetadataResult> {
     const flags = (await this.parse(DeployMetadata)).flags;

@@ -85,16 +85,11 @@ USAGE
 
 FLAGS
   -d, --source-dir=<value>...  Path to the local source files to deploy.
-
   -l, --test-level=<option>    [default: NoTestRun] Deployment Apex testing level.
                                <options: NoTestRun|RunSpecifiedTests|RunLocalTests|RunAllTestsInOrg>
-
   -m, --metadata=<value>...    Metadata component names to deploy.
-
   -o, --target-org=<value>     Login username or alias for the target org.
-
   -w, --wait=<value>           [default: 33] Number of minutes to wait for command to complete and display results.
-
   -x, --manifest=<value>       Full file path for manifest (package.xml) of components to deploy.
 
 GLOBAL FLAGS
@@ -121,8 +116,9 @@ EXAMPLES
     $ sf deploy metadata  --source-dir path/to/source
 
   Deploy a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
-  $ sf deploy metadata --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
-  $ sf deploy metadata --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
+
+    $ sf deploy metadata --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
+    $ sf deploy metadata --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
 
   Deploy all Apex classes:
 
@@ -133,8 +129,9 @@ EXAMPLES
     $ sf deploy metadata --metadata ApexClass:MyApexClass
 
   Deploy all custom objects and Apex classes (both examples are equivalent):
-  $ sf deploy metadata --metadata CustomObject ApexClass
-  $ sf deploy metadata --metadata CustomObject --metadata ApexClass
+
+    $ sf deploy metadata --metadata CustomObject ApexClass
+    $ sf deploy metadata --metadata CustomObject --metadata ApexClass
 
   Deploy all Apex classes and a profile that has a space in its name:
 
@@ -206,10 +203,8 @@ FLAGS
   -m, --metadata=<value>...      Metadata component names to retrieve.
   -n, --package-name=<value>...  Package names to retrieve.
   -o, --target-org=<value>       Login username or alias for the target org.
-
   -w, --wait=<value>             [default: 33] Number of minutes to wait for the command to complete and display results
                                  to the terminal window.
-
   -x, --manifest=<value>         File path for the manifest (package.xml) that specifies the components to retrieve.
 
 GLOBAL FLAGS
@@ -233,8 +228,9 @@ EXAMPLES
     $ sf retrieve metadata --source-dir path/to/source
 
   Retrieve a specific Apex class and the objects whose source is in a directory (both examples are equivalent):
-  $ sf retrieve metadata --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
-  $ sf retrieve metadata --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
+
+    $ sf retrieve metadata --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects
+    $ sf retrieve metadata --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects
 
   Retrieve all Apex classes:
 
@@ -245,8 +241,9 @@ EXAMPLES
     $ sf retrieve metadata --metadata ApexClass:MyApexClass
 
   Retrieve all custom objects and Apex classes (both examples are equivalent):
-  $ sf retrieve metadata --metadata CustomObject ApexClass
-  $ sf retrieve metadata --metadata CustomObject --metadata ApexClass
+
+    $ sf retrieve metadata --metadata CustomObject ApexClass
+    $ sf retrieve metadata --metadata CustomObject --metadata ApexClass
 
   Retrieve all metadata components listed in a manifest:
 
@@ -257,8 +254,9 @@ EXAMPLES
     $ sf retrieve metadata --package-name MyPackageName
 
   Retrieve metadata from multiple packages, one of which has a space in its name (both examples are equivalent):
-  $ sf retrieve metadata --package-name Package1 "PackageName With Spaces" Package3
-  $ sf retrieve metadata --package-name Package1 --package-name "PackageName With Spaces" --package-name Package3
+
+    $ sf retrieve metadata --package-name Package1 "PackageName With Spaces" Package3
+    $ sf retrieve metadata --package-name Package1 --package-name "PackageName With Spaces" --package-name Package3
 
 FLAG DESCRIPTIONS
   -a, --api-version=<value>  Target API version for the retrieve.

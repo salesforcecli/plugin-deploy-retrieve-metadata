@@ -6,7 +6,7 @@
  */
 
 import { EOL } from 'os';
-import { Flags, HelpSection } from '@oclif/core';
+import { Flags } from '@oclif/core';
 import { EnvironmentVariable, Messages, OrgConfigProperties, SfdxPropertyKeys } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
 import { get, getString } from '@salesforce/ts-types';
@@ -84,15 +84,12 @@ export default class DeployMetadata extends SfCommand<DeployMetadataResult> {
     }),
   };
 
-  public static configurationVariablesSection?: HelpSection = toHelpSection(
+  public static configurationVariablesSection = toHelpSection(
     'CONFIGURATION VARIABLES',
     OrgConfigProperties.TARGET_ORG,
     SfdxPropertyKeys.API_VERSION
   );
-  public static envVariablesSection?: HelpSection = toHelpSection(
-    'ENVIRONMENT VARIABLES',
-    EnvironmentVariable.SF_TARGET_ORG
-  );
+  public static envVariablesSection = toHelpSection('ENVIRONMENT VARIABLES', EnvironmentVariable.SF_TARGET_ORG);
 
   public async run(): Promise<DeployMetadataResult> {
     const flags = (await this.parse(DeployMetadata)).flags;

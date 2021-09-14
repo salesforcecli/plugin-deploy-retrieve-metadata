@@ -5,7 +5,7 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
-import { Flags, HelpSection } from '@oclif/core';
+import { Flags } from '@oclif/core';
 import { EnvironmentVariable, Messages, OrgConfigProperties, SfdxPropertyKeys, SfdxProject } from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@sf/sdr';
@@ -72,15 +72,12 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
     }),
   };
 
-  public static configurationVariablesSection?: HelpSection = toHelpSection(
+  public static configurationVariablesSection = toHelpSection(
     'CONFIGURATION VARIABLES',
     OrgConfigProperties.TARGET_ORG,
     SfdxPropertyKeys.API_VERSION
   );
-  public static envVariablesSection?: HelpSection = toHelpSection(
-    'ENVIRONMENT VARIABLES',
-    EnvironmentVariable.SF_TARGET_ORG
-  );
+  public static envVariablesSection = toHelpSection('ENVIRONMENT VARIABLES', EnvironmentVariable.SF_TARGET_ORG);
 
   protected retrieveResult!: RetrieveResult;
 

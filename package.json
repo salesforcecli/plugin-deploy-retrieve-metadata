@@ -5,9 +5,9 @@
   "author": "Salesforce",
   "bugs": "https://github.com/salesforcecli/cli/issues",
   "dependencies": {
-    "@oclif/core": "^0.5.37",
+    "@oclif/core": "^0.5.38",
     "@salesforce/core": "3.6.1",
-    "@salesforce/sf-plugins-core": "^0.0.22",
+    "@salesforce/sf-plugins-core": "^0.0.23",
     "@sf/sdr": "npm:@salesforce/source-deploy-retrieve@4.4.1",
     "chalk": "^4.1.2",
     "cli-ux": "^5.6.3",

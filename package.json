@@ -5,13 +5,12 @@
   "author": "Salesforce",
   "bugs": "https://github.com/salesforcecli/cli/issues",
   "dependencies": {
-    "@oclif/core": "^0.5.35",
-    "@salesforce/command": "^4.1.1",
-    "@salesforce/core": "3.6.0",
-    "@salesforce/sf-plugins-core": "^0.0.18",
+    "@oclif/core": "^0.5.36",
+    "@salesforce/core": "3.6.1",
+    "@salesforce/sf-plugins-core": "^0.0.21",
     "@sf/sdr": "npm:@salesforce/source-deploy-retrieve@4.4.1",
     "chalk": "^4.1.2",
-    "cli-ux": "^5.5.1",
+    "cli-ux": "^5.6.3",
     "tslib": "^2"
   },
   "devDependencies": {

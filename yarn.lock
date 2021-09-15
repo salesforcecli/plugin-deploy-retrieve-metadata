@@ -928,7 +928,7 @@
     cli-ux "^5.6.3"
     inquirer "^8.1.1"
 
-"@salesforce/source-deploy-retrieve@^4.0.2", "@salesforce/source-deploy-retrieve@^4.4.1", "@sf/sdr@npm:@salesforce/source-deploy-retrieve@4.4.1":
+"@salesforce/source-deploy-retrieve@4.4.1", "@salesforce/source-deploy-retrieve@^4.0.2", "@sf/sdr@npm:@salesforce/source-deploy-retrieve@4.4.1":
   version "4.4.1"
   resolved "https://registry.yarnpkg.com/@salesforce/source-deploy-retrieve/-/source-deploy-retrieve-4.4.1.tgz#892cc5918aa46553536cf15c461428a6a3a1a4b7"
   integrity sha512-9oMVdHZIUr1yrKxLsBL1VTb3tFR94oWOrGaHMkYGKDQ1ruM9PPbm7bSMbTFY0uSnIGE6/hQeIHXYePlseRaJog==

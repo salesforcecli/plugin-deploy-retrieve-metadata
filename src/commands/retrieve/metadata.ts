@@ -10,8 +10,7 @@ import { EnvironmentVariable, Messages, OrgConfigProperties, SfdxPropertyKeys, S
 import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@sf/sdr';
 
-import { SfCommand } from '@salesforce/command';
-import { toHelpSection } from '@salesforce/sf-plugins-core';
+import { SfCommand, toHelpSection } from '@salesforce/sf-plugins-core';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
 import { displaySuccesses } from '../../utils/output';
@@ -77,7 +76,12 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
     OrgConfigProperties.TARGET_ORG,
     SfdxPropertyKeys.API_VERSION
   );
-  public static envVariablesSection = toHelpSection('ENVIRONMENT VARIABLES', EnvironmentVariable.SF_TARGET_ORG);
+  public static envVariablesSection = toHelpSection(
+    'ENVIRONMENT VARIABLES',
+    EnvironmentVariable.SF_TARGET_ORG,
+    EnvironmentVariable.SFDX_DEFAULTUSERNAME,
+    EnvironmentVariable.SFDX_USE_PROGRESS_BAR
+  );
 
   protected retrieveResult!: RetrieveResult;
 

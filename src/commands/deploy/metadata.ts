@@ -12,8 +12,7 @@ import { Duration } from '@salesforce/kit';
 import { get, getString } from '@salesforce/ts-types';
 import { DeployResult, FileResponse } from '@sf/sdr';
 import { RequestStatus } from '@sf/sdr/lib/src/client/types';
-import { SfCommand } from '@salesforce/command';
-import { toHelpSection } from '@salesforce/sf-plugins-core';
+import { SfCommand, toHelpSection } from '@salesforce/sf-plugins-core';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
 import { asRelativePaths, displayFailures, displaySuccesses, displayTestResults } from '../../utils/output';
@@ -89,7 +88,12 @@ export default class DeployMetadata extends SfCommand<DeployMetadataResult> {
     OrgConfigProperties.TARGET_ORG,
     SfdxPropertyKeys.API_VERSION
   );
-  public static envVariablesSection = toHelpSection('ENVIRONMENT VARIABLES', EnvironmentVariable.SF_TARGET_ORG);
+  public static envVariablesSection = toHelpSection(
+    'ENVIRONMENT VARIABLES',
+    EnvironmentVariable.SF_TARGET_ORG,
+    EnvironmentVariable.SFDX_DEFAULTUSERNAME,
+    EnvironmentVariable.SFDX_USE_PROGRESS_BAR
+  );
 
   public async run(): Promise<DeployMetadataResult> {
     const flags = (await this.parse(DeployMetadata)).flags;

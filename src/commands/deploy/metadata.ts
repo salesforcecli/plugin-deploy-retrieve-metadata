@@ -91,7 +91,8 @@ export default class DeployMetadata extends SfCommand<DeployMetadataResult> {
   public static envVariablesSection = toHelpSection(
     'ENVIRONMENT VARIABLES',
     EnvironmentVariable.SF_TARGET_ORG,
-    EnvironmentVariable.SFDX_DEFAULTUSERNAME
+    EnvironmentVariable.SFDX_DEFAULTUSERNAME,
+    EnvironmentVariable.SFDX_USE_PROGRESS_BAR
   );
 
   public async run(): Promise<DeployMetadataResult> {

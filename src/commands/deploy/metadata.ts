@@ -88,7 +88,11 @@ export default class DeployMetadata extends SfCommand<DeployMetadataResult> {
     OrgConfigProperties.TARGET_ORG,
     SfdxPropertyKeys.API_VERSION
   );
-  public static envVariablesSection = toHelpSection('ENVIRONMENT VARIABLES', EnvironmentVariable.SF_TARGET_ORG);
+  public static envVariablesSection = toHelpSection(
+    'ENVIRONMENT VARIABLES',
+    EnvironmentVariable.SF_TARGET_ORG,
+    EnvironmentVariable.SFDX_DEFAULTUSERNAME
+  );
 
   public async run(): Promise<DeployMetadataResult> {
     const flags = (await this.parse(DeployMetadata)).flags;

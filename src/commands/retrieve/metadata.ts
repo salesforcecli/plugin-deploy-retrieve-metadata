@@ -76,7 +76,11 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
     OrgConfigProperties.TARGET_ORG,
     SfdxPropertyKeys.API_VERSION
   );
-  public static envVariablesSection = toHelpSection('ENVIRONMENT VARIABLES', EnvironmentVariable.SF_TARGET_ORG);
+  public static envVariablesSection = toHelpSection(
+    'ENVIRONMENT VARIABLES',
+    EnvironmentVariable.SF_TARGET_ORG,
+    EnvironmentVariable.SFDX_DEFAULTUSERNAME
+  );
 
   protected retrieveResult!: RetrieveResult;
 

@@ -19,7 +19,7 @@
     "@salesforce/dev-config": "^2.1.2",
     "@salesforce/dev-scripts": "^0.9.18",
     "@salesforce/plugin-command-reference": "sf",
-    "@salesforce/plugin-config": "^2.0.3",
+    "@salesforce/plugin-config": "^2.2.6",
     "@salesforce/plugin-deploy-retrieve": "^0.0.21",
     "@salesforce/prettier-config": "^0.0.2",
     "@salesforce/source-testkit": "^0.0.14",

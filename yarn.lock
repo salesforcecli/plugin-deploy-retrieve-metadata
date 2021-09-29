@@ -468,7 +468,7 @@
     is-wsl "^2.1.1"
     tslib "^2.0.0"
 
-"@oclif/core@^0.5.26", "@oclif/core@^0.5.34", "@oclif/core@^0.5.35":
+"@oclif/core@^0.5.34", "@oclif/core@^0.5.35":
   version "0.5.37"
   resolved "https://registry.yarnpkg.com/@oclif/core/-/core-0.5.37.tgz#acf8815bcb405851be59f2de5bafe74171f8dd8f"
   integrity sha512-9tTIGfDJIGD7jt4jSCpIhwaALtztzTHGCXuKyj7PYtF0zs0/BayPa7YEFqJjaTjO3Ea53awxdIbL6kLS7bLyTg==
@@ -809,27 +809,6 @@
     sfdx-faye "^1.0.9"
     ts-retry-promise "^0.6.0"
 
-"@salesforce/core@^3.3.4":
-  version "3.3.4"
-  resolved "https://registry.npmjs.org/@salesforce/core/-/core-3.3.4.tgz#9d8bb10b4691d52b70c3b56e7155ffa7272271ab"
-  integrity sha512-rs5Vev5dO1CUEVhy4MSNPtmbVN9JZI7ypc99OAmjcVCf56140o9up8XrIGjdaDZh6Xa78hGmBXs/WNZ3cchwXg==
-  dependencies:
-    "@salesforce/bunyan" "^2.0.0"
-    "@salesforce/kit" "^1.5.8"
-    "@salesforce/schemas" "^1.0.1"
-    "@salesforce/ts-types" "^1.5.13"
-    "@types/graceful-fs" "^4.1.5"
-    "@types/jsforce" "^1.9.29"
-    "@types/mkdirp" "^1.0.1"
-    debug "^3.1.0"
-    graceful-fs "^4.2.4"
-    jsen "0.6.6"
-    jsforce "^1.10.1"
-    jsonwebtoken "8.5.0"
-    mkdirp "1.0.4"
-    sfdx-faye "^1.0.9"
-    ts-retry-promise "^0.6.0"
-
 "@salesforce/core@^3.6.0":
   version "3.6.1"
   resolved "https://registry.yarnpkg.com/@salesforce/core/-/core-3.6.1.tgz#2f5fb779036008d08cf2fa213dece1f808d29f4e"
@@ -936,13 +915,14 @@
     handlebars "^4.7.7"
     tslib "^2"
 
-"@salesforce/plugin-config@^2.0.3":
-  version "2.0.3"
-  resolved "https://registry.npmjs.org/@salesforce/plugin-config/-/plugin-config-2.0.3.tgz#4af375ead34472ae5c111163894cb6945c409619"
-  integrity sha512-5nFtHWyOMafkdSenyc/g2l216IwUQwUAMzKMRfyXAGPM54qu+O395K9wc2z3ksC9OdTd/VvzhwCjNrXrxDC7aQ==
+"@salesforce/plugin-config@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.npmjs.org/@salesforce/plugin-config/-/plugin-config-2.2.6.tgz#b584083b17f3f527890f14925742cddd78a9f887"
+  integrity sha512-p0vdw3EASn6zC97uIKQX+b4TfKmod+/RRp3qQ24OoHXojbgSLE+QfIUZlEl26isEVF3Bv3GJLm4BmvX5e4tCUQ==
   dependencies:
-    "@oclif/core" "^0.5.26"
-    "@salesforce/core" "^3.3.4"
+    "@oclif/core" "^1.0.0"
+    "@salesforce/core" "3.6.5"
+    "@salesforce/sf-plugins-core" "^1.0.0"
     chalk "^4.1.1"
     cli-ux "^5.6.3"
     tslib "^2"

@@ -76,7 +76,7 @@ sf plugins
 
 ## `sf deploy metadata`
 
-You must run this command from within a project.
+Deploy metadata in source format to an org from your local project.
 
 ```
 USAGE
@@ -190,7 +190,7 @@ FLAG DESCRIPTIONS
 
 ## `sf retrieve metadata`
 
-You must run this command from within a project.
+Retrieve metadata in source format from an org to your local project.
 
 ```
 USAGE

@@ -2,6 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.0.0](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.31...v1.0.0) (2021-09-30)
+
 ### [0.0.31](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.30...v0.0.31) (2021-09-16)
 
 

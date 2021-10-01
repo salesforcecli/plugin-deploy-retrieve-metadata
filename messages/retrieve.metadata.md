@@ -94,3 +94,35 @@ Number of minutes to wait for the command to complete and display results to the
 # flags.wait.description
 
 If the command continues to run after the wait period, the CLI returns control of the terminal window to you.
+
+# RetrieveTitle
+
+Retrieving metadata
+
+# Pending
+
+Pending
+
+# InProgress
+
+In Progress
+
+# Succeeded
+
+Succeeded
+
+# Cancelled
+
+Cancelled
+
+# SucceededPartial
+
+Partial Succeeded
+
+# Failed
+
+Failed
+
+# Canceling
+
+Canceling

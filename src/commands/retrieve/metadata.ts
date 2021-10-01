@@ -11,6 +11,7 @@ import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@sf/sdr';
 
 import { SfCommand, toHelpSection } from '@salesforce/sf-plugins-core';
+import { cli } from 'cli-ux';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
 import { displaySuccesses } from '../../utils/output';
@@ -112,6 +113,24 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
       output: project.getDefaultPackage().fullPath,
       packageOptions: flags['package-name'],
     });
+
+    if (!flags.json) {
+      retrieve.onUpdate((data) => {
+        cli.action.status = messages.getMessage(data.status);
+      });
+
+      // any thing else should stop the progress bar
+      retrieve.onFinish((data) => cli.action.stop(messages.getMessage(data.response.status)));
+
+      retrieve.onCancel((data) => cli.action.stop(messages.getMessage(data.status)));
+
+      retrieve.onError((error: Error) => {
+        cli.action.stop(error.name);
+        throw error;
+      });
+
+      cli.action.start(messages.getMessage('RetrieveTitle'));
+    }
 
     await retrieve.start();
     const result = await retrieve.pollStatus(500, Duration.minutes(flags.wait).seconds);

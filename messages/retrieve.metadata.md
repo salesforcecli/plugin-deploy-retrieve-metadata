@@ -113,7 +113,7 @@ Succeeded
 
 # Cancelled
 
-Cancelled
+Canceled
 
 # SucceededPartial
 

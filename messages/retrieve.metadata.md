@@ -97,7 +97,7 @@ If the command continues to run after the wait period, the CLI returns control o
 
 # RetrieveTitle
 
-Retrieving metadata
+Retrieving Metadata
 
 # Pending
 

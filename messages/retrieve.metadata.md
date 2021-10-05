@@ -117,7 +117,7 @@ Canceled
 
 # SucceededPartial
 
-Partial Succeeded
+Partially Succeeded
 
 # Failed
 

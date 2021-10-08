@@ -9,9 +9,16 @@ import * as util from 'util';
 import cli from 'cli-ux';
 import { env, once } from '@salesforce/kit';
 import { MetadataApiDeploy } from '@sf/sdr';
+import { Messages } from '@salesforce/core';
 
-const startProgressBar = once((bar: ProgressBar.Bar, total: number) => {
+Messages.importMessagesDirectory(__dirname);
+const mdTrasferMessages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'metadata.transfer');
+
+const startProgressBar = once((bar: ProgressBar.Bar, total: number, payload = {}) => {
   bar.start(total);
+  if (Object.keys(payload).length) {
+    bar.update(0, payload);
+  }
 });
 
 export class ProgressBar {
@@ -42,17 +49,17 @@ export class ProgressBar {
     this.bar.setTotal(total);
   }
 
-  public start(total: number): void {
+  public start(total: number, payload = {}): void {
     this.total = total;
-    startProgressBar(this.bar, total);
+    startProgressBar(this.bar, total, payload);
   }
 
-  public update(num: number): void {
-    this.bar.update(num);
+  public update(num: number, payload = {}): void {
+    this.bar.update(num, payload);
   }
 
-  public finish(): void {
-    this.bar.update(this.total);
+  public finish(payload = {}): void {
+    this.bar.update(this.total, payload);
     this.bar.stop();
   }
 
@@ -63,8 +70,8 @@ export class ProgressBar {
 
 export namespace ProgressBar {
   export type Bar = {
-    start: (num: number) => void;
-    update: (num: number) => void;
+    start: (num: number, payload?: unknown) => void;
+    update: (num: number, payload?: unknown) => void;
     updateTotal: (num: number) => void;
     setTotal: (num: number) => void;
     stop: () => void;
@@ -81,7 +88,13 @@ export namespace ProgressBar {
 
 export class DeployProgress extends ProgressBar {
   public constructor(private deploy: MetadataApiDeploy) {
-    super();
+    super({
+      title: 'Status',
+      format: '%s: {status} | {bar} | {value}/{total} Components',
+      barCompleteChar: '\u2588',
+      barIncompleteChar: '\u2591',
+      linewrap: true,
+    });
   }
 
   public start(): void {
@@ -90,8 +103,12 @@ export class DeployProgress extends ProgressBar {
     this.deploy.onUpdate((data) => {
       // the numCompTot. isn't computed right away, wait to start until we know how many we have
       if (data.numberComponentsTotal) {
-        super.start(data.numberComponentsTotal + data.numberTestsTotal);
-        this.update(data.numberComponentsDeployed + data.numberTestsCompleted);
+        super.setTotal(data.numberComponentsTotal + data.numberTestsTotal);
+        this.update(data.numberComponentsDeployed + data.numberTestsCompleted, {
+          status: mdTrasferMessages.getMessage(data.status),
+        });
+      } else {
+        super.start(0, { status: mdTrasferMessages.getMessage(data.status) ?? 'Waiting' });
       }
 
       // the numTestsTot. isn't computed until validated as tests by the server, update the PB once we know
@@ -101,7 +118,7 @@ export class DeployProgress extends ProgressBar {
     });
 
     // any thing else should stop the progress bar
-    this.deploy.onFinish(() => this.finish());
+    this.deploy.onFinish((data) => this.finish({ status: mdTrasferMessages.getMessage(data.response.status) }));
 
     this.deploy.onCancel(() => this.stop());
 

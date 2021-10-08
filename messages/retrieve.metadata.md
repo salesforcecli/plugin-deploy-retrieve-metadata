@@ -98,31 +98,3 @@ If the command continues to run after the wait period, the CLI returns control o
 # RetrieveTitle
 
 Retrieving Metadata
-
-# Pending
-
-Pending
-
-# InProgress
-
-In Progress
-
-# Succeeded
-
-Succeeded
-
-# Cancelled
-
-Canceled
-
-# SucceededPartial
-
-Partially Succeeded
-
-# Failed
-
-Failed
-
-# Canceling
-
-Canceling

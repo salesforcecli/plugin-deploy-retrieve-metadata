@@ -5,23 +5,33 @@
  * For full license text, see LICENSE.txt file in the repo root or https://opensource.org/licenses/BSD-3-Clause
  */
 
+import * as path from 'path';
 import { Flags } from '@oclif/core';
-import { EnvironmentVariable, Messages, OrgConfigProperties, SfdxPropertyKeys, SfdxProject } from '@salesforce/core';
+import {
+  EnvironmentVariable,
+  Messages,
+  OrgConfigProperties,
+  SfdxPropertyKeys,
+  SfdxProject,
+  SfdxError,
+} from '@salesforce/core';
 import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@sf/sdr';
 
 import { SfCommand, toHelpSection } from '@salesforce/sf-plugins-core';
 import { cli } from 'cli-ux';
+import { getArray, getBoolean, getString } from '@salesforce/ts-types';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
-import { displaySuccesses } from '../../utils/output';
+import { displayPackages, displaySuccesses, PackageRetrieval } from '../../utils/output';
 import { validateOneOfCommandFlags } from '../../utils/requiredFlagValidator';
 
 Messages.importMessagesDirectory(__dirname);
 const messages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'retrieve.metadata');
+const mdTrasferMessages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'metadata.transfer');
 
 // One of these flags must be specified for a valid deploy.
-const requiredFlags = ['manifest', 'metadata', 'source-dir'];
+const requiredFlags = ['manifest', 'metadata', 'package-name', 'source-dir'];
 
 export type RetrieveMetadataResult = FileResponse[];
 
@@ -116,13 +126,13 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
 
     if (!flags.json) {
       retrieve.onUpdate((data) => {
-        cli.action.status = messages.getMessage(data.status);
+        cli.action.status = mdTrasferMessages.getMessage(data.status);
       });
 
       // any thing else should stop the progress bar
-      retrieve.onFinish((data) => cli.action.stop(messages.getMessage(data.response.status)));
+      retrieve.onFinish((data) => cli.action.stop(mdTrasferMessages.getMessage(data.response.status)));
 
-      retrieve.onCancel((data) => cli.action.stop(messages.getMessage(data.status)));
+      retrieve.onCancel((data) => cli.action.stop(mdTrasferMessages.getMessage(data.status)));
 
       retrieve.onError((error: Error) => {
         cli.action.stop(error.name);
@@ -138,8 +148,38 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
     const fileResponses = result?.getFileResponses() || [];
 
     if (!flags.json) {
-      displaySuccesses(result);
+      if (result.response.status === 'Succeeded') {
+        await this.displayResults(result, flags);
+      } else {
+        throw new SfdxError(
+          getString(result.response, 'errorMessage', result.response.status),
+          getString(result.response, 'errorStatusCode', 'unknown')
+        );
+      }
     }
     return fileResponses;
+  }
+  private async displayResults(result: RetrieveResult, flags): Promise<void> {
+    if (!getBoolean(flags, 'json', false)) {
+      if (result.response.status === 'Succeeded') {
+        displaySuccesses(result);
+        displayPackages(result, await this.getPackages(result, flags));
+      } else {
+        throw new SfdxError(
+          getString(result.response, 'errorMessage', result.response.status),
+          getString(result.response, 'errorStatusCode', 'unknown')
+        );
+      }
+    }
+  }
+
+  private async getPackages(result: RetrieveResult, flags): Promise<PackageRetrieval[]> {
+    const packages: PackageRetrieval[] = [];
+    const projectPath = await SfdxProject.resolveProjectPath();
+    const packageNames = getArray(flags, 'package-name', []) as string[];
+    packageNames.forEach((name) => {
+      packages.push({ name, path: path.join(projectPath, name) });
+    });
+    return packages;
   }
 }

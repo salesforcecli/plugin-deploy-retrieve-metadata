@@ -148,14 +148,7 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
     const fileResponses = result?.getFileResponses() || [];
 
     if (!flags.json) {
-      if (result.response.status === 'Succeeded') {
-        await this.displayResults(result, flags);
-      } else {
-        throw new SfdxError(
-          getString(result.response, 'errorMessage', result.response.status),
-          getString(result.response, 'errorStatusCode', 'unknown')
-        );
-      }
+      await this.displayResults(result, flags);
     }
     return fileResponses;
   }

@@ -147,9 +147,8 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
 
     const fileResponses = result?.getFileResponses() || [];
 
-    if (!flags.json) {
-      await this.displayResults(result, flags);
-    }
+    await this.displayResults(result, flags);
+
     return fileResponses;
   }
   private async displayResults(result: RetrieveResult, flags): Promise<void> {

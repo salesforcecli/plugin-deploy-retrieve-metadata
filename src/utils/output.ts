@@ -86,14 +86,15 @@ export function displaySuccesses(result: DeployResult | RetrieveResult): void {
 }
 
 export function displayPackages(result: RetrieveResult, packages: PackageRetrieval[]): void {
-  // Display any package retrievals
   if (packages?.length) {
-    cli.log('');
-    cli.styledHeader(blue('Retrieved Packages'));
-    packages.forEach((pkg) => {
-      cli.log(`${pkg.name} package converted and retrieved to: ${pkg.path}`);
-    });
-    cli.log('');
+    const columns = {
+      name: { header: 'Package Name' },
+      path: { header: 'Converted Location' },
+    };
+    const title = 'Retrieved Packages';
+    const options = { title: info(title) };
+    cli.log();
+    cli.table(packages, columns, options);
   }
 }
 

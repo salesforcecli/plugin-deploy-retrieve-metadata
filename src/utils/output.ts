@@ -22,6 +22,11 @@ function error(message: string): string {
   return red(bold(message));
 }
 
+export interface PackageRetrieval {
+  name: string;
+  path: string;
+}
+
 export function asRelativePaths(fileResponses: FileResponse[]): FileResponse[] {
   fileResponses.forEach((file) => {
     if (file.filePath) {
@@ -78,6 +83,19 @@ export function displaySuccesses(result: DeployResult | RetrieveResult): void {
   const options = { title: info(title) };
   cli.log();
   cli.table(successes, columns, options);
+}
+
+export function displayPackages(result: RetrieveResult, packages: PackageRetrieval[]): void {
+  if (packages?.length) {
+    const columns = {
+      name: { header: 'Package Name' },
+      path: { header: 'Converted Location' },
+    };
+    const title = 'Retrieved Packages';
+    const options = { title: info(title) };
+    cli.log();
+    cli.table(packages, columns, options);
+  }
 }
 
 export function displayTestResults(result: DeployResult, testLevel: TestLevel): void {

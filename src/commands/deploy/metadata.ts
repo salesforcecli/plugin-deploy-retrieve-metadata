@@ -13,7 +13,7 @@ import { get, getString } from '@salesforce/ts-types';
 import { DeployResult, FileResponse } from '@sf/sdr';
 import { RequestStatus } from '@sf/sdr/lib/src/client/types';
 import { SfCommand, toHelpSection } from '@salesforce/sf-plugins-core';
-import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
+import { getPackageDirs, resolveTargetOrg, getSourceApiVersion } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
 import { asRelativePaths, displayFailures, displaySuccesses, displayTestResults } from '../../utils/output';
 import { TestLevel } from '../../utils/testLevel';
@@ -101,6 +101,7 @@ export default class DeployMetadata extends SfCommand<DeployMetadataResult> {
     validateOneOfCommandFlags(requiredFlags, flags);
 
     const componentSet = await ComponentSetBuilder.build({
+      sourceapiversion: await getSourceApiVersion(),
       sourcepath: flags['source-dir'],
       manifest: (flags.manifest && {
         manifestPath: flags.manifest,

@@ -6,7 +6,7 @@
  */
 
 import { ConfigAggregator, GlobalInfo, SfdxError, SfdxProject, OrgConfigProperties } from '@salesforce/core';
-import { AnyJson, Nullable } from '@salesforce/ts-types';
+import { AnyJson, Nullable, getString } from '@salesforce/ts-types';
 
 export const resolveTargetOrg = async (targetOrg: Nullable<string>): Promise<string> => {
   const configuredTargetOrg = getConfigValue<string>(OrgConfigProperties.TARGET_ORG);
@@ -28,4 +28,10 @@ export const getPackageDirs = async (): Promise<string[]> => {
 
 const getConfigValue = <T extends AnyJson>(key: string): T => {
   return ConfigAggregator.getValue(key)?.value as T;
+};
+
+export const getSourceApiVersion = async (): Promise<string> => {
+  const project = await SfdxProject.resolve();
+  const projectConfig = await project.resolveProjectConfig();
+  return getString(projectConfig, 'sourceApiVersion');
 };

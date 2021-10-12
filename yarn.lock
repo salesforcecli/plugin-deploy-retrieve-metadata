@@ -983,16 +983,17 @@
   dependencies:
     tslib "^2.2.0"
 
-"@sf/sdr@npm:@salesforce/source-deploy-retrieve@4.5.0":
-  version "4.5.0"
-  resolved "https://registry.yarnpkg.com/@salesforce/source-deploy-retrieve/-/source-deploy-retrieve-4.5.0.tgz#9eb6b4c6051892057466b32fb632955fc4f309a2"
-  integrity sha512-tHg8pa1EfSjrN8kYkj5E1jh8Tglb5OqbENWuTVEzw5RqSkasrLjkN6KN1RTh/Whd5IYUeTh4/8s4Nxw6A5hbyg==
+"@sf/sdr@npm:@salesforce/source-deploy-retrieve@4.5.9":
+  version "4.5.9"
+  resolved "https://registry.npmjs.org/@salesforce/source-deploy-retrieve/-/source-deploy-retrieve-4.5.9.tgz#35936e637aa04f894fdaaedb7c2aa0a2d55d325d"
+  integrity sha512-caHnYj8S0tyQD7EB2ZYeBjeKcOjKJ2fsxyypickRl2+8JT4f+q/ujTFL5tdhcBIy4MYyoeyXh/2MgcpaHKvbBw==
   dependencies:
     "@salesforce/core" "2.28.0"
     "@salesforce/kit" "^1.5.0"
     "@salesforce/ts-types" "^1.4.2"
     archiver "^5.3.0"
     fast-xml-parser "^3.17.4"
+    graceful-fs "^4.2.8"
     ignore "^5.1.8"
     mime "2.4.6"
     unzipper "0.10.11"
@@ -4255,6 +4256,11 @@ graceful-fs@^4.1.15, graceful-fs@^4.1.2, graceful-fs@^4.1.6, graceful-fs@^4.2.0,
   version "4.2.6"
   resolved "https://registry.yarnpkg.com/graceful-fs/-/graceful-fs-4.2.6.tgz#ff040b2b0853b23c3d31027523706f1885d76bee"
   integrity sha512-nTnJ528pbqxYanhpDYsi4Rd8MAeaBA67+RZ10CM1m3bTAVFEDcd5AuA4a6W5YkGZ1iNXHzZz8T6TBKLeBuNriQ==
+
+graceful-fs@^4.2.8:
+  version "4.2.8"
+  resolved "https://registry.npmjs.org/graceful-fs/-/graceful-fs-4.2.8.tgz#e412b8d33f5e006593cbd3cee6df9f2cebbe802a"
+  integrity sha512-qkIilPUYcNhJpd33n0GBXTB1MMPp14TxEsEs0pTrsSVucApsYzW5V+Q8Qxhik6KU3evy+qkAAowTByymK0avdg==
 
 grouped-queue@^1.1.0:
   version "1.1.0"

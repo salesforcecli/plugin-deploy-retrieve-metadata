@@ -1,0 +1,236 @@
+{
+  "version": "1.0.5",
+  "commands": {
+    "deploy:metadata": {
+      "id": "deploy:metadata",
+      "summary": "Deploy metadata in source format to an org from your local project.",
+      "description": "You must run this command from within a project.\n\nThis command doesn't support source-tracking. The source you deploy overwrites the corresponding metadata in your org. This command doesn’t attempt to merge your source with the versions in your org.\n\nTo run the command asynchronously, set --wait to 0, which immediately returns the job ID. This way, you can continue to use the CLI. \n\nTo deploy multiple metadata components, either set multiple --metadata <name> flags or a single --metadata flag with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax applies to --manifest and --source-dir.",
+      "strict": true,
+      "pluginName": "@salesforce/plugin-deploy-retrieve-metadata",
+      "pluginAlias": "@salesforce/plugin-deploy-retrieve-metadata",
+      "pluginType": "core",
+      "aliases": [],
+      "examples": [
+        "Deploy the source files in a directory:\n<%= config.bin %> <%= command.id %>  --source-dir path/to/source",
+        "Deploy a specific Apex class and the objects whose source is in a directory (both examples are equivalent):\n<%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects\n<%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects",
+        "Deploy all Apex classes:\n<%= config.bin %> <%= command.id %> --metadata ApexClass",
+        "Deploy a specific Apex class:\n<%= config.bin %> <%= command.id %> --metadata ApexClass:MyApexClass",
+        "Deploy all custom objects and Apex classes (both examples are equivalent):\n<%= config.bin %> <%= command.id %> --metadata CustomObject ApexClass\n<%= config.bin %> <%= command.id %> --metadata CustomObject --metadata ApexClass",
+        "Deploy all Apex classes and a profile that has a space in its name:\n<%= config.bin %> <%= command.id %> --metadata ApexClass --metadata \"Profile:My Profile\"",
+        "Deploy all components listed in a manifest:\n<%= config.bin %> <%= command.id %> --manifest path/to/package.xml",
+        "Run the tests that aren’t in any managed packages as part of a deployment:\n<%= config.bin %> <%= command.id %> --metadata ApexClass --test-level RunLocalTests"
+      ],
+      "flags": {
+        "json": {
+          "name": "json",
+          "type": "boolean",
+          "description": "Format output as json.",
+          "helpGroup": "GLOBAL",
+          "allowNo": false
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "option",
+          "char": "m",
+          "summary": "Metadata component names to deploy.",
+          "multiple": true,
+          "exclusive": ["manifest", "source-dir"]
+        },
+        "manifest": {
+          "name": "manifest",
+          "type": "option",
+          "char": "x",
+          "summary": "Full file path for manifest (package.xml) of components to deploy.",
+          "description": "All child components are included. If you specify this flag, don’t specify --metadata or --source-dir.",
+          "multiple": false,
+          "exclusive": ["metadata", "source-dir"]
+        },
+        "source-dir": {
+          "name": "source-dir",
+          "type": "option",
+          "char": "d",
+          "summary": "Path to the local source files to deploy.",
+          "description": "The supplied path can be to a single file (in which case the operation is applied to only one file) or to a folder (in which case the operation is applied to all metadata types in the directory and its subdirectories).\n\nIf you specify this flag, don’t specify --metadata or --manifest.",
+          "multiple": true,
+          "exclusive": ["manifest", "metadata"]
+        },
+        "target-org": {
+          "name": "target-org",
+          "type": "option",
+          "char": "o",
+          "summary": "Login username or alias for the target org.",
+          "description": "Overrides your default org.",
+          "multiple": false
+        },
+        "test-level": {
+          "name": "test-level",
+          "type": "option",
+          "char": "l",
+          "summary": "Deployment Apex testing level.",
+          "description": "Valid values are:\n\n- NoTestRun — No tests are run. This test level applies only to deployments to development environments, such as sandbox, Developer Edition, or trial orgs. This test level is the default for development environments.\n\n- RunSpecifiedTests — Runs only the tests that you specify with the --run-tests flag. Code coverage requirements differ from the default coverage requirements when using this test level. Executed tests must comprise a minimum of 75% code coverage for each class and trigger in the deployment package. This coverage is computed for each class and trigger individually and is different than the overall coverage percentage.\n\n- RunLocalTests — All tests in your org are run, except the ones that originate from installed managed packages. This test level is the default for production deployments that include Apex classes or triggers.\n\n- RunAllTestsInOrg — All tests in your org are run, including tests of managed packages.\n\n  If you don’t specify a test level, the default behavior depends on the contents of your deployment package. For more information, see [Running Tests in a Deployment](https://developer.salesforce.com/docs/atlas.en-us.api_meta.meta/api_meta/meta_deploy_running_tests.htm) in the \"Metadata API Developer Guide\".",
+          "multiple": false,
+          "options": ["NoTestRun", "RunSpecifiedTests", "RunLocalTests", "RunAllTestsInOrg"],
+          "default": "NoTestRun"
+        },
+        "wait": {
+          "name": "wait",
+          "type": "option",
+          "char": "w",
+          "summary": "Number of minutes to wait for command to complete and display results.",
+          "description": "If the command continues to run after the wait period, the CLI returns control of the terminal window to you.",
+          "multiple": false,
+          "default": 33
+        }
+      },
+      "args": [],
+      "configurationVariablesSection": {
+        "header": "CONFIGURATION VARIABLES",
+        "body": [
+          {
+            "name": "target-org",
+            "description": "Username or alias of the org that all commands run against by default. (sf only)"
+          },
+          {
+            "name": "apiVersion",
+            "description": "API version of your project. Default: API version of your Dev Hub org."
+          }
+        ]
+      },
+      "envVariablesSection": {
+        "header": "ENVIRONMENT VARIABLES",
+        "body": [
+          {
+            "name": "SF_TARGET_ORG",
+            "description": "Username or alias of your default org. Overrides the target-org configuration variable."
+          },
+          {
+            "name": "SFDX_DEFAULTUSERNAME",
+            "description": "Username or alias of your default org. Overrides the defaultusername configuration value."
+          },
+          {
+            "name": "SFDX_USE_PROGRESS_BAR",
+            "description": "Set to false to disable the progress bar when running force:mdapi:deploy, force:source:deploy, or force:source:push."
+          }
+        ]
+      }
+    },
+    "retrieve:metadata": {
+      "id": "retrieve:metadata",
+      "summary": "Retrieve metadata in source format from an org to your local project.",
+      "description": "You must run this command from within a project.\n\nThis command doesn't support source-tracking. The source you retrieve overwrites the corresponding source files in your local project. This command doesn’t attempt to merge the source from your org with your local source files.\n\nTo retrieve multiple metadata components, either use multiple --metadata <name> flags or use a single --metadata flag with multiple names separated by spaces. Enclose names that contain spaces in one set of double quotes. The same syntax applies to --manifest and --source-dir.",
+      "strict": true,
+      "pluginName": "@salesforce/plugin-deploy-retrieve-metadata",
+      "pluginAlias": "@salesforce/plugin-deploy-retrieve-metadata",
+      "pluginType": "core",
+      "aliases": [],
+      "examples": [
+        "Retrieve the source files in a directory:\n<%= config.bin %> <%= command.id %> --source-dir path/to/source",
+        "Retrieve a specific Apex class and the objects whose source is in a directory (both examples are equivalent):\n<%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls path/to/source/objects\n<%= config.bin %> <%= command.id %> --source-dir path/to/apex/classes/MyClass.cls --source-dir path/to/source/objects",
+        "Retrieve all Apex classes:\n<%= config.bin %> <%= command.id %> --metadata ApexClass",
+        "Retrieve a specific Apex class:\n<%= config.bin %> <%= command.id %> --metadata ApexClass:MyApexClass",
+        "Retrieve all custom objects and Apex classes (both examples are equivalent):\n<%= config.bin %> <%= command.id %> --metadata CustomObject ApexClass\n<%= config.bin %> <%= command.id %> --metadata CustomObject --metadata ApexClass",
+        "Retrieve all metadata components listed in a manifest:\n<%= config.bin %> <%= command.id %> --manifest path/to/package.xml",
+        "Retrieve metadata from a package:\n<%= config.bin %> <%= command.id %> --package-name MyPackageName",
+        "Retrieve metadata from multiple packages, one of which has a space in its name (both examples are equivalent):\n<%= config.bin %> <%= command.id %> --package-name Package1 \"PackageName With Spaces\" Package3\n<%= config.bin %> <%= command.id %> --package-name Package1 --package-name \"PackageName With Spaces\" --package-name Package3"
+      ],
+      "flags": {
+        "json": {
+          "name": "json",
+          "type": "boolean",
+          "description": "Format output as json.",
+          "helpGroup": "GLOBAL",
+          "allowNo": false
+        },
+        "api-version": {
+          "name": "api-version",
+          "type": "option",
+          "char": "a",
+          "summary": "Target API version for the retrieve.",
+          "description": "Use this flag to override the default API version, which is the latest version supported the CLI, with the API version in your package.xml file.",
+          "multiple": false
+        },
+        "manifest": {
+          "name": "manifest",
+          "type": "option",
+          "char": "x",
+          "summary": "File path for the manifest (package.xml) that specifies the components to retrieve.",
+          "description": "If you specify this parameter, don’t specify --metadata or --source-dir.",
+          "multiple": false,
+          "exclusive": ["metadata", "source-dir"]
+        },
+        "metadata": {
+          "name": "metadata",
+          "type": "option",
+          "char": "m",
+          "summary": "Metadata component names to retrieve.",
+          "multiple": true,
+          "exclusive": ["manifest", "source-dir"]
+        },
+        "package-name": {
+          "name": "package-name",
+          "type": "option",
+          "char": "n",
+          "summary": "Package names to retrieve.",
+          "multiple": true
+        },
+        "source-dir": {
+          "name": "source-dir",
+          "type": "option",
+          "char": "d",
+          "summary": "File paths for source to retrieve from the org.",
+          "description": "The supplied paths can be to a single file (in which case the operation is applied to only one file) or to a folder (in which case the operation is applied to all source files in the directory and its subdirectories).",
+          "multiple": true,
+          "exclusive": ["manifest", "metadata"]
+        },
+        "target-org": {
+          "name": "target-org",
+          "type": "option",
+          "char": "o",
+          "summary": "Login username or alias for the target org.",
+          "description": "Overrides your default org.",
+          "multiple": false
+        },
+        "wait": {
+          "name": "wait",
+          "type": "option",
+          "char": "w",
+          "summary": "Number of minutes to wait for the command to complete and display results to the terminal window.",
+          "description": "If the command continues to run after the wait period, the CLI returns control of the terminal window to you.",
+          "multiple": false,
+          "default": 33
+        }
+      },
+      "args": [],
+      "configurationVariablesSection": {
+        "header": "CONFIGURATION VARIABLES",
+        "body": [
+          {
+            "name": "target-org",
+            "description": "Username or alias of the org that all commands run against by default. (sf only)"
+          },
+          {
+            "name": "apiVersion",
+            "description": "API version of your project. Default: API version of your Dev Hub org."
+          }
+        ]
+      },
+      "envVariablesSection": {
+        "header": "ENVIRONMENT VARIABLES",
+        "body": [
+          {
+            "name": "SF_TARGET_ORG",
+            "description": "Username or alias of your default org. Overrides the target-org configuration variable."
+          },
+          {
+            "name": "SFDX_DEFAULTUSERNAME",
+            "description": "Username or alias of your default org. Overrides the defaultusername configuration value."
+          },
+          {
+            "name": "SFDX_USE_PROGRESS_BAR",
+            "description": "Set to false to disable the progress bar when running force:mdapi:deploy, force:source:deploy, or force:source:push."
+          }
+        ]
+      }
+    }
+  }
+}

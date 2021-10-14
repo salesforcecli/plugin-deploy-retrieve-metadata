@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.7](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.6...v1.0.7) (2021-10-14)
+
+
+### Bug Fixes
+
+* bump deps and gen hook schema ([#38](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/38)) ([feb3c7b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/feb3c7bfe0bb3eb29cda74fbf06958e142cb97cc))
+
 ### [1.0.6](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.5...v1.0.6) (2021-10-13)
 
 

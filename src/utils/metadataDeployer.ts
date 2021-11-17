@@ -86,7 +86,7 @@ export class DeployablePackage extends Deployable {
 export class MetadataDeployer extends Deployer {
   public static NAME = 'Salesforce Apps';
 
-  public deployables: DeployablePackage[];
+  public declare deployables: DeployablePackage[];
   private testLevel = TestLevel.NoTestRun;
   private username!: string;
 

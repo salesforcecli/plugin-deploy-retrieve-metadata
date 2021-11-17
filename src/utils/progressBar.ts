@@ -14,7 +14,7 @@ import { Messages } from '@salesforce/core';
 Messages.importMessagesDirectory(__dirname);
 const mdTrasferMessages = Messages.loadMessages('@salesforce/plugin-deploy-retrieve-metadata', 'metadata.transfer');
 
-const startProgressBar = once((bar: ProgressBar.Bar, total: number, payload = {}) => {
+const startProgressBar = once((bar: ProgressBar.Bar, total: number, payload: unknown = {}) => {
   bar.start(total);
   if (Object.keys(payload).length) {
     bar.update(0, payload);

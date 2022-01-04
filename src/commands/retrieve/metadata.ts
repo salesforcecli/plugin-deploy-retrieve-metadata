@@ -19,7 +19,6 @@ import { Duration } from '@salesforce/kit';
 import { FileResponse, RetrieveResult } from '@sf/sdr';
 
 import { SfCommand, toHelpSection } from '@salesforce/sf-plugins-core';
-import { cli } from 'cli-ux';
 import { getArray, getBoolean, getString } from '@salesforce/ts-types';
 import { getPackageDirs, resolveTargetOrg } from '../../utils/orgs';
 import { ComponentSetBuilder, ManifestOption } from '../../utils/componentSetBuilder';
@@ -124,23 +123,21 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
       packageOptions: flags['package-name'],
     });
 
-    if (!flags.json) {
-      retrieve.onUpdate((data) => {
-        cli.action.status = mdTrasferMessages.getMessage(data.status);
-      });
+    retrieve.onUpdate((data) => {
+      this.spinner.status = mdTrasferMessages.getMessage(data.status);
+    });
 
-      // any thing else should stop the progress bar
-      retrieve.onFinish((data) => cli.action.stop(mdTrasferMessages.getMessage(data.response.status)));
+    // any thing else should stop the progress bar
+    retrieve.onFinish((data) => this.spinner.stop(mdTrasferMessages.getMessage(data.response.status)));
 
-      retrieve.onCancel((data) => cli.action.stop(mdTrasferMessages.getMessage(data.status)));
+    retrieve.onCancel((data) => this.spinner.stop(mdTrasferMessages.getMessage(data.status)));
 
-      retrieve.onError((error: Error) => {
-        cli.action.stop(error.name);
-        throw error;
-      });
+    retrieve.onError((error: Error) => {
+      this.spinner.stop(error.name);
+      throw error;
+    });
 
-      cli.action.start(messages.getMessage('RetrieveTitle'));
-    }
+    this.spinner.start(messages.getMessage('RetrieveTitle'));
 
     await retrieve.start();
     const result = await retrieve.pollStatus(500, Duration.minutes(flags.wait).seconds);

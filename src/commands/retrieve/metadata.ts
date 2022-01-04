@@ -123,23 +123,21 @@ export default class RetrieveMetadata extends SfCommand<RetrieveMetadataResult> 
       packageOptions: flags['package-name'],
     });
 
-    if (!flags.json) {
-      retrieve.onUpdate((data) => {
-        this.spinner.status = mdTrasferMessages.getMessage(data.status);
-      });
+    retrieve.onUpdate((data) => {
+      this.spinner.status = mdTrasferMessages.getMessage(data.status);
+    });
 
-      // any thing else should stop the progress bar
-      retrieve.onFinish((data) => this.spinner.stop(mdTrasferMessages.getMessage(data.response.status)));
+    // any thing else should stop the progress bar
+    retrieve.onFinish((data) => this.spinner.stop(mdTrasferMessages.getMessage(data.response.status)));
 
-      retrieve.onCancel((data) => this.spinner.stop(mdTrasferMessages.getMessage(data.status)));
+    retrieve.onCancel((data) => this.spinner.stop(mdTrasferMessages.getMessage(data.status)));
 
-      retrieve.onError((error: Error) => {
-        this.spinner.stop(error.name);
-        throw error;
-      });
+    retrieve.onError((error: Error) => {
+      this.spinner.stop(error.name);
+      throw error;
+    });
 
-      this.spinner.start(messages.getMessage('RetrieveTitle'));
-    }
+    this.spinner.start(messages.getMessage('RetrieveTitle'));
 
     await retrieve.start();
     const result = await retrieve.pollStatus(500, Duration.minutes(flags.wait).seconds);

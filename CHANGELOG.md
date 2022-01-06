@@ -2,87 +2,82 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [1.0.7](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.6...v1.0.7) (2021-10-14)
-
+### [1.0.8](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.7...v1.0.8) (2022-01-06)
 
 ### Bug Fixes
 
-* bump deps and gen hook schema ([#38](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/38)) ([feb3c7b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/feb3c7bfe0bb3eb29cda74fbf06958e142cb97cc))
+- add main to package.json ([#42](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/42)) ([330ceac](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/330ceac61a1266a6ed39f589ccdfe59ad4a9d1c0))
+
+### [1.0.7](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.6...v1.0.7) (2021-10-14)
+
+### Bug Fixes
+
+- bump deps and gen hook schema ([#38](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/38)) ([feb3c7b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/feb3c7bfe0bb3eb29cda74fbf06958e142cb97cc))
 
 ### [1.0.6](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.5...v1.0.6) (2021-10-13)
 
-
 ### Bug Fixes
 
-* add basic retrieve md nuts ([#37](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/37)) ([0dd62d5](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/0dd62d5b57337596dc9f85839a7bd1a9922317ac))
+- add basic retrieve md nuts ([#37](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/37)) ([0dd62d5](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/0dd62d5b57337596dc9f85839a7bd1a9922317ac))
 
 ### [1.0.5](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.4...v1.0.5) (2021-10-12)
 
-
 ### Bug Fixes
 
-* accept --package-name flag when supplied ([#35](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/35)) ([90bdfb9](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/90bdfb9b4159854054d011b28454ab68aedf3715))
+- accept --package-name flag when supplied ([#35](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/35)) ([90bdfb9](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/90bdfb9b4159854054d011b28454ab68aedf3715))
 
 ### [1.0.4](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.3...v1.0.4) (2021-10-12)
 
-
 ### Bug Fixes
 
-* pass in sourceapiversion ([#36](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/36)) ([51f84b4](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/51f84b4335417c437b5f7cd189dc7ab2587c6f08))
+- pass in sourceapiversion ([#36](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/36)) ([51f84b4](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/51f84b4335417c437b5f7cd189dc7ab2587c6f08))
 
 ### [1.0.3](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.2...v1.0.3) (2021-10-12)
 
 ### [1.0.2](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.1...v1.0.2) (2021-10-06)
 
-
 ### Bug Fixes
 
-* improve customer feedback for retrieve metadata ([d19421c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/d19421c37a94fc73a59978ea2068842fb9252e5a))
+- improve customer feedback for retrieve metadata ([d19421c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/d19421c37a94fc73a59978ea2068842fb9252e5a))
 
 ### [1.0.1](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v1.0.0...v1.0.1) (2021-09-30)
 
-
 ### Bug Fixes
 
-* bump deps ([#33](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/33)) [skip-validate-pr] ([db23c63](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/db23c638f16fd596250bff1c41a19f477c87be73))
+- bump deps ([#33](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/33)) [skip-validate-pr] ([db23c63](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/db23c638f16fd596250bff1c41a19f477c87be73))
 
 ## [1.0.0](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.31...v1.0.0) (2021-09-30)
 
 ### [0.0.31](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.30...v0.0.31) (2021-09-16)
 
-
 ### Bug Fixes
 
-* bump to latest sf-plugins-core ([#30](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/30)) ([72bf09c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/72bf09cc859afafa871faac34ca31e1550750e39))
+- bump to latest sf-plugins-core ([#30](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/30)) ([72bf09c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/72bf09cc859afafa871faac34ca31e1550750e39))
 
 ### [0.0.30](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.29...v0.0.30) (2021-09-15)
 
-
 ### Bug Fixes
 
-* replace command with sf-plugins-core ([#29](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/29)) ([6c9d4d5](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/6c9d4d5dcc8b1f4c9e98a4b2b210a2fc23893b21))
+- replace command with sf-plugins-core ([#29](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/29)) ([6c9d4d5](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/6c9d4d5dcc8b1f4c9e98a4b2b210a2fc23893b21))
 
 ### [0.0.29](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.28...v0.0.29) (2021-09-14)
 
-
 ### Bug Fixes
 
-* add additional help sections ([#27](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/27)) ([7760145](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/7760145b1bf2e77853d75a93f58751ff69025471))
+- add additional help sections ([#27](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/27)) ([7760145](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/7760145b1bf2e77853d75a93f58751ff69025471))
 
 ### [0.0.28](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.27...v0.0.28) (2021-09-02)
 
-
 ### Features
 
-* use sf-plugins-core ([#26](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/26)) ([50da793](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/50da793d4d1eff5e365bdc7a77d66d3ff8f850a6))
+- use sf-plugins-core ([#26](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/26)) ([50da793](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/50da793d4d1eff5e365bdc7a77d66d3ff8f850a6))
 
 ### [0.0.27](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.26...v0.0.27) (2021-08-30)
 
-
 ### Bug Fixes
 
-* add note about no source-tracking support ([1bbc28e](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/1bbc28e9dd04dee43ed2ed27357a728dd7e83b45))
-* add note that command doesn't support source-tracking ([cd56c49](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/cd56c49b26e7d3955b4ced54bb566f70a6c761bd))
+- add note about no source-tracking support ([1bbc28e](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/1bbc28e9dd04dee43ed2ed27357a728dd7e83b45))
+- add note that command doesn't support source-tracking ([cd56c49](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/cd56c49b26e7d3955b4ced54bb566f70a6c761bd))
 
 ### [0.0.26](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.25...v0.0.26) (2021-08-26)
 
@@ -90,57 +85,49 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.0.24](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.23...v0.0.24) (2021-08-24)
 
-
 ### Bug Fixes
 
-* keep up with plugin-source ([#23](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/23)) ([b55385c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/b55385c3207f1dee32087f9a30531e09720840ee))
+- keep up with plugin-source ([#23](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/23)) ([b55385c](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/b55385c3207f1dee32087f9a30531e09720840ee))
 
 ### [0.0.23](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.22...v0.0.23) (2021-08-18)
 
-
 ### Bug Fixes
 
-* bump oclif/core and @salesforce/core ([#22](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/22)) ([5d3203f](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/5d3203f57e2e28a7ca7b1516d7c5b2b8df0b789f))
+- bump oclif/core and @salesforce/core ([#22](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/22)) ([5d3203f](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/5d3203f57e2e28a7ca7b1516d7c5b2b8df0b789f))
 
 ### [0.0.22](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.21...v0.0.22) (2021-08-18)
 
-
 ### Bug Fixes
 
-* minor edits to help ([603aba4](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/603aba48e900b92e73c66de91917d2df75c4f1a0))
+- minor edits to help ([603aba4](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/603aba48e900b92e73c66de91917d2df75c4f1a0))
 
 ### [0.0.21](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.20...v0.0.21) (2021-08-16)
 
-
 ### Bug Fixes
 
-* disply correct result header ([#19](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/19)) ([53b333b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/53b333b627ad75213f3b4ad6b30b3ad0411016cb))
+- disply correct result header ([#19](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/19)) ([53b333b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/53b333b627ad75213f3b4ad6b30b3ad0411016cb))
 
 ### [0.0.20](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.19...v0.0.20) (2021-08-12)
 
-
 ### Bug Fixes
 
-* bump @salesforce/core to 3.4.1 ([b40b0e2](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/b40b0e23e3db15b716a0711c0d58d63351fc4178))
+- bump @salesforce/core to 3.4.1 ([b40b0e2](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/b40b0e23e3db15b716a0711c0d58d63351fc4178))
 
 ### [0.0.19](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.18...v0.0.19) (2021-08-11)
 
-
 ### Bug Fixes
 
-* limit orgs to select during interactive deploy ([#17](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/17)) ([1ce5e54](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/1ce5e54ce3f4ff4a8a6072c8c28d4a46040e9823))
+- limit orgs to select during interactive deploy ([#17](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/17)) ([1ce5e54](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/1ce5e54ce3f4ff4a8a6072c8c28d4a46040e9823))
 
 ### [0.0.18](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.16...v0.0.18) (2021-08-10)
 
-
 ### Features
 
-* display test results ([e8c1293](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/e8c12930cc4744de008483d26b4965fc69f12357))
-
+- display test results ([e8c1293](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/e8c12930cc4744de008483d26b4965fc69f12357))
 
 ### Bug Fixes
 
-* update deps ([#16](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/16)) ([2b1546b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/2b1546bd3e7a98b47d42da5422e4366a6c9795d0))
+- update deps ([#16](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/issues/16)) ([2b1546b](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/commit/2b1546bd3e7a98b47d42da5422e4366a6c9795d0))
 
 ### [0.0.17](https://github.com/salesforcecli/plugin-deploy-retrieve-metadata/compare/v0.0.16...v0.0.17) (2021-08-09)
 

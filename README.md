@@ -71,8 +71,9 @@ sf plugins
 ## Commands
 
 <!-- commands -->
-* [`sf deploy metadata`](#sf-deploy-metadata)
-* [`sf retrieve metadata`](#sf-retrieve-metadata)
+
+- [`sf deploy metadata`](#sf-deploy-metadata)
+- [`sf retrieve metadata`](#sf-retrieve-metadata)
 
 ## `sf deploy metadata`
 
@@ -165,8 +166,8 @@ FLAG DESCRIPTIONS
     75% code coverage for each class and trigger in the deployment package. This coverage is computed for each class and
     trigger individually and is different than the overall coverage percentage.
 
-    - RunLocalTests — All tests in your org are run, except the ones that originate from installed managed packages.
-    This test level is the default for production deployments that include Apex classes or triggers.
+    - RunLocalTests — All tests in your org are run, except the ones that originate from installed managed and unlocked
+    packages. This test level is the default for production deployments that include Apex classes or triggers.
 
     - RunAllTestsInOrg — All tests in your org are run, including tests of managed packages.
 
@@ -281,4 +282,5 @@ FLAG DESCRIPTIONS
 
     If you specify this parameter, don’t specify --metadata or --source-dir.
 ```
+
 <!-- commandsstop -->

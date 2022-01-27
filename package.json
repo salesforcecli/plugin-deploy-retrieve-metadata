@@ -5,12 +5,11 @@
   "author": "Salesforce",
   "bugs": "https://github.com/forcedotcom/cli/issues",
   "dependencies": {
-    "@oclif/core": "^1.0.11",
+    "@oclif/core": "^1.2.0",
     "@salesforce/core": "3.7.3",
-    "@salesforce/sf-plugins-core": "^1.1.0",
+    "@salesforce/sf-plugins-core": "^1.2.0",
     "@sf/sdr": "npm:@salesforce/source-deploy-retrieve@4.5.9",
     "chalk": "^4.1.2",
-    "cli-ux": "^5.6.3",
     "tslib": "^2"
   },
   "devDependencies": {
@@ -18,7 +17,7 @@
     "@salesforce/cli-plugins-testkit": "^1.4.11",
     "@salesforce/dev-config": "^2.1.2",
     "@salesforce/dev-scripts": "^1.0.2",
-    "@salesforce/plugin-command-reference": "sf",
+    "@salesforce/plugin-command-reference": "^2.1.1",
     "@salesforce/plugin-config": "^2.2.9",
     "@salesforce/plugin-deploy-retrieve": "^1.0.2",
     "@salesforce/prettier-config": "^0.0.2",
@@ -41,7 +40,7 @@
     "lint-staged": "^10.2.2",
     "mocha": "^8.4.0",
     "nyc": "^15.1.0",
-    "oclif": "^2.0.0-main.5",
+    "oclif": "^2.4.0",
     "prettier": "^2.0.5",
     "pretty-quick": "^3.1.0",
     "shx": "0.2.2",

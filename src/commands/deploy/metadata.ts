@@ -122,9 +122,7 @@ export default class DeployMetadata extends SfCommand<DeployMetadataResult> {
       apiOptions: { testLevel },
     });
 
-    if (!this.jsonEnabled()) {
-      new DeployProgress(deploy).start();
-    }
+    new DeployProgress(deploy, this.jsonEnabled()).start();
 
     const result = await deploy.pollStatus(500, Duration.minutes(flags.wait).seconds);
     this.setExitCode(result);

@@ -7,7 +7,7 @@
 
 import * as os from 'os';
 import * as path from 'path';
-import cli from 'cli-ux';
+import { CliUx } from '@oclif/core';
 import { blue, bold, dim, red, underline } from 'chalk';
 import { DeployResult, FileResponse, RetrieveResult } from '@sf/sdr';
 import { RequestStatus, Failures, Successes } from '@sf/sdr/lib/src/client/types';
@@ -22,10 +22,20 @@ function error(message: string): string {
   return red(bold(message));
 }
 
-export interface PackageRetrieval {
+function table(
+  responses: FileResponse[] | Array<Record<string, unknown>>,
+  columns: Record<string, unknown>,
+  options: Record<string, unknown>
+): void {
+  // Interfaces cannot be casted to Record<string, unknown> so we have to cast to unknown first
+  // See https://github.com/microsoft/TypeScript/issues/15300
+  CliUx.ux.table(responses as unknown as Array<Record<string, unknown>>, columns, options);
+}
+
+export type PackageRetrieval = {
   name: string;
   path: string;
-}
+};
 
 export function asRelativePaths(fileResponses: FileResponse[]): FileResponse[] {
   fileResponses.forEach((file) => {
@@ -81,8 +91,9 @@ export function displaySuccesses(result: DeployResult | RetrieveResult): void {
   };
   const title = result instanceof DeployResult ? 'Deployed Source' : 'Retrieved Source';
   const options = { title: info(title) };
-  cli.log();
-  cli.table(successes, columns, options);
+  CliUx.ux.log();
+
+  table(successes, columns, options);
 }
 
 export function displayPackages(result: RetrieveResult, packages: PackageRetrieval[]): void {
@@ -93,14 +104,14 @@ export function displayPackages(result: RetrieveResult, packages: PackageRetriev
     };
     const title = 'Retrieved Packages';
     const options = { title: info(title) };
-    cli.log();
-    cli.table(packages, columns, options);
+    CliUx.ux.log();
+    table(packages, columns, options);
   }
 }
 
 export function displayTestResults(result: DeployResult, testLevel: TestLevel): void {
   if (testLevel === TestLevel.NoTestRun) {
-    cli.log();
+    CliUx.ux.log();
     return;
   }
 
@@ -108,28 +119,28 @@ export function displayTestResults(result: DeployResult, testLevel: TestLevel): 
     const failures = toArray(result.response.details?.runTestResult?.failures);
     const failureCount = result.response.details.runTestResult?.numFailures;
     const tests = sortTestResults(failures) as Failures[];
-    cli.log();
-    cli.log(error(`Test Failures [${failureCount}]`));
+    CliUx.ux.log();
+    CliUx.ux.log(error(`Test Failures [${failureCount}]`));
     for (const test of tests) {
       const testName = underline(`${test.name}.${test.methodName}`);
       const stackTrace = test.stackTrace.replace(/\n/g, `${os.EOL}    `);
-      cli.log(`• ${testName}`);
-      cli.log(`  ${dim('message')}: ${test.message}`);
-      cli.log(`  ${dim('stacktrace')}: ${os.EOL}    ${stackTrace}`);
-      cli.log();
+      CliUx.ux.log(`• ${testName}`);
+      CliUx.ux.log(`  ${dim('message')}: ${test.message}`);
+      CliUx.ux.log(`  ${dim('stacktrace')}: ${os.EOL}    ${stackTrace}`);
+      CliUx.ux.log();
     }
   }
 
-  cli.log();
-  cli.log(info('Test Results Summary'));
+  CliUx.ux.log();
+  CliUx.ux.log(info('Test Results Summary'));
   const passing = get(result, 'response.numberTestsCompleted', 0) as number;
   const failing = get(result, 'response.numberTestErrors', 0) as number;
   const total = get(result, 'response.numberTestsTotal', 0) as number;
   const time = get(result, 'response.details.runTestResult.totalTime', 0) as number;
-  cli.log(`Passing: ${passing}`);
-  cli.log(`Failing: ${failing}`);
-  cli.log(`Total: ${total}`);
-  if (time) cli.log(`Time: ${time}`);
+  CliUx.ux.log(`Passing: ${passing}`);
+  CliUx.ux.log(`Failing: ${failing}`);
+  CliUx.ux.log(`Total: ${total}`);
+  if (time) CliUx.ux.log(`Time: ${time}`);
 }
 
 export function displayFailures(result: DeployResult | RetrieveResult): void {
@@ -145,6 +156,6 @@ export function displayFailures(result: DeployResult | RetrieveResult): void {
     error: { header: 'Problem' },
   };
   const options = { title: error(`Component Failures [${failures.length}]`) };
-  cli.log();
-  cli.table(failures, columns, options);
+  CliUx.ux.log();
+  table(failures, columns, options);
 }

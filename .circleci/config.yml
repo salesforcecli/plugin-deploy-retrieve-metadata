@@ -51,21 +51,18 @@ workflows:
                 - latest
                 - lts
                 - maintenance
-            exclude:
-              - os: windows
-                node_version: latest
       - release-management/test-nut:
           name: nuts-on-linux
           sfdx_version: latest
           node_version: lts
           requires:
             - release-management/test-package
-      # - release-management/test-nut:
-      #     name: nuts-on-windows
-      #     sfdx_version: lts
-      #     os: windows
-      #     requires:
-      #       - release-management/test-package
+      - release-management/test-nut:
+          name: nuts-on-windows
+          sfdx_version: lts
+          os: windows
+          requires:
+            - release-management/test-package
       - release-management/release-package:
           sign: true
           github-release: true
